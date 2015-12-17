@@ -1,0 +1,12 @@
+name: ArchonCrates
+main: com.HamiStudios.ArchonCrates.Main
+version: 17.1
+softdepend: [Vault]
+commands:
+   ArchonCrates:
+      description: Main command for ArchonCrates
+      usage: /<command> <argument 1> [argument 2] [argument 3] [argument 4]
+      aliases: ac
+   ac?:
+      description: Check if the server is running ArchonCrates
+      usage: /ac?
