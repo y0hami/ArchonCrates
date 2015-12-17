@@ -9,4 +9,4 @@ commands:
       aliases: ac
    ac?:
       description: Check if the server is running ArchonCrates
-      usage: /<command>
+      usage: /ac?
