@@ -9,6 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidCrateInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualCrateInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.ACPermission;
 import com.HamiStudios.ArchonCrates.Util.CrateFinder;
@@ -110,7 +112,12 @@ public class Commands implements CommandExecutor {
 				if(args[0].equalsIgnoreCase("createv")) {
 					if(sender.hasPermission(ACPermission.COMMAND_CREATE_VIRTUAL.toString())) {
 						if(sender instanceof Player) {
-							CreateVirtual.run((Player) sender, new VirtualCrate());
+							try {
+								CreateVirtual.run((Player) sender, new VirtualCrate());
+							} catch (InvalidVirtualCrateInput e) {
+								e.log();
+								e.writeToFile();
+							}
 						}
 						else{
 							sender.sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.PLAYER_ONLY_COMMAND.toString(true));
@@ -143,7 +150,12 @@ public class Commands implements CommandExecutor {
 										break;
 									}
 								}
-								Create.run((Player) sender, new com.HamiStudios.ArchonCrates.API.Objects.Crate(realCrateType));
+								try {
+									Create.run((Player) sender, new com.HamiStudios.ArchonCrates.API.Objects.Crate(realCrateType));
+								} catch (InvalidCrateInput e) {
+									e.log(realCrateType);
+									e.writeToFile(realCrateType);
+								}
 							}
 							else{
 								sender.sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.COMMAND_CREATE_NOT_CRATE_TYPE.toString(true));

@@ -29,6 +29,10 @@ import com.HamiStudios.ArchonCrates.API.Objects.Key;
 import com.HamiStudios.ArchonCrates.API.Objects.Prize;
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualKey;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidCrateInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualCrateInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualKeyInput;
 import com.HamiStudios.ArchonCrates.Files.Data;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.ACPermission;
@@ -63,7 +67,12 @@ public class Crate {
 	public void open(final Player player, String crateType, String keyType, boolean virtual, final Location crateLocation) {
 		
 		this.prizeList = new ArrayList<>();
-		this.key = new Key(keyType);
+		try {
+			this.key = new Key(keyType);
+		} catch(InvalidKeyInput e) {
+			e.log(keyType);
+			e.writeToFile(keyType);
+		}
 		for(Prize p : key.getLoot()) {
 			if(p.usePermission()) {
 				if(player.hasPermission(p.getPermission())) prizeList.add(p);
@@ -79,7 +88,12 @@ public class Crate {
 			}
 			prizeList.add(p);
 		}
-		this.crate = new com.HamiStudios.ArchonCrates.API.Objects.Crate(crateType);
+		try {
+			this.crate = new com.HamiStudios.ArchonCrates.API.Objects.Crate(crateType);
+		} catch (InvalidCrateInput e) {
+			e.log(crateType);
+			e.writeToFile(crateType);
+		}
 		this.main = MainGetter.getMain();
 		this.player = player;
 		
@@ -199,7 +213,7 @@ public class Crate {
 		winDurationTask = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
 			@Override
 			public void run() {
-				player.closeInventory();
+				if(crateGUI.getViewers().contains(player)) player.closeInventory();
 			}
 		}, 3*20L);
 		
@@ -288,7 +302,12 @@ public class Crate {
 	public void openVirtual(final Player player, String vkeyType) {
 		
 		this.prizeList = new ArrayList<>();
-		this.vkey = new VirtualKey(vkeyType);
+		try {
+			this.vkey = new VirtualKey(vkeyType);
+		} catch (InvalidVirtualKeyInput e) {
+			e.log(vkeyType);
+			e.writeToFile(vkeyType);
+		}
 		for(Prize p : vkey.getLoot()) {
 			if(p.usePermission()) {
 				if(player.hasPermission(p.getPermission())) prizeList.add(p);
@@ -306,7 +325,12 @@ public class Crate {
 		}
 		this.main = MainGetter.getMain();
 		this.player = player;
-		this.vcrate = new VirtualCrate();
+		try {
+			this.vcrate = new VirtualCrate();
+		} catch (InvalidVirtualCrateInput e) {
+			e.log();
+			e.writeToFile();
+		}
 		
 		
 		// ADD PLAYER TO DATA
@@ -393,7 +417,7 @@ public class Crate {
 		winDurationTask = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
 			@Override
 			public void run() {
-				player.closeInventory();
+				if(crateGUI.getViewers().contains(player)) player.closeInventory();
 			}
 		}, 3*20L);
 		

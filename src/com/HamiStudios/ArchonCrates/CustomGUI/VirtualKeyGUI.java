@@ -14,9 +14,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.HamiStudios.ArchonCrates.API.Objects.Glow;
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualKey;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualCrateInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualKeyInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.FileType;
-import com.HamiStudios.ArchonCrates.Util.KeyFinder;
 import com.HamiStudios.ArchonCrates.Util.PlayerData;
 
 public class VirtualKeyGUI {
@@ -29,7 +30,13 @@ public class VirtualKeyGUI {
 		this.player = player;
 		
 		ArrayList<VirtualKey> virtualKeys = new ArrayList<>();
-		for(String s : FileHandler.getFile(FileType.VIRTUAL_KEYS).getConfigurationSection("Virtual Keys").getKeys(false)) virtualKeys.add(new VirtualKey(s));
+		for(String s : FileHandler.getFile(FileType.VIRTUAL_KEYS).getConfigurationSection("Virtual Keys").getKeys(false))
+			try {
+				virtualKeys.add(new VirtualKey(s));
+			} catch (InvalidVirtualKeyInput e) {
+				e.log(s);
+				e.writeToFile(s);
+			}
 		
 		int rows = FileHandler.getFile(FileType.CUSTOM_GUI).getInt("Virtual Keys GUI.rows");
 		String title = FileHandler.getFile(FileType.CUSTOM_GUI).getString("Virtual Keys GUI.title");
@@ -57,14 +64,17 @@ public class VirtualKeyGUI {
 			gui.setItem(Integer.parseInt(s), item);
 		}
   		
-		ArrayList<VirtualKey> vkeys = new ArrayList<>();
 		for(String s : FileHandler.getFile(FileType.CUSTOM_GUI).getConfigurationSection("Virtual Keys GUI.keys").getKeys(false)) {
-			if(KeyFinder.isKeyType(s)) {
-				vkeys.add(new VirtualKey(s));
+			
+			VirtualKey k = null;
+			try {
+				k = new VirtualKey(s);
+			} catch (InvalidVirtualKeyInput e) {
+				e.log(s);
+				e.writeToFile(s);
 			}
-		}
-		
-		for(VirtualKey k : vkeys) {
+			if(k == null) continue;
+			
 			@SuppressWarnings("deprecation")
 			ItemStack item = new ItemStack(Material.valueOf(Material.getMaterial(k.getItemId())+""));
 			ItemMeta itemMeta = item.getItemMeta();
@@ -86,7 +96,14 @@ public class VirtualKeyGUI {
 	}
 	
 	public void open() {
-		VirtualCrate vcrate = new VirtualCrate();
+		VirtualCrate vcrate = null;
+		try {
+			vcrate = new VirtualCrate();
+		} catch (InvalidVirtualCrateInput e) {
+			e.log();
+			e.writeToFile();
+		}
+		if(vcrate == null) return;
 		player.playSound(player.getLocation(), Sound.valueOf(vcrate.getOpenSound()), 1, 1);
 		player.openInventory(gui);
 	}

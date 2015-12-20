@@ -7,12 +7,20 @@ import org.bukkit.inventory.ItemStack;
 
 import com.HamiStudios.ArchonCrates.API.Events.OnPlayerKeyGiven;
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
 import com.HamiStudios.ArchonCrates.Util.LanguageType;
 
 public class GiveKey {
 
 	public static void runForPlayer(Player player, CommandSender sender, String keyType, int amount) {
-		Key key = new Key(keyType);
+		Key key = null;
+		try {
+			key = new Key(keyType);
+		} catch (InvalidKeyInput e) {
+			e.log(keyType);
+			e.writeToFile(keyType);
+		}
+		if(key == null) return;
 		ItemStack keyitem = key.getItem();
 		keyitem.setAmount(amount);
 		if(player.getInventory().firstEmpty() == -1) {
@@ -26,7 +34,14 @@ public class GiveKey {
 	
 	@SuppressWarnings("deprecation")
 	public static void runForAll(CommandSender sender, String keyType, int amount) {
-		Key key = new Key(keyType);
+		Key key = null;
+		try {
+			key = new Key(keyType);
+		} catch (InvalidKeyInput e) {
+			e.log(keyType);
+			e.writeToFile(keyType);
+		}
+		if(key == null) return;
 		ItemStack keyitem = key.getItem();
 		keyitem.setAmount(amount);
 		for(Player player : Bukkit.getOnlinePlayers()) {

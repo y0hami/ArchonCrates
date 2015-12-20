@@ -8,6 +8,8 @@ import com.HamiStudios.ArchonCrates.Main;
 import com.HamiStudios.ArchonCrates.API.Events.OnCrateRemove;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidCrateInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualCrateInput;
 import com.HamiStudios.ArchonCrates.Util.ACPermission;
 import com.HamiStudios.ArchonCrates.Util.CrateFinder;
 import com.HamiStudios.ArchonCrates.Util.LanguageType;
@@ -40,7 +42,14 @@ public class BlockBreakEvent implements Listener {
 			else{
 				if(event.getPlayer().hasPermission(ACPermission.BREAK_CRATE.toString())) {
 					event.setCancelled(false);
-					Crate crate = new Crate(crateType);
+					Crate crate = null;
+					try {
+						crate = new Crate(crateType);
+					} catch (InvalidCrateInput e) {
+						e.log(crateType);
+						e.writeToFile(crateType);
+					}
+					if(crate == null) return;
 					crate.remove(blockId, x, y, z, world);
 					this.main.getServer().getPluginManager().callEvent(new OnCrateRemove(event.getPlayer(), crate, false));
 					event.getPlayer().sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.BREAK_CRATE_ALLOW.toString(true));
@@ -59,7 +68,14 @@ public class BlockBreakEvent implements Listener {
 			else{
 				if(event.getPlayer().hasPermission(ACPermission.BREAK_CRATE.toString())) {
 					event.setCancelled(false);
-					VirtualCrate vcrate = new VirtualCrate();
+					VirtualCrate vcrate = null;
+					try {
+						vcrate = new VirtualCrate();
+					} catch (InvalidVirtualCrateInput e) {
+						e.log();
+						e.writeToFile();
+					}
+					if(vcrate == null) return;
 					vcrate.remove(blockId, x, y, z, world);
 					this.main.getServer().getPluginManager().callEvent(new OnCrateRemove(event.getPlayer(), vcrate, true));
 					event.getPlayer().sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.BREAK_CRATE_ALLOW.toString(true));

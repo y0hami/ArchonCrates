@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidPrizeInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.FileType;
 
@@ -34,28 +35,31 @@ public class Prize {
 	private ArrayList<String> subCommands;
 	
 	@SuppressWarnings("unchecked")
-	public Prize(String prizeName) {
-		this.prizeID = prizeName;
-		this.itemID = (int) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Item ID");
-		this.itemData = (int) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Item Data");
-		this.stackAmount = (int) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".StackAmount");
-		this.displayName = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Name");
-		this.broadcast = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Broadcast Win");
-		this.playerMessage = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Player Message");
-		this.chance = (double) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Chance");
-		this.prizeName = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Prize Name");
-		this.glow = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Glow");
-		this.usePermission = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Use Permission");
-		this.permission = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Permission");
-		this.globalWinAmount = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Global Win Amount");
-		this.playerWinAmount = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Player Win Amount");
-		this.commands = (List<String>) FileHandler.getList(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Commands");
-		
-		if(FileHandler.getFile(FileType.CRATE_LOOT).contains("Crate Loot." + prizeName + ".Use Sub Commands")) this.useSubCommands = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Use Sub Commands");
-		if(FileHandler.getFile(FileType.CRATE_LOOT).contains("Crate Loot." + prizeName + ".Ranks To Sub")) this.ranksToSub = (ArrayList<String>) FileHandler.getList(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Ranks To Sub");
-		if(FileHandler.getFile(FileType.CRATE_LOOT).contains("Crate Loot." + prizeName + ".Sub-Commands")) this.subCommands = (ArrayList<String>) FileHandler.getList(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Sub-Commands");
+	public Prize(String prizeName) throws InvalidPrizeInput {
+		try {
+			this.prizeID = prizeName;
+			this.itemID = (int) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Item ID");
+			this.itemData = (int) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Item Data");
+			this.stackAmount = (int) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".StackAmount");
+			this.displayName = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Name");
+			this.broadcast = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Broadcast Win");
+			this.playerMessage = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Player Message");
+			this.chance = (double) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Chance");
+			this.prizeName = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Prize Name");
+			this.glow = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Glow");
+			this.usePermission = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Use Permission");
+			this.permission = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Permission");
+			this.globalWinAmount = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Global Win Amount");
+			this.playerWinAmount = (String) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Player Win Amount");
+			this.commands = (List<String>) FileHandler.getList(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Commands");
+			
+			if(FileHandler.getFile(FileType.CRATE_LOOT).contains("Crate Loot." + prizeName + ".Use Sub Commands")) this.useSubCommands = (boolean) FileHandler.get(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Use Sub Commands");
+			if(FileHandler.getFile(FileType.CRATE_LOOT).contains("Crate Loot." + prizeName + ".Ranks To Sub")) this.ranksToSub = (ArrayList<String>) FileHandler.getList(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Ranks To Sub");
+			if(FileHandler.getFile(FileType.CRATE_LOOT).contains("Crate Loot." + prizeName + ".Sub-Commands")) this.subCommands = (ArrayList<String>) FileHandler.getList(FileType.CRATE_LOOT, "Crate Loot." + prizeName + ".Sub-Commands");
+		} catch(Exception e) {
+			throw new InvalidPrizeInput();
+		}
 	}
-	
 	
 	public String getPrizeID() {
 		return this.prizeID;

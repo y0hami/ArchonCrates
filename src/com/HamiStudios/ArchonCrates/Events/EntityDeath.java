@@ -14,6 +14,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import com.HamiStudios.ArchonCrates.Main;
 import com.HamiStudios.ArchonCrates.API.Events.OnMobKeyDrop;
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.FileType;
 
@@ -46,7 +47,14 @@ public class EntityDeath implements Listener {
 								int max = keys.size();
 								int randomNum = (int) (Math.random() * (max));
 								String keyType = keys.get(randomNum);
-								Key key = new Key(keyType);
+								Key key = null;
+								try {
+									key = new Key(keyType);
+								} catch (InvalidKeyInput e) {
+									e.log(keyType);
+									e.writeToFile(keyType);
+								}
+								if(key == null) return;
 								entity.getLocation().getWorld().dropItemNaturally(entity.getLocation(), key.getItem());
 								this.main.getServer().getPluginManager().callEvent(new OnMobKeyDrop(entity, key, chanceValue));
 							}

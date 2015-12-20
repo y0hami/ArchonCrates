@@ -61,7 +61,7 @@ public class VirtualCrates implements FileInterface {
 		fileconfig.set("Virtual Crates.openSound", "CHEST_OPEN");
 		fileconfig.set("Virtual Crates.winSound", "LEVEL_UP");
 		fileconfig.set("Virtual Crates.scrollSound", "NOTE_BASS");
-		fileconfig.set("Virtual Crates.firework", "true");
+		fileconfig.set("Virtual Crates.firework", true);
 		fileconfig.set("Virtual Crates.openDuration", 8);
 		fileconfig.set("Virtual Crates.prizeDisplayDuration", 10);
 		fileconfig.set("Virtual Crates.disableColouredGlass", false);

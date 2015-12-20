@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.HamiStudios.ArchonCrates.Main;
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualKey;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualKeyInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Tasks.Crate;
 import com.HamiStudios.ArchonCrates.Util.FileType;
@@ -39,7 +40,13 @@ public class InventoryClick implements Listener {
 		
 		if(event.getInventory().getTitle().equals(ChatColor.translateAlternateColorCodes('&', FileHandler.getFile(FileType.CUSTOM_GUI).getString("Virtual Keys GUI.title")))) {
 			ArrayList<VirtualKey> vkeys = new ArrayList<>();
-			for(String s : FileHandler.getFile(FileType.VIRTUAL_KEYS).getConfigurationSection("Virtual Keys").getKeys(false)) vkeys.add(new VirtualKey(s));
+			for(String s : FileHandler.getFile(FileType.VIRTUAL_KEYS).getConfigurationSection("Virtual Keys").getKeys(false))
+				try {
+					vkeys.add(new VirtualKey(s));
+				} catch (InvalidVirtualKeyInput e) {
+					e.log(s);
+					e.writeToFile(s);
+				}
 			
 			if(event.getCurrentItem().hasItemMeta()) {
 				ItemStack itemClicked = event.getCurrentItem();
@@ -50,7 +57,12 @@ public class InventoryClick implements Listener {
 						if(itemClicked.getTypeId() == k.getItemId()) {
 							if(itemClicked.getDurability() == (short)k.getItemData()) {
 								if(itemClicked.getItemMeta().getLore().get(0).startsWith(ChatColor.GRAY + "Keys: ")) {
-									vkey = new VirtualKey(k.getVKeyType());
+									try {
+										vkey = new VirtualKey(k.getVKeyType());
+									} catch (InvalidVirtualKeyInput e) {
+										e.log(k.getVKeyType());
+										e.writeToFile(k.getVKeyType());
+									}
 									break;
 								}
 							}

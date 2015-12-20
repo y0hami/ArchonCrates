@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.HamiStudios.ArchonCrates.Main;
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidCrateInput;
 import com.HamiStudios.ArchonCrates.CustomGUI.PrizeViewerGUI;
 import com.HamiStudios.ArchonCrates.CustomGUI.VirtualKeyGUI;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
@@ -81,7 +82,14 @@ public class BlockClickEvent implements Listener {
 							String keyType = KeyFinder.findKeyType(item);
 							if(keyType != null) {
 								Crate crateGUI = new Crate();
-								com.HamiStudios.ArchonCrates.API.Objects.Crate crate = new com.HamiStudios.ArchonCrates.API.Objects.Crate(crateType);
+								com.HamiStudios.ArchonCrates.API.Objects.Crate crate = null;
+								try {
+									crate = new com.HamiStudios.ArchonCrates.API.Objects.Crate(crateType);
+								} catch (InvalidCrateInput e) {
+									e.log(crateType);
+									e.writeToFile(crateType);
+								}
+								if(crate == null) return;
 								
 								ArrayList<String> useableKeys = new ArrayList<>();
 								for(Key k : crate.getUseableKeys()) useableKeys.add(k.getKeyType().toUpperCase());

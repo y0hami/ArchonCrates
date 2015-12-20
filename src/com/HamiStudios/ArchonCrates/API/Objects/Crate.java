@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidCrateInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Files.Locations;
 import com.HamiStudios.ArchonCrates.Util.CrateFinder;
@@ -28,21 +30,25 @@ public class Crate {
 	private String wrongKeyMessage;
 	
 	@SuppressWarnings("unchecked")
-	public Crate(String crateID) {
-		this.crateID = crateID;
-		this.title = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".title");
-		this.blockID = (int) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".blockID");
-		this.blockData = (int) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".blockData");
-		this.openSound = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".openSound");
-		this.winSound = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".winSound");
-		this.scrollSound = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".scrollSound");
-		this.effects = (boolean) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".effects");
-		this.firework = (boolean) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".firework");
-		this.openDuration = (int) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".openDuration");
-		this.prizeDisplayDuration = (int) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".prizeDisplayDuration");
-		this.disableColouredGlass = (boolean) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".disableColouredGlass");
-		this.useableKeys = (ArrayList<String>) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".useableKeys");
-		this.wrongKeyMessage = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".wrongKeyMessage");
+	public Crate(String crateID) throws InvalidCrateInput {
+		try {
+			this.crateID = crateID;
+			this.title = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".title");
+			this.blockID = (int) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".blockID");
+			this.blockData = (int) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".blockData");
+			this.openSound = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".openSound");
+			this.winSound = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".winSound");
+			this.scrollSound = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".scrollSound");
+			this.effects = (boolean) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".effects");
+			this.firework = (boolean) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".firework");
+			this.openDuration = (int) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".openDuration");
+			this.prizeDisplayDuration = (int) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".prizeDisplayDuration");
+			this.disableColouredGlass = (boolean) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".disableColouredGlass");
+			this.useableKeys = (ArrayList<String>) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".useableKeys");
+			this.wrongKeyMessage = (String) FileHandler.get(FileType.CRATES, "Crates." + crateID + ".wrongKeyMessage");	
+		} catch(Exception e) {
+			throw new InvalidCrateInput();
+		}
 	}
 	
 	public String getCrateID() {
@@ -100,7 +106,14 @@ public class Crate {
 	public ArrayList<Key> getUseableKeys() {
 		ArrayList<Key> useable = new ArrayList<>();
 		for(String s : this.useableKeys) {
-			Key key = new Key(s);
+			Key key = null;
+			try {
+				key = new Key(s);
+			} catch (InvalidKeyInput e) {
+				e.log(s);
+				e.writeToFile(s);
+			}
+			if(key == null) continue;
 			useable.add(key);
 		}
 		return useable;

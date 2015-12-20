@@ -16,6 +16,7 @@ import com.HamiStudios.ArchonCrates.Events.BlockBreakEvent;
 import com.HamiStudios.ArchonCrates.Events.BlockClickEvent;
 import com.HamiStudios.ArchonCrates.Events.BlockDrop;
 import com.HamiStudios.ArchonCrates.Events.BlockPlace;
+import com.HamiStudios.ArchonCrates.Events.DevCommand;
 import com.HamiStudios.ArchonCrates.Events.DevJoin;
 import com.HamiStudios.ArchonCrates.Events.EntityDeath;
 import com.HamiStudios.ArchonCrates.Events.InventoryClick;
@@ -261,6 +262,7 @@ public class OnEnable {
 		new SignBreak(main);
 		new DevJoin(main);
 		new onCommand(main);
+		new DevCommand(main);
 		
 		// LOAD MAJOR FILES
 		FileHandler fileHandler = new FileHandler();

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualCrateInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Files.Locations;
 import com.HamiStudios.ArchonCrates.Util.CrateFinder;
@@ -25,18 +27,22 @@ public class VirtualCrate {
 	private ArrayList<String> useableKeys;
 	
 	@SuppressWarnings("unchecked")
-	public VirtualCrate() {
-		this.title = (String) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.title");
-		this.blockID = (int) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.blockID");
-		this.blockData = (int) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.blockData");
-		this.openSound = (String) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.openSound");
-		this.winSound = (String) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.winSound");
-		this.scrollSound = (String) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.scrollSound");
-		this.firework = (boolean) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.firework");
-		this.openDuration = (int) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.openDuration");
-		this.prizeDisplayDuration = (int) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.prizeDisplayDuration");
-		this.disableColouredGlass = (boolean) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.disableColouredGlass");
-		this.useableKeys = (ArrayList<String>) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.useableKeys");
+	public VirtualCrate() throws InvalidVirtualCrateInput {
+		try {
+			this.title = (String) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.title");
+			this.blockID = (int) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.blockID");
+			this.blockData = (int) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.blockData");
+			this.openSound = (String) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.openSound");
+			this.winSound = (String) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.winSound");
+			this.scrollSound = (String) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.scrollSound");
+			this.firework = (boolean) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.firework");
+			this.openDuration = (int) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.openDuration");
+			this.prizeDisplayDuration = (int) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.prizeDisplayDuration");
+			this.disableColouredGlass = (boolean) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.disableColouredGlass");
+			this.useableKeys = (ArrayList<String>) FileHandler.get(FileType.VIRTUAL_CRATES, "Virtual Crates.useableKeys");
+		} catch(Exception e) {
+			throw new InvalidVirtualCrateInput();
+		}
 	}
 	
 	public String getTitle() {
@@ -86,7 +92,14 @@ public class VirtualCrate {
 	public ArrayList<Key> getUseableKeys() {
 		ArrayList<Key> useable = new ArrayList<>();
 		for(String s : this.useableKeys) {
-			Key key = new Key(s);
+			Key key = null;
+			try {
+				key = new Key(s);
+			} catch (InvalidKeyInput e) {
+				e.log(s);
+				e.writeToFile(s);
+			}
+			if(key == null) continue;
 			useable.add(key);
 		}
 		return useable;

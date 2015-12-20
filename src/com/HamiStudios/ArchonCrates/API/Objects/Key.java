@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidPrizeInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.FileType;
 import com.HamiStudios.ArchonCrates.Util.KeyFinder;
@@ -25,18 +27,31 @@ public class Key {
 	private ArrayList<Prize> loot;
 
 	@SuppressWarnings("unchecked")
-	public Key(String keyType) {
-		this.keyType = KeyFinder.getKeyTypeToCase(keyType);
-		this.name = (String) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".name");
-		this.lore = (ArrayList<String>) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".lore");
-		this.itemID = (int) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".itemID");
-		this.itemData = (int) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".itemData");
-		this.glow = (boolean) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".glow");
-		this.winMessage = (String) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".winMessage");
-		this.playerMessage = (String) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".playerMessage");
-		this.lootRaw = (ArrayList<String>) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".loot");
+	public Key(String keyType) throws InvalidKeyInput {
+		try {
+			this.keyType = KeyFinder.getKeyTypeToCase(keyType);
+			this.name = (String) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".name");
+			this.lore = (ArrayList<String>) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".lore");
+			this.itemID = (int) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".itemID");
+			this.itemData = (int) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".itemData");
+			this.glow = (boolean) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".glow");
+			this.winMessage = (String) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".winMessage");
+			this.playerMessage = (String) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".playerMessage");
+			this.lootRaw = (ArrayList<String>) FileHandler.get(FileType.KEYS, "Keys." + this.keyType + ".loot");
+		} catch(Exception e) {
+			throw new InvalidKeyInput();
+		}
 		loot = new ArrayList<>();
-		for(String s : lootRaw) loot.add(new Prize(s));
+		for(String s : lootRaw) {
+			try {
+				loot.add(new Prize(s));
+			} catch(InvalidPrizeInput e) {
+				e.log(s);
+				e.writeToFile(s);
+				continue;
+			}
+		}
+		
 	}
 	
 	public String getDisplayName() {

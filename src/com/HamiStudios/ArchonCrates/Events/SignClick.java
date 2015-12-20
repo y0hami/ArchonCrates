@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import com.HamiStudios.ArchonCrates.Main;
 import com.HamiStudios.ArchonCrates.API.Objects.BuySign;
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
 import com.HamiStudios.ArchonCrates.Util.ACPermission;
 import com.HamiStudios.ArchonCrates.Util.LanguageType;
 import com.HamiStudios.ArchonCrates.Util.PlayerData;
@@ -54,7 +55,14 @@ public class SignClick implements Listener {
 										return;
 									}
 									else{
-										event.getPlayer().getInventory().addItem(new Key(bsign.getKeyType()).getItem());
+										try {
+											event.getPlayer().getInventory().addItem(new Key(bsign.getKeyType()).getItem());
+										} catch (IllegalArgumentException e) {
+											e.printStackTrace();
+										} catch (InvalidKeyInput e) {
+											e.log(bsign.getKeyType());
+											e.writeToFile(bsign.getKeyType());
+										}
 										event.getPlayer().updateInventory();
 										event.getPlayer().sendMessage(LanguageType.SIGN_BOUGHT_KEY.toString(true).replaceAll("<price>", bsign.getPrice()+""));
 										return;

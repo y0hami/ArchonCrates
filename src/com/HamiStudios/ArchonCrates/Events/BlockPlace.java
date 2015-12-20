@@ -12,6 +12,8 @@ import com.HamiStudios.ArchonCrates.Main;
 import com.HamiStudios.ArchonCrates.API.Events.OnCrateCreate;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidCrateInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualCrateInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.FileType;
 import com.HamiStudios.ArchonCrates.Util.LanguageType;
@@ -42,7 +44,14 @@ public class BlockPlace implements Listener {
 				if(block.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Crate Block")) {
 					if(!event.isCancelled()) {
 						String crateType = block.getItemMeta().getLore().toString().split("'")[1];
-						Crate crate = new Crate(crateType);
+						Crate crate = null;
+						try {
+							crate = new Crate(crateType);
+						} catch (InvalidCrateInput e) {
+							e.log(crateType);
+							e.writeToFile(crateType);
+						}
+						if(crate == null) return;
 						crate.createNew(event.getBlock().getLocation());
 						this.main.getServer().getPluginManager().callEvent(new OnCrateCreate(event.getPlayer(), crate, false));
 						event.getPlayer().sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.CREATE_CRATE.toString(true).replaceAll("<crateType>", crate.getCrateID()));
@@ -56,7 +65,14 @@ public class BlockPlace implements Listener {
 			if(vblockID == block.getType().getId()) {
 				if(block.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Virtual Crate Block")) {
 					if(!event.isCancelled()) {
-						VirtualCrate vcrate = new VirtualCrate();
+						VirtualCrate vcrate = null;
+						try {
+							vcrate = new VirtualCrate();
+						} catch (InvalidVirtualCrateInput e) {
+							e.log();
+							e.writeToFile();
+						}
+						if(vcrate == null) return;
 						vcrate.createNew(event.getBlock().getLocation());
 						this.main.getServer().getPluginManager().callEvent(new OnCrateCreate(event.getPlayer(), vcrate, true));
 						event.getPlayer().sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.CREATE_VIRTUAL_CRATE.toString(true));

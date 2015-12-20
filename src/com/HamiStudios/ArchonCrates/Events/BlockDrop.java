@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import com.HamiStudios.ArchonCrates.Main;
 import com.HamiStudios.ArchonCrates.API.Events.OnBlockDropKey;
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.FileType;
 
@@ -42,7 +43,14 @@ public class BlockDrop implements Listener {
 						int max = keys.size();
 						int randomNum = (int) (Math.random() * (max));
 						String keyType = keys.get(randomNum);
-						Key key = new Key(keyType);
+						Key key = null;
+						try {
+							key = new Key(keyType);
+						} catch (InvalidKeyInput e) {
+							e.log(keyType);
+							e.writeToFile(keyType);
+						}
+						if(key == null) return;
 						block.getLocation().getWorld().dropItemNaturally(block.getLocation(), key.getItem());
 						this.main.getServer().getPluginManager().callEvent(new OnBlockDropKey(block, key, chanceValue));
 					}

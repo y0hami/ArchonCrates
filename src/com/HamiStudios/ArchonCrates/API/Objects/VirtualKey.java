@@ -2,8 +2,11 @@ package com.HamiStudios.ArchonCrates.API.Objects;
 
 import java.util.ArrayList;
 
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidPrizeInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualKeyInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.FileType;
+import com.HamiStudios.ArchonCrates.Util.KeyFinder;
 
 public class VirtualKey {
 
@@ -17,20 +20,42 @@ public class VirtualKey {
 	private ArrayList<String> rawLoot;
 	private ArrayList<Prize> loot;
 	
-	public VirtualKey(String vKeyType) {
-		this.vKeyType = vKeyType;
-		this.displayName = FileHandler.getFile(FileType.VIRTUAL_KEYS).getString("Virtual Keys." + this.vKeyType + ".name");
-		this.itemId = FileHandler.getFile(FileType.VIRTUAL_KEYS).getInt("Virtual Keys." + this.vKeyType + ".itemID");
-		this.itemData = FileHandler.getFile(FileType.VIRTUAL_KEYS).getInt("Virtual Keys." + this.vKeyType + ".itemData");
-		this.glow = FileHandler.getFile(FileType.VIRTUAL_KEYS).getBoolean("Virtual Keys." + this.vKeyType + ".glow");
-		this.winMessage = FileHandler.getFile(FileType.VIRTUAL_KEYS).getString("Virtual Keys." + this.vKeyType + ".winMessage");
-		this.playerMessage = FileHandler.getFile(FileType.VIRTUAL_KEYS).getString("Virtual Keys." + this.vKeyType + ".playerMessage");
-		
-		this.rawLoot = new ArrayList<>();
+	public VirtualKey(String vKeyType) throws InvalidVirtualKeyInput {
+		try {
+			this.vKeyType = KeyFinder.getVKeyTypeToCase(vKeyType);
+			if(this.vKeyType == null) {
+				throw new InvalidVirtualKeyInput();
+			}
+			this.displayName = (String) FileHandler.getFile(FileType.VIRTUAL_KEYS).getString("Virtual Keys." + this.vKeyType + ".name");
+			String testId = FileHandler.getFile(FileType.VIRTUAL_KEYS).getString("Virtual Keys." + this.vKeyType + ".itemID");
+			try {
+				this.itemId = Integer.parseInt(testId);
+			} catch(NumberFormatException e) {
+				throw new InvalidVirtualKeyInput();
+			}
+			String testData = FileHandler.getFile(FileType.VIRTUAL_KEYS).getString("Virtual Keys." + this.vKeyType + ".itemData");
+			try {
+				this.itemData = Integer.parseInt(testData);
+			} catch(NumberFormatException e) {
+				throw new InvalidVirtualKeyInput();
+			}
+			this.glow = (boolean) FileHandler.getFile(FileType.VIRTUAL_KEYS).getBoolean("Virtual Keys." + this.vKeyType + ".glow");
+			this.winMessage = (String) FileHandler.getFile(FileType.VIRTUAL_KEYS).getString("Virtual Keys." + this.vKeyType + ".winMessage");
+			this.playerMessage = (String) FileHandler.getFile(FileType.VIRTUAL_KEYS).getString("Virtual Keys." + this.vKeyType + ".playerMessage");
+			this.rawLoot = new ArrayList<>();
+			for(String s : FileHandler.getFile(FileType.VIRTUAL_KEYS).getStringList("Virtual Keys." + this.vKeyType + ".loot")) rawLoot.add(s);
+		} catch(Exception e) {
+			throw new InvalidVirtualKeyInput();
+		}
 		this.loot = new ArrayList<>();
-		for(String s : FileHandler.getFile(FileType.VIRTUAL_KEYS).getStringList("Virtual Keys." + this.vKeyType + ".loot")) {
-			rawLoot.add(s);
-			this.loot.add(new Prize(s));
+		for(String s : this.rawLoot) {
+			try {
+				this.loot.add(new Prize(s));
+			} catch (InvalidPrizeInput e) {
+				e.log(s);
+				e.writeToFile(s);
+				continue;
+			}
 		}
 	}
 

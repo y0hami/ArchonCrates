@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 
 public class VoucherUtil {
@@ -51,7 +52,14 @@ public class VoucherUtil {
 			}
 			else{
 				while(amount != 0) {
-					player.getInventory().addItem(new Key(keyType).getItem());
+					try {
+						player.getInventory().addItem(new Key(keyType).getItem());
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (InvalidKeyInput e) {
+						e.log(keyType);
+						e.writeToFile(keyType);
+					}
 					amount--;
 				}
 				

@@ -5,17 +5,31 @@ import java.util.ArrayList;
 import org.bukkit.inventory.ItemStack;
 
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 
 public class KeyFinder {
 
 	public static String findKeyType(ItemStack item) {
 		ArrayList<ItemStack> keys = new ArrayList<>();
-		for(String s : FileHandler.getSection(FileType.KEYS, "Keys").getKeys(false)) keys.add(new Key(s).getItem());
+		for(String s : FileHandler.getSection(FileType.KEYS, "Keys").getKeys(false))
+			try {
+				keys.add(new Key(s).getItem());
+			} catch (InvalidKeyInput e) {
+				e.log(s);
+				e.writeToFile(s);
+			}
 		if(keys.contains(item)) {
 			String keyType = null;
 			for(String s : FileHandler.getSection(FileType.KEYS, "Keys").getKeys(false)) {
-				Key key = new Key(s);
+				Key key = null;
+				try {
+					key = new Key(s);
+				} catch (InvalidKeyInput e) {
+					e.log(s);
+					e.writeToFile(s);
+				}
+				if(key == null) continue;
 				if(item.equals(key.getItem())) {
 					keyType = key.getKeyType();
 					break;

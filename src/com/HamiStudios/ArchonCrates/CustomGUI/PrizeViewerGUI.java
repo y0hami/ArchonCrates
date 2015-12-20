@@ -13,6 +13,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
 import com.HamiStudios.ArchonCrates.API.Objects.Prize;
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualKey;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidKeyInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidPrizeInput;
+import com.HamiStudios.ArchonCrates.API.Objects.Exceptions.InvalidVirtualKeyInput;
 import com.HamiStudios.ArchonCrates.Files.FileHandler;
 import com.HamiStudios.ArchonCrates.Util.FileType;
 
@@ -46,11 +49,29 @@ public class PrizeViewerGUI {
 		
 		
 		ArrayList<Prize> prizes = new ArrayList<>();
-		for(String s : FileHandler.getFile(FileType.CRATE_LOOT).getConfigurationSection("Crate Loot").getKeys(false)) prizes.add(new Prize(s));
+		for(String s : FileHandler.getFile(FileType.CRATE_LOOT).getConfigurationSection("Crate Loot").getKeys(false))
+			try {
+				prizes.add(new Prize(s));
+			} catch (InvalidPrizeInput e) {
+				e.log(s);
+				e.writeToFile(s);
+			}
 		ArrayList<Key> keys = new ArrayList<>();
-		for(String s : FileHandler.getFile(FileType.KEYS).getConfigurationSection("Keys").getKeys(false)) keys.add(new Key(s));
+		for(String s : FileHandler.getFile(FileType.KEYS).getConfigurationSection("Keys").getKeys(false))
+			try {
+				keys.add(new Key(s));
+			} catch (InvalidKeyInput e) {
+				e.log(s);
+				e.writeToFile(s);
+			}
 		ArrayList<VirtualKey> vkeys = new ArrayList<>();
-		for(String s : FileHandler.getFile(FileType.VIRTUAL_KEYS).getConfigurationSection("Virtual Keys").getKeys(false)) vkeys.add(new VirtualKey(s));
+		for(String s : FileHandler.getFile(FileType.VIRTUAL_KEYS).getConfigurationSection("Virtual Keys").getKeys(false))
+			try {
+				vkeys.add(new VirtualKey(s));
+			} catch (InvalidVirtualKeyInput e) {
+				e.log(s);
+				e.writeToFile(s);
+			}
 		
 		for(Prize p : prizes) {
 			ItemStack prize = p.getItem();
