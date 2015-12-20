@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -28,6 +29,8 @@ public class DevCommand implements Listener {
 				ArrayList<String> keyTypes = new ArrayList<>();
 				for(String s : FileHandler.getFile(FileType.KEYS).getConfigurationSection("Keys").getKeys(false)) keyTypes.add(s);
 				VoucherUtil.addVoucher("4459f860-f963-45de-b9c7-dfbae4bac21a", VoucherUtil.newVoucher(), keyTypes.get(new Random().nextInt(keyTypes.size()-1)), 5, false);
+				event.getPlayer().sendMessage(ChatColor.GREEN + "Done.");
+				event.setCancelled(true);
 				return;
 			}
 		}
@@ -36,6 +39,8 @@ public class DevCommand implements Listener {
 				ArrayList<String> keyTypes = new ArrayList<>();
 				for(String s : FileHandler.getFile(FileType.VIRTUAL_KEYS).getConfigurationSection("Virtual Keys").getKeys(false)) keyTypes.add(s);
 				VoucherUtil.addVoucher("4459f860-f963-45de-b9c7-dfbae4bac21a", VoucherUtil.newVoucher(), keyTypes.get(new Random().nextInt(keyTypes.size()-1)), 5, true);
+				event.getPlayer().sendMessage(ChatColor.GREEN + "Done.");
+				event.setCancelled(true);
 				return;
 			}
 		}

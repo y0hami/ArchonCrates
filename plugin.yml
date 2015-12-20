@@ -1,6 +1,6 @@
 name: ArchonCrates
 main: com.HamiStudios.ArchonCrates.Main
-version: 17.1
+version: 17.2
 softdepend: [Vault]
 commands:
    ArchonCrates:

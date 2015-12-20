@@ -61,7 +61,7 @@ public class BlockClickEvent implements Listener {
 							return;
 						}
 					}
-					
+
 					// Normal
 					if(crateType != null) {
 						event.setCancelled(true);
@@ -71,14 +71,8 @@ public class BlockClickEvent implements Listener {
 								event.getPlayer().sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.CANT_OPEN_CRATE.toString(true));
 								return;
 							}
-							if(event.getItem() == null) {
-								event.setCancelled(true);
-								event.getPlayer().sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.CANT_OPEN_CRATE.toString(true));
-								return;
-							}
 							int amount = event.getPlayer().getItemInHand().getAmount();
-							ItemStack item = event.getItem();
-							item.setAmount(1);
+							ItemStack item = event.getPlayer().getItemInHand();
 							String keyType = KeyFinder.findKeyType(item);
 							if(keyType != null) {
 								Crate crateGUI = new Crate();

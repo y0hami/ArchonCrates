@@ -13,7 +13,9 @@ import com.HamiStudios.ArchonCrates.Files.FileHandler;
 public class VoucherUtil {
 
 	public static String newVoucher() {
-		return UUID.randomUUID().toString();
+		String voucher = UUID.randomUUID().toString();
+		while(voucherExists(voucher)) voucher = UUID.randomUUID().toString();
+		return voucher;
 	}
 	
 	public static boolean voucherExists(String voucher) {
