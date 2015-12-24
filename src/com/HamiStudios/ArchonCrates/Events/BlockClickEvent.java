@@ -73,8 +73,10 @@ public class BlockClickEvent implements Listener {
 							}
 							int amount = event.getPlayer().getItemInHand().getAmount();
 							ItemStack item = event.getPlayer().getItemInHand();
+							item.setAmount(1);
 							String keyType = KeyFinder.findKeyType(item);
 							if(keyType != null) {
+								event.getPlayer().getItemInHand().setAmount(amount);
 								Crate crateGUI = new Crate();
 								com.HamiStudios.ArchonCrates.API.Objects.Crate crate = null;
 								try {
@@ -105,6 +107,7 @@ public class BlockClickEvent implements Listener {
 								crateGUI.open(player, crateType, keyType, false, event.getClickedBlock().getLocation());
 							}
 							else{
+								event.getPlayer().getItemInHand().setAmount(amount);
 								event.setCancelled(true);
 								event.getPlayer().sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.CANT_OPEN_CRATE.toString(true));
 								return;

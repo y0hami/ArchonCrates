@@ -58,6 +58,10 @@ public class Crate {
 	// Task IDs
 	private int randomGlassTask;
 	private int randomPrizeTask;
+	private int randomPrizeTask2;
+	private int randomPrizeTask3;
+	private int randomPrizeTask4;
+	private int randomPrizeTask5;
 	private int effectTask;
 	@SuppressWarnings("unused")
 	private int crateDurationTask;
@@ -176,33 +180,141 @@ public class Crate {
 			}
 		}
 		
-		randomPrizeTask = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
-			@Override
-			public void run() {
-				Random random = new Random();
-				if(lastRandom == -1) {
-					lastRandom = random.nextInt(prizeList.size());
-					crateGUI.setItem(13, prizeList.get(lastRandom).getItem());
+		if(crate.getPrizeDisplayDuration() == -1) {
+			randomPrizeTask = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
+				@Override
+				public void run() {
+					Random random = new Random();
+					if(lastRandom == -1) {
+						lastRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(lastRandom).getItem());
+					}
+					else { 
+						int newRandom = lastRandom;
+						while(lastRandom == newRandom) newRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(newRandom).getItem());
+						lastRandom = newRandom;
+					}
+					player.playSound(player.getLocation(), Sound.valueOf(crate.getScrollSound()), 1, 1);
 				}
-				else { 
-					int newRandom = lastRandom;
-					while(lastRandom == newRandom) newRandom = random.nextInt(prizeList.size());
-					crateGUI.setItem(13, prizeList.get(newRandom).getItem());
-					lastRandom = newRandom;
+			}, 0, 10L);
+			
+			randomPrizeTask2 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
+				@Override
+				public void run() {
+					Bukkit.getServer().getScheduler().cancelTask(randomPrizeTask);
+					Random random = new Random();
+					if(lastRandom == -1) {
+						lastRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(lastRandom).getItem());
+					}
+					else { 
+						int newRandom = lastRandom;
+						while(lastRandom == newRandom) newRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(newRandom).getItem());
+						lastRandom = newRandom;
+					}
+					player.playSound(player.getLocation(), Sound.valueOf(crate.getScrollSound()), 1, 1);
 				}
-				player.playSound(player.getLocation(), Sound.valueOf(crate.getScrollSound()), 1, 1);
-			}
-		}, 0, crate.getPrizeDisplayDuration());
+			}, 2*20L, 8L);
+			
+			randomPrizeTask3 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
+				@Override
+				public void run() {
+					Bukkit.getServer().getScheduler().cancelTask(randomPrizeTask2);
+					Random random = new Random();
+					if(lastRandom == -1) {
+						lastRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(lastRandom).getItem());
+					}
+					else { 
+						int newRandom = lastRandom;
+						while(lastRandom == newRandom) newRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(newRandom).getItem());
+						lastRandom = newRandom;
+					}
+					player.playSound(player.getLocation(), Sound.valueOf(crate.getScrollSound()), 1, 1);
+				}
+			}, 3*20L, 6L);
+			
+			randomPrizeTask4 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
+				@Override
+				public void run() {
+					Bukkit.getServer().getScheduler().cancelTask(randomPrizeTask3);
+					Random random = new Random();
+					if(lastRandom == -1) {
+						lastRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(lastRandom).getItem());
+					}
+					else { 
+						int newRandom = lastRandom;
+						while(lastRandom == newRandom) newRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(newRandom).getItem());
+						lastRandom = newRandom;
+					}
+					player.playSound(player.getLocation(), Sound.valueOf(crate.getScrollSound()), 1, 1);
+				}
+			}, 4*20L, 4L);
+			
+			randomPrizeTask5 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
+				@Override
+				public void run() {
+					Bukkit.getServer().getScheduler().cancelTask(randomPrizeTask4);
+					Random random = new Random();
+					if(lastRandom == -1) {
+						lastRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(lastRandom).getItem());
+					}
+					else { 
+						int newRandom = lastRandom;
+						while(lastRandom == newRandom) newRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(newRandom).getItem());
+						lastRandom = newRandom;
+					}
+					player.playSound(player.getLocation(), Sound.valueOf(crate.getScrollSound()), 1, 1);
+				}
+			}, 5*20L, 2L);
+			
+			crateDurationTask = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+				@Override
+				public void run() {
+					Bukkit.getServer().getScheduler().cancelTask(randomGlassTask);
+					Bukkit.getServer().getScheduler().cancelTask(randomPrizeTask5);
+					Bukkit.getServer().getScheduler().cancelTask(effectTask);
+					runWinTask();
+				}
+			}, 8*20L);
+		}
 		
-		crateDurationTask = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
-			@Override
-			public void run() {
-				Bukkit.getServer().getScheduler().cancelTask(randomGlassTask);
-				Bukkit.getServer().getScheduler().cancelTask(randomPrizeTask);
-				Bukkit.getServer().getScheduler().cancelTask(effectTask);
-				runWinTask();
-			}
-		}, crate.getOpenDuration()*20L);
+		else{
+			randomPrizeTask = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
+				@Override
+				public void run() {
+					Random random = new Random();
+					if(lastRandom == -1) {
+						lastRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(lastRandom).getItem());
+					}
+					else { 
+						int newRandom = lastRandom;
+						while(lastRandom == newRandom) newRandom = random.nextInt(prizeList.size());
+						crateGUI.setItem(13, prizeList.get(newRandom).getItem());
+						lastRandom = newRandom;
+					}
+					player.playSound(player.getLocation(), Sound.valueOf(crate.getScrollSound()), 1, 1);
+				}
+			}, 0, crate.getPrizeDisplayDuration());
+			
+			crateDurationTask = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+				@Override
+				public void run() {
+					Bukkit.getServer().getScheduler().cancelTask(randomGlassTask);
+					Bukkit.getServer().getScheduler().cancelTask(randomPrizeTask);
+					Bukkit.getServer().getScheduler().cancelTask(effectTask);
+					runWinTask();
+				}
+			}, crate.getOpenDuration()*20L);
+		}
 		
 		player.openInventory(crateGUI);
 	}
