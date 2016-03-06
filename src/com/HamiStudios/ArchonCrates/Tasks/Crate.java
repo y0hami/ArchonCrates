@@ -111,7 +111,6 @@ public class Crate {
 			}
 		}
 		
-		
 		// ADD PLAYER TO DATA
 		Data dataFile = new Data();
 		dataFile.set("data.inCrate." + player.getUniqueId(), true);

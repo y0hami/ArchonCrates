@@ -27,7 +27,7 @@ public class GiveVirtualKey {
 		sender.sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.COMMAND_VKEY_GIVEN.toString(true).replaceAll("<amount>", amount+"").replaceAll("<player>", playername));
 	}
 	
-	@SuppressWarnings({ "static-access", "deprecation" })
+	@SuppressWarnings("static-access")
 	public static void runForAll(CommandSender sender, String vKeyType, int amount) {
 		PlayerData playerData = new PlayerData();
 		for(Player p : Bukkit.getOnlinePlayers()) {

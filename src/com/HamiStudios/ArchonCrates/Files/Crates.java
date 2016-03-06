@@ -56,12 +56,12 @@ public class Crates implements FileInterface {
 	
 	@Override
 	public void create() {
-		fileconfig.set("Crates.default.title", "&a                Default Crate");
+		fileconfig.set("Crates.default.title", "&a            Default Crate");
 		fileconfig.set("Crates.default.blockID", 54);
 		fileconfig.set("Crates.default.blockData", 0);
-		fileconfig.set("Crates.default.openSound", "CHEST_OPEN");
-		fileconfig.set("Crates.default.winSound", "LEVEL_UP");
-		fileconfig.set("Crates.default.scrollSound", "NOTE_BASS");
+		fileconfig.set("Crates.default.openSound", "BLOCK_CHEST_OPEN");
+		fileconfig.set("Crates.default.winSound", "ENTITY_PLAYER_LEVELUP");
+		fileconfig.set("Crates.default.scrollSound", "BLOCK_NOTE_BASS");
 		fileconfig.set("Crates.default.effects", true);
 		fileconfig.set("Crates.default.firework", true);
 		fileconfig.set("Crates.default.openDuration", 8);
@@ -72,12 +72,12 @@ public class Crates implements FileInterface {
 		fileconfig.set("Crates.default.useableKeys", useableKeys);
 		fileconfig.set("Crates.default.wrongKeyMessage", "&cYou can't use that key for this crate!");
 		
-		fileconfig.set("Crates.golden.title", "&6                Golden Crate");
+		fileconfig.set("Crates.golden.title", "&6            Golden Crate");
 		fileconfig.set("Crates.golden.blockID", 130);
 		fileconfig.set("Crates.golden.blockData", 0);
-		fileconfig.set("Crates.golden.openSound", "CHEST_OPEN");
-		fileconfig.set("Crates.golden.winSound", "LEVEL_UP");
-		fileconfig.set("Crates.golden.scrollSound", "NOTE_BASS");
+		fileconfig.set("Crates.golden.openSound", "BLOCK_CHEST_OPEN");
+		fileconfig.set("Crates.golden.winSound", "ENTITY_PLAYER_LEVELUP");
+		fileconfig.set("Crates.golden.scrollSound", "BLOCK_NOTE_BASS");
 		fileconfig.set("Crates.golden.effects", true);
 		fileconfig.set("Crates.golden.firework", true);
 		fileconfig.set("Crates.golden.openDuration", 8);
@@ -107,8 +107,8 @@ public class Crates implements FileInterface {
 				+ "     blockID: 54                            - The ID of the block you want the crate to be eg: 54 would be a chest block                 #\n"
 				+ "     blockData: 0                           - The data value of the block you want the crate to be eg: 5:2 would be birch planks         #\n"
 				+ "     openSound: CHEST_OPEN                  - The sound played to the player when they open a crate                                      #\n"
-				+ "     winSound: LEVEL_UP                     - The sound played to the player when they win a prize                                       #\n"
-				+ "     scrollSound: NOTE_BASS                 - The sound played as the prizes are scrolling in the crate GUI                              #\n"
+				+ "     winSound: ENTITY_PLAYER_LEVELUP        - The sound played to the player when they win a prize                                       #\n"
+				+ "     scrollSound: BLOCK_NOTE_BASS           - The sound played as the prizes are scrolling in the crate GUI                              #\n"
 				+ "     effects: true                          - If true it will play the effect defined (below) when a player is using a crate             #\n"
 				+ "     firework: true                         - If true it will lurch a firework when a player wins                                        #\n"
 				+ "     openDuration: 8                        - The duration of how long the crate GUI is open for until the player wins (seconds)         #\n"

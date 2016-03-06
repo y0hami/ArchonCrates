@@ -32,7 +32,6 @@ public class GiveKey {
 		sender.sendMessage(LanguageType.PREFIX.toString(true) + LanguageType.COMMAND_KEY_GIVEN.toString(true).replaceAll("<amount>", amount+"").replaceAll("<player>", player.getName()));
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static void runForAll(CommandSender sender, String keyType, int amount) {
 		Key key = null;
 		try {

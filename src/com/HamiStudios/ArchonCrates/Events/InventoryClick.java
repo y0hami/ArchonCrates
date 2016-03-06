@@ -80,7 +80,7 @@ public class InventoryClick implements Listener {
 					}
 					else{
 						event.setCancelled(true);
-						player.playSound(player.getLocation(), Sound.NOTE_BASS, 1, 1);
+						player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
 						return;
 					}
 				}

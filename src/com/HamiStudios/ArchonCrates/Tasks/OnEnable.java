@@ -51,7 +51,7 @@ import com.HamiStudios.ArchonCrates.Util.UpdateChecker;
 
 public class OnEnable {
 
-	@SuppressWarnings({ "unused", "deprecation" })
+	@SuppressWarnings("unused")
 	public OnEnable(Main main) {
 		
 		MainGetter maingetter = new MainGetter(main);
@@ -220,7 +220,7 @@ public class OnEnable {
 			console.sendMessage(" ");
 		}
 		
-		if(Bukkit.getServer().getOnlinePlayers().length > 0) {
+		if(Bukkit.getServer().getOnlinePlayers().size() > 0) {
 			console.sendMessage(ChatColor.translateAlternateColorCodes('&', "  &ePlayer Data Handler:"));
 			console.sendMessage(" ");
 			console.sendMessage(ChatColor.translateAlternateColorCodes('&', "     &eThere are players currently online!"));

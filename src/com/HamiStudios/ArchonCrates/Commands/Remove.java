@@ -1,5 +1,7 @@
 package com.HamiStudios.ArchonCrates.Commands;
 
+import java.util.HashSet;
+
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,7 +14,8 @@ public class Remove {
 
 	@SuppressWarnings("deprecation")
 	public static void run(Player player) {
-		Block block = player.getTargetBlock(null, 5);
+		
+		Block block = (Block) player.getLineOfSight((HashSet<Byte>)null, 5);
 		Location loc = block.getLocation();
 		String crateid = CrateFinder.findCrateLocationId(block.getTypeId(), loc.getX(), loc.getY(), block.getZ(), block.getWorld());
 		if(crateid != null) {

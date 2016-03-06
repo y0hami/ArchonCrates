@@ -55,12 +55,12 @@ public class VirtualCrates implements FileInterface {
 	
 	@Override
 	public void create() {
-		fileconfig.set("Virtual Crates.title", "&a               Mystery Crate");
+		fileconfig.set("Virtual Crates.title", "&a           Mystery Crate");
 		fileconfig.set("Virtual Crates.blockID", 54);
 		fileconfig.set("Virtual Crates.blockData", 0);
-		fileconfig.set("Virtual Crates.openSound", "CHEST_OPEN");
-		fileconfig.set("Virtual Crates.winSound", "LEVEL_UP");
-		fileconfig.set("Virtual Crates.scrollSound", "NOTE_BASS");
+		fileconfig.set("Virtual Crates.openSound", "BLOCK_CHEST_OPEN");
+		fileconfig.set("Virtual Crates.winSound", "ENTITY_PLAYER_LEVELUP");
+		fileconfig.set("Virtual Crates.scrollSound", "BLOCK_NOTE_BASS");
 		fileconfig.set("Virtual Crates.firework", true);
 		fileconfig.set("Virtual Crates.openDuration", 8);
 		fileconfig.set("Virtual Crates.prizeDisplayDuration", 10);

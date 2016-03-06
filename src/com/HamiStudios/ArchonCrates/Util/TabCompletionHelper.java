@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 
 public class TabCompletionHelper {
 
-	@SuppressWarnings("deprecation")
 	public static List<String> getPossibleCompletionsForGivenArgs(String[] args, String[] strings, boolean addPlayers) {
 		
 		String arg = args[args.length-1];
@@ -32,7 +31,6 @@ public class TabCompletionHelper {
 		return possableComplete;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static List<String> getPossibleCompletionsForGivenArgs(String[] args, ArrayList<String> strings, boolean addPlayers) {
 		
 		String arg = args[args.length-1];
@@ -56,7 +54,6 @@ public class TabCompletionHelper {
 		return possableComplete;
 	}
 	 
-	@SuppressWarnings("deprecation")
 	public static ArrayList<String> getOnlinePlayerNames(String[] args) {
 		ArrayList<String> onlinePlayerNames = new ArrayList<>();
 		for(Player p : Bukkit.getOnlinePlayers()) {
