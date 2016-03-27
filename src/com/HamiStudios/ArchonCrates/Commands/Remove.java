@@ -15,7 +15,7 @@ public class Remove {
 	@SuppressWarnings("deprecation")
 	public static void run(Player player) {
 		
-		Block block = (Block) player.getLineOfSight((HashSet<Byte>)null, 5);
+		Block block = (Block) player.getTargetBlock((HashSet<Byte>) null, 100);
 		Location loc = block.getLocation();
 		String crateid = CrateFinder.findCrateLocationId(block.getTypeId(), loc.getX(), loc.getY(), block.getZ(), block.getWorld());
 		if(crateid != null) {
