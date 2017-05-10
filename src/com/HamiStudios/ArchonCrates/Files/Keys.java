@@ -1,0 +1,132 @@
+package com.HamiStudios.ArchonCrates.Files;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
+import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
+
+public class Keys implements FileInterface {
+
+	// Instances of File and FileConfiguration
+		private File file;
+		private FileConfiguration fileconfig;
+		private String filePath = "plugins/ArchonCrates/keys.yml";
+		
+		
+		// Crates file constructor
+		public Keys() {
+			// Creates the instances of the File and FileConfiguration
+			this.file = new File(this.filePath);
+			this.fileconfig = YamlConfiguration.loadConfiguration(file);
+		}
+		
+		// Get the File instance
+		@Override
+		public File getFile() {
+			return this.file;
+		}
+		
+		// Get the FileConfiguration instance
+		@Override
+		public FileConfiguration getFileConfiguration() {
+			return this.fileconfig;
+		}
+
+		@Override
+		public boolean save() {
+			try {
+				this.fileconfig.save(this.file);
+				return true;
+			} catch(IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		public boolean reload() {
+			try {
+				this.file = new File(this.filePath);
+				this.fileconfig = YamlConfiguration.loadConfiguration(this.file);
+				return true;
+			} catch(Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		public boolean set(String path, Object value) {
+			try {
+				this.fileconfig.set(path, value);
+				this.save();
+				return true;
+			} catch(Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		public Object get(String path) {
+			return this.fileconfig.get(path);
+		}
+
+		@Override
+		public boolean exists() {
+			if(new File(this.filePath).exists()) return true;
+			return false;
+		}
+
+		@Override
+		public boolean create() {
+			try {
+				// Default Key
+				this.set("Keys.default.name", "&aDefault Key");
+				
+				ArrayList<String> lore = new ItemLore()
+					.translateColours(false)
+					.add("&7Right click a crate")
+					.add("&7to use this key")
+					.build();
+				
+				this.set("Keys.default.lore", lore);
+				this.set("Keys.default.item.ID", 131);
+				this.set("Keys.default.item.data", 0);
+				this.set("Keys.default.glow", true);
+				
+				
+				// Golden Key
+				this.set("Keys.golden.name", "&aDefault Key");
+				
+				lore = new ItemLore()
+					.translateColours(false)
+					.add("&7Right click a crate")
+					.add("&7to use this key")
+					.build();
+				
+				this.set("Keys.golden.lore", lore);
+				this.set("Keys.golden.item.ID", 131);
+				this.set("Keys.golden.item.data", 0);
+				this.set("Keys.golden.glow", true);
+				
+				this.save();
+
+				return true;
+			} catch(Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		public boolean setHeader() {
+			return true;
+		}
+	
+}
