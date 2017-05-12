@@ -12,6 +12,7 @@ import com.HamiStudios.ArchonCrates.Files.Prizes;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Main extends JavaPlugin {
@@ -102,7 +103,16 @@ public class Main extends JavaPlugin {
 			console.notice("&fAll file checks where performed with no errors.");
 		}
 		console.space();
-		
+
+
+		// Check if "data" directory exists
+		File dataFolder = new File("plugins/ArchonCrates/data");
+		if(!dataFolder.exists()) {
+			// If it doesn't create it
+			dataFolder.mkdirs();
+		}
+
+
 		// Register the commands
 		this.getCommand("archoncrates").setExecutor(new Commands());
 		this.getCommand("archoncrates").setTabCompleter(new TabCompleter());
@@ -113,6 +123,7 @@ public class Main extends JavaPlugin {
 		
 		// Register Events
 
+		// Events
 	}
 
 	@Override

@@ -2,9 +2,11 @@
   <artifact type="jar" name="ArchonCrates">
     <output-path>$PROJECT_DIR$/../../Projects/ArchonCrates/TestServer/server/plugins</output-path>
     <root id="archive" name="ArchonCrates.jar">
-      <element id="library" level="module" name="spigot.jar" module-name="ArchonCrates" />
       <element id="module-output" name="ArchonCrates" />
       <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+      <element id="library" level="project" name="spigot" />
+      <element id="library" level="project" name="gson-2.6.2" />
+      <element id="library" level="project" name="sqlite-jdbc-3.16.1" />
     </root>
   </artifact>
 </component>
