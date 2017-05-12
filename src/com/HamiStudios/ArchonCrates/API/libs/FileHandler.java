@@ -1,11 +1,10 @@
 package com.HamiStudios.ArchonCrates.API.libs;
 
-import java.io.File;
-
+import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.HamiStudios.ArchonCrates.API.Enums.Files;
+import java.io.File;
 
 public class FileHandler {
 
@@ -26,7 +25,7 @@ public class FileHandler {
 
 	// Get FileConfiguration instance
 	public FileConfiguration getFileConfiguration() {
-		return YamlConfiguration.loadConfiguration(new File(this.file.getFilePath()));
+		return YamlConfiguration.loadConfiguration(new File(this.file.getFilePath() + this.file.getFileName()));
 	}
 	
 }

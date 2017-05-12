@@ -15,5 +15,9 @@ public class LanguageManager {
 	public static String getPrefix() {
 		return ChatColor.translateAlternateColorCodes('&', "&7[&5ArchonCrates&7] ");
 	}
-	
+
+	public static String getHelpPrefix() { return ChatColor.translateAlternateColorCodes('&', "&7====[ &5ArchonCrates Help &7]===="); }
+
+	public static String getHelpURL() { return "https://archoncrates.net/docs/"; }
+
 }

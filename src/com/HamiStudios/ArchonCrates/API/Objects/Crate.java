@@ -1,15 +1,14 @@
 package com.HamiStudios.ArchonCrates.API.Objects;
 
-import java.util.ArrayList;
-
-import org.bukkit.Sound;
-
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.Exceptions.InvalidSoundValue;
 import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
 import com.HamiStudios.ArchonCrates.API.libs.Find;
 import com.HamiStudios.ArchonCrates.API.libs.GetSound;
 import com.HamiStudios.ArchonCrates.Files.Crates;
+import org.bukkit.Sound;
+
+import java.util.ArrayList;
 
 public class Crate {
 
@@ -27,7 +26,7 @@ public class Crate {
 	private boolean sendPlayerMessage;
 	private int scrollDuration;
 	private int showcaseDuration;
-	private int displayColouredGlass;
+	private boolean displayColouredGlass;
 	private ArrayList<Prize> prizes;
 	
 	private Crates crateFile;
@@ -49,14 +48,14 @@ public class Crate {
 			this.scrollSound = GetSound.get((String) this.crateFile.get("Crates." + ID + ".sounds.scroll"), ID, Files.CRATES);
 			this.winSound = GetSound.get((String) this.crateFile.get("Crates." + ID + ".sounds.win"), ID, Files.CRATES);
 			this.displayPlayerEffects = (boolean) this.crateFile.get("Crates." + ID + ".win.playerEffects");
-			this.displayFireworks = (boolean) this.crateFile.get("Crates." + ID + ".win.fireworks");
+			this.displayFireworks = (boolean) this.crateFile.get("Crates." + ID + ".win.firework");
 			this.broadcastWin = (boolean) this.crateFile.get("Crates." + ID + ".win.broadcast");
 			this.sendPlayerMessage = (boolean) this.crateFile.get("Crates." + ID + ".win.messagePlayer");
 			this.scrollDuration = (int) this.crateFile.get("Crates." + ID + ".config.scrollDuration");
 			this.showcaseDuration = (int) this.crateFile.get("Crates." + ID + ".config.showcaseDuration");
-			this.displayColouredGlass = (int) this.crateFile.get("Crates." + ID + ".config.colouredGlass");
+			this.displayColouredGlass = (boolean) this.crateFile.get("Crates." + ID + ".config.colouredGlass");
 			
-			this.prizes = new ArrayList<Prize>();
+			this.prizes = new ArrayList<>();
 			
 			/*
 			 * Get the list of prize IDs and go through each and create a Prize object, if it is valid add

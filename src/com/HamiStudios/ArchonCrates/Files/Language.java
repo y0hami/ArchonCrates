@@ -1,12 +1,11 @@
 package com.HamiStudios.ArchonCrates.Files;
 
-import java.io.File;
-import java.io.IOException;
-
+import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
+import java.io.File;
+import java.io.IOException;
 
 public class Language implements FileInterface {
 
@@ -84,10 +83,10 @@ public class Language implements FileInterface {
 		@Override
 		public boolean create() {
 			try {
-				// Default Key
+				// Set all default language values
 				this.set("Language.Prefix", "&7[&5ArchonCrates&7] ");
 				this.set("Language.NoPermission", "&cYou don't have permission to do that command.");
-				this.set("Language.InvalidCommand", "&cThe command you entered is invalid, try \n&f/archoncrates help &cto view a list of all commands.");
+				this.set("Language.InvalidCommand", "&cThe command you entered is invalid, try archoncrates help &cto view a list of all commands.");
 				
 				this.set("Language.Commands.Create.InvalidType", "&cThe crate type you entered is invalid, try looking at the create command help page.");
 				

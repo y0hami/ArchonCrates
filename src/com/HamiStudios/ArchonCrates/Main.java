@@ -1,18 +1,18 @@
 package com.HamiStudios.ArchonCrates;
 
-import java.util.ArrayList;
-
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.libs.Console;
-import com.HamiStudios.ArchonCrates.API.libs.Find;
 import com.HamiStudios.ArchonCrates.API.libs.Glow;
 import com.HamiStudios.ArchonCrates.Commands.Commands;
+import com.HamiStudios.ArchonCrates.Commands.TabCompleter;
 import com.HamiStudios.ArchonCrates.Files.Crates;
 import com.HamiStudios.ArchonCrates.Files.Keys;
 import com.HamiStudios.ArchonCrates.Files.Language;
 import com.HamiStudios.ArchonCrates.Files.Prizes;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
 
 public class Main extends JavaPlugin {
 
@@ -23,6 +23,9 @@ public class Main extends JavaPlugin {
 		
 		// Announce the plugin is starting in the server console
 		console.notice("&fStarting...");
+
+		console.notice("&fArchonCrates Version: " + Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion());
+
 		console.space();
 		
 		// Start checking if files exist
@@ -73,20 +76,20 @@ public class Main extends JavaPlugin {
 				
 				// Find out what file is missing then execute the create method
 				switch (file.getName()) {
-				case "Crates":
-					cratesFile.create();
-					break;
-				case "Keys":
-					keysFile.create();
-					break;
-				case "Prizes":
-					prizesFile.create();
-					break;
-				case "Language":
-					languageFile.create();
-					break;
-				default:
-					break;
+					case "Crates":
+						cratesFile.create();
+						break;
+					case "Keys":
+						keysFile.create();
+						break;
+					case "Prizes":
+						prizesFile.create();
+						break;
+					case "Language":
+						languageFile.create();
+						break;
+					default:
+						break;
 				}
 				
 				// Announce that the file has been created
@@ -102,13 +105,14 @@ public class Main extends JavaPlugin {
 		
 		// Register the commands
 		this.getCommand("archoncrates").setExecutor(new Commands());
+		this.getCommand("archoncrates").setTabCompleter(new TabCompleter());
 		
 		// Register Glow object
 		Glow glow = new Glow(99);
 		glow.registerGlow();
 		
 		// Register Events
-		Find.prize("afsueohgb");
+
 	}
 
 	@Override

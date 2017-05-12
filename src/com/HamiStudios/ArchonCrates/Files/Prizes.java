@@ -1,15 +1,14 @@
 package com.HamiStudios.ArchonCrates.Files;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
 import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Prizes implements FileInterface {
 	
@@ -244,7 +243,7 @@ public class Prizes implements FileInterface {
 			commands = new ArrayList<>();
 			commands.add("minecraft:give <player> skull 1 3 {SkullOwner:\"Hamiii\",Unbreakable:1}");
 			
-			this.set("Prizes.CrateKey.commands", commands);
+			this.set("Prizes.DevHead.commands", commands);
 			
 			
 			// Nether Star Prize
