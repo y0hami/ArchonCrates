@@ -1,16 +1,15 @@
 package com.HamiStudios.ArchonCrates.Files;
 
+import com.HamiStudios.ArchonCrates.API.Enums.Files;
+import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
+import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-
-import com.HamiStudios.ArchonCrates.API.Enums.Files;
-import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
-import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
 
 public class Crates implements FileInterface {
 	
@@ -183,7 +182,5 @@ public class Crates implements FileInterface {
 	public boolean setHeader() {
 		return true;
 	}
-
-	
 
 }

@@ -1,7 +1,7 @@
 package com.HamiStudios.ArchonCrates.Commands;
 
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
-import com.HamiStudios.ArchonCrates.API.libs.ACSender;
+import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
 import com.HamiStudios.ArchonCrates.API.libs.LanguageManager;
 
 public class HelpCommand implements Command {

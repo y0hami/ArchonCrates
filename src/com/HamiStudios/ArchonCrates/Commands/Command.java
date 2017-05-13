@@ -1,6 +1,6 @@
 package com.HamiStudios.ArchonCrates.Commands;
 
-import com.HamiStudios.ArchonCrates.API.libs.ACSender;
+import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
 
 public interface Command {
 

@@ -8,8 +8,8 @@ public enum Files {
 	KEYS ("Keys", "keys.yml", "plugins/ArchonCrates/"),
 	PRIZES ("Prizes", "prizes.yml", "plugins/ArchonCrates/"),
 	LANGUAGE ("Language", "language.yml", "plugins/ArchonCrates/"),
-	CRATE_DATA ("Crate Data", "crate.json", "plugins/ArchonCrates/data/");
-	
+	CRATE_DATA ("CrateData", "crates.json", "plugins/ArchonCrates/data/");
+
 	// Variables for file values
 	private String name;
 	private String fileName;

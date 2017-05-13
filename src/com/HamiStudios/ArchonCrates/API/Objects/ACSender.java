@@ -1,4 +1,4 @@
-package com.HamiStudios.ArchonCrates.API.libs;
+package com.HamiStudios.ArchonCrates.API.Objects;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

@@ -5,10 +5,8 @@ import com.HamiStudios.ArchonCrates.API.libs.Console;
 import com.HamiStudios.ArchonCrates.API.libs.Glow;
 import com.HamiStudios.ArchonCrates.Commands.Commands;
 import com.HamiStudios.ArchonCrates.Commands.TabCompleter;
-import com.HamiStudios.ArchonCrates.Files.Crates;
-import com.HamiStudios.ArchonCrates.Files.Keys;
-import com.HamiStudios.ArchonCrates.Files.Language;
-import com.HamiStudios.ArchonCrates.Files.Prizes;
+import com.HamiStudios.ArchonCrates.Events.PlayerJoin;
+import com.HamiStudios.ArchonCrates.Files.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,22 +19,59 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		// Create instance of the server console
 		Console console = new Console(this);
-		
+
+		console.space();
+		console.space();
+
 		// Announce the plugin is starting in the server console
 		console.notice("&fStarting...");
 
 		console.notice("&fArchonCrates Version: " + Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion());
 
+
 		console.space();
-		
+		console.space();
+
+
+		// Check if "data" directory structure exists
+		console.notice("&fChecking if data directory structure exists...");
+		console.space();
+
+		File dataFolder = new File("plugins/ArchonCrates/data");
+		if(!dataFolder.exists()) {
+			console.warning("&fData directory is missing, creating it...");
+			// If it doesn't create it
+			dataFolder.mkdirs();
+			console.notice("&fSuccessfully created 'data' directory.");
+		} else {
+			console.notice("&fData directory exists.");
+		}
+
+		console.space();
+
+		File playerDataFolder = new File("plugins/ArchonCrates/data/players");
+		if(!playerDataFolder.exists()) {
+			console.warning("&fPlayer Data directory is missing, creating it...");
+			// If it doesn't create it
+			playerDataFolder.mkdirs();
+			console.notice("&fSuccessfully created 'data/players' directory.");
+		} else {
+			console.notice("&fPlayer Data directory exists.");
+		}
+
+
+		console.space();
+		console.space();
+
+
 		// Start checking if files exist
-		console.notice("&fChecking files...");
+		console.notice("&fChecking configuration files...");
 		
 		// List of missing files
 		ArrayList<Files> missingFiles = new ArrayList<>();
 		
 		// Total files
-		int totalFiles = 4;
+		int totalFiles = 6;
 		
 		// Check if crates.yml exists
 		Crates cratesFile = new Crates();
@@ -61,7 +96,13 @@ public class Main extends JavaPlugin {
 		if(!languageFile.exists()) {
 			missingFiles.add(Files.LANGUAGE);
 		}
-		
+
+		// Check if data/crates.json exists
+		CrateData crateData = new CrateData();
+		if(!crateData.exists()) {
+			missingFiles.add(Files.CRATE_DATA);
+		}
+
 		/* If any files are missing announce how many are missing out of the total of files
 		 * and then announce the creation of the new files
 		 */
@@ -89,6 +130,9 @@ public class Main extends JavaPlugin {
 					case "Language":
 						languageFile.create();
 						break;
+					case "CrateData":
+						crateData.create();
+						break;
 					default:
 						break;
 				}
@@ -103,27 +147,36 @@ public class Main extends JavaPlugin {
 			console.notice("&fAll file checks where performed with no errors.");
 		}
 		console.space();
+		console.space();
 
-
-		// Check if "data" directory exists
-		File dataFolder = new File("plugins/ArchonCrates/data");
-		if(!dataFolder.exists()) {
-			// If it doesn't create it
-			dataFolder.mkdirs();
-		}
-
+		console.notice("&fRegistering Commands...");
 
 		// Register the commands
 		this.getCommand("archoncrates").setExecutor(new Commands());
 		this.getCommand("archoncrates").setTabCompleter(new TabCompleter());
-		
+
+		console.notice("&fCommands registered.");
+
+
+		console.space();
+		console.space();
+
+
 		// Register Glow object
 		Glow glow = new Glow(99);
 		glow.registerGlow();
 		
 		// Register Events
 
+		console.notice("&fRegistering events...");
+
 		// Events
+		new PlayerJoin(this);
+
+		console.notice("&fEvents registered.");
+
+		console.space();
+		console.space();
 	}
 
 	@Override
