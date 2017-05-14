@@ -9,7 +9,7 @@ public enum Files {
 	KEYS ("Keys", "keys.yml", "plugins/ArchonCrates/"),
 	PRIZES ("Prizes", "prizes.yml", "plugins/ArchonCrates/"),
 	LANGUAGE ("Language", "language.yml", "plugins/ArchonCrates/"),
-	CRATE_DATA ("CrateData", "crates.yml", "plugins/ArchonCrates/data/");
+	CRATE_DATA ("CrateData", "crates data.yml", "plugins/ArchonCrates/data/");
 
 	// Variables for file values
 	private String name;

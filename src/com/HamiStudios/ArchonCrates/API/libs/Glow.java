@@ -1,10 +1,10 @@
 package com.HamiStudios.ArchonCrates.API.libs;
 
-import java.lang.reflect.Field;
-
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
+
+import java.lang.reflect.Field;
 
 public class Glow extends Enchantment {
 
@@ -52,7 +52,7 @@ public class Glow extends Enchantment {
             e.printStackTrace();
         }
         try {
-            Glow glow = new Glow(70);
+            Glow glow = new Glow(99);
             Enchantment.registerEnchantment(glow);
         }
         catch (IllegalArgumentException e){

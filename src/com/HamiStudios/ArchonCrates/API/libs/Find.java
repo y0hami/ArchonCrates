@@ -13,7 +13,7 @@ public class Find {
 	
 	// Find a key via the ID given
 	public static Key key(String ID) {
-		return new Key();
+		return new Key(ID);
 	}
 	
 	// Find a prize via the ID given

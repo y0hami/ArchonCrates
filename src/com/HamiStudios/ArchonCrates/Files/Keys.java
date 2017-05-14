@@ -1,5 +1,7 @@
 package com.HamiStudios.ArchonCrates.Files;
 
+import com.HamiStudios.ArchonCrates.API.Enums.Files;
+import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
 import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
 import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -72,8 +74,12 @@ public class Keys implements FileInterface {
 		}
 
 		@Override
-		public Object get(String path) {
-			return this.fileconfig.get(path);
+		public Object get(String path) throws NoValueException {
+			Object returnValue = this.fileconfig.get(path);
+			if(returnValue == null) {
+				throw new NoValueException(path, Files.KEYS);
+			}
+			return returnValue;
 		}
 
 		@Override
@@ -101,7 +107,7 @@ public class Keys implements FileInterface {
 				
 				
 				// Golden Key
-				this.set("Keys.golden.name", "&aDefault Key");
+				this.set("Keys.golden.name", "&6Golden Key");
 				
 				lore = new ItemLore()
 					.translateColours(false)
@@ -110,7 +116,7 @@ public class Keys implements FileInterface {
 					.build();
 				
 				this.set("Keys.golden.lore", lore);
-				this.set("Keys.golden.item.ID", 131);
+				this.set("Keys.golden.item.ID", 396);
 				this.set("Keys.golden.item.data", 0);
 				this.set("Keys.golden.glow", true);
 

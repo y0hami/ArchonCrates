@@ -77,7 +77,7 @@ public class VirtualCrates implements FileInterface {
 	public Object get(String path) throws NoValueException {
 		Object returnValue = this.fileconfig.get(path);
 		if(returnValue == null) {
-			throw new NoValueException(path, Files.CRATES);
+			throw new NoValueException(path, Files.VIRTUAL_CRATES);
 		}
 		return returnValue;
 	}

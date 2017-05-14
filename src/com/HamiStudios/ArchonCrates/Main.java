@@ -3,6 +3,7 @@ package com.HamiStudios.ArchonCrates;
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.libs.Console;
 import com.HamiStudios.ArchonCrates.API.libs.Glow;
+import com.HamiStudios.ArchonCrates.API.libs.OperationsManager;
 import com.HamiStudios.ArchonCrates.Commands.Commands;
 import com.HamiStudios.ArchonCrates.Commands.TabCompleter;
 import com.HamiStudios.ArchonCrates.Events.BlockBreak;
@@ -17,6 +18,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Main extends JavaPlugin {
+
+	// Instance of the OperationsManager
+	private OperationsManager operationsManager;
+
 
 	@Override
 	public void onEnable() {
@@ -164,7 +169,7 @@ public class Main extends JavaPlugin {
 		console.notice("&fRegistering Commands...");
 
 		// Register the commands
-		this.getCommand("archoncrates").setExecutor(new Commands());
+		this.getCommand("archoncrates").setExecutor(new Commands(this));
 		this.getCommand("archoncrates").setTabCompleter(new TabCompleter());
 
 		console.notice("&fCommands registered.");
@@ -193,6 +198,15 @@ public class Main extends JavaPlugin {
 
 		console.space();
 		console.space();
+
+
+		console.notice("&fStarting operation manager...");
+		this.operationsManager = new OperationsManager();
+		console.notice("&fOperation manager started.");
+
+
+		console.space();
+		console.space();
 	}
 
 	@Override
@@ -200,5 +214,9 @@ public class Main extends JavaPlugin {
 		Console console = new Console(this);
 		console.notice("&fShutting down...");
 	}
+
+
+	// Get the OperationsManager
+	public OperationsManager getOperationsManager() { return this.operationsManager; }
 	
 }

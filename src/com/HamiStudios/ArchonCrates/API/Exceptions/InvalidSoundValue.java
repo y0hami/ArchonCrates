@@ -1,9 +1,8 @@
 package com.HamiStudios.ArchonCrates.API.Exceptions;
 
-import org.bukkit.Bukkit;
-
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.libs.Console;
+import org.bukkit.Bukkit;
 
 public class InvalidSoundValue extends Exception {
 
@@ -15,7 +14,11 @@ public class InvalidSoundValue extends Exception {
 		console.space();
 		console.error("&cThere was an error trying to parse '" + soundUsed + "' into a Minecraft sound.");
 		console.log("                      &7File: " + file.getFileName(), false);
-		console.log("                      &7Error Element: " + ID, false);
+
+		if(file == Files.CRATES) {
+			console.log("                      &7Error Element: " + ID, false);
+		}
+
 		console.space();
 	}
 	

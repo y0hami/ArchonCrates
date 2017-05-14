@@ -1,5 +1,7 @@
 package com.HamiStudios.ArchonCrates.Files;
 
+import com.HamiStudios.ArchonCrates.API.Enums.Files;
+import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
 import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -70,8 +72,12 @@ public class Language implements FileInterface {
 		}
 
 		@Override
-		public Object get(String path) {
-			return this.fileconfig.get(path);
+		public Object get(String path) throws NoValueException {
+			Object returnValue = this.fileconfig.get(path);
+			if(returnValue == null) {
+				throw new NoValueException(path, Files.LANGUAGE);
+			}
+			return returnValue;
 		}
 
 		@Override
@@ -85,18 +91,23 @@ public class Language implements FileInterface {
 			try {
 				// Set all default language values
 
-				// Erros
+				// Global Errors
 				this.set("Language.Prefix", "&7[&5ArchonCrates&7] ");
 				this.set("Language.NoPermission", "&cYou don't have permission to do that command.");
 				this.set("Language.InvalidCommand", "&cThe command you entered is invalid, try archoncrates help &cto view a list of all commands.");
 
 				// Commands
 				this.set("Language.Commands.Create.AddedToInv", "&fCrate added to your inventory.");
+				this.set("Language.Commands.Create.NoSpace", "&cCan't open crate selection menu because your inventory is full.");
+				this.set("Language.Commands.Key.InvalidAmount", "&cYou must enter a number for the amount.");
 
 				// Events
 				this.set("Language.Events.Crate.Created", "&fYou successfully created a &5<crate> &fcrate!.");
 				this.set("Language.Events.Crate.Removed", "&fCrate successfully removed.");
 				this.set("Language.Events.Crate.SneakToRemove", "&cYou must be sneaking to remove crates.");
+				this.set("Language.Events.Key.NoPermission", "&cYou don't have permission to give players keys.");
+				this.set("Language.Events.Key.GivenAll", "&fGiven &5<amount> <key> &fkey(s) to all players.");
+				this.set("Language.Events.Key.GivenPlayer", "&fGiven &5<amount> <key> &fkey(s) to &5<player>&f.");
 
 				this.save();
 

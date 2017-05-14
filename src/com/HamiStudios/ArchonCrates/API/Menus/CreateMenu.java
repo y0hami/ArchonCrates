@@ -5,6 +5,7 @@ import com.HamiStudios.ArchonCrates.API.Enums.Menu;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
 import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
+import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
 import com.HamiStudios.ArchonCrates.API.libs.Fetcher;
 import com.HamiStudios.ArchonCrates.API.libs.ItemBuilder;
 import com.HamiStudios.ArchonCrates.API.libs.LanguageManager;
@@ -123,8 +124,11 @@ public class CreateMenu {
 					// Create a Bukkit Player instance of the player that clicked the slot
 					Player player = (Player) event.getWhoClicked();
 
+					// Close the crate selection menu
+					player.closeInventory();
+
 					// If that player has permission to create a crate
-					if(player.hasPermission(Permissions.CREATE_PHYSICAL.value())) {
+					if(player.hasPermission(Permissions.CREATE_CRATE.value())) {
 
 						// Add the crate create item to the players inventory
 						player.getInventory().addItem(new ItemBuilder()
@@ -133,7 +137,7 @@ public class CreateMenu {
 								.setData((short) crate.getBlockData())
 								.setLore(new ItemLore()
 										.add("&7Place down to create")
-										.add("&7a new crate.")
+										.add("&7a new crate")
 										.add("")
 										.add("&7Crate ID:")
 										.add("&f" + crate.getID())
@@ -141,11 +145,11 @@ public class CreateMenu {
 								.build()
 						);
 
-						// Close the crate selection menu
-						player.closeInventory();
-
 						// Send the player a message so they know the crate has been added to their inventory
 						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_CREATE_ADDED_TO_INV));
+					} else {
+						// Send the player a message to say they don't have permission
+						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
 					}
 				}
 
@@ -162,9 +166,34 @@ public class CreateMenu {
 
 					// Give the player a virtual crate to place
 
-					event.getWhoClicked().closeInventory();
-					event.getWhoClicked().sendMessage("virtual");
+					// Create a Bukkit Player instance of the player that clicked the slot
+					Player player = (Player) event.getWhoClicked();
 
+					// Close the crate selection menu
+					player.closeInventory();
+
+					if(player.hasPermission(Permissions.CREATE_CRATE.value())) {
+						// Get an instance of the virtual crate
+						VirtualCrate crate = new VirtualCrate();
+
+						// Add the virtual crate item to the players inventory
+						player.getInventory().addItem(new ItemBuilder()
+								.setMaterial(Material.getMaterial(crate.getBlockID()))
+								.setName(crate.getTitle())
+								.setData((short) crate.getBlockData())
+								.setLore(new ItemLore()
+										.add("&7Place down to create")
+										.add("&7a new virtual crate")
+										.build())
+								.build()
+						);
+
+						// Send the player a message so they know the crate has been added to their inventory
+						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_CREATE_ADDED_TO_INV));
+					} else {
+						// Send the player a message to say they don't have permission
+						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
+					}
 				}
 
 				break;

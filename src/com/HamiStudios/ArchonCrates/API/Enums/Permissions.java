@@ -7,17 +7,16 @@ public enum Permissions {
 	// Commands
 	COMMAND_USE ("archoncrates.command.use"),
 	COMMAND_HELP ("archoncrates.command.help"),
+	COMMAND_KEY_PLAYER ("archoncrates.command.key.player"),
+	COMMAND_KEY_ALL ("archoncrates.command.key.all"),
 
 	// Create
-	CREATE_PHYSICAL ("archoncrates.create.physical"),
-	CREATE_VIRTUAL ("archoncrates.create.virtual");
+	CREATE_CRATE ("archoncrates.create.physical");
 
 	// Permission value
 	private String value;
 	
-	Permissions(String value) {
-		this.value = value;
-	}
+	Permissions(String value) { this.value = value; }
 
 	// Return the permission value
 	public String value() {

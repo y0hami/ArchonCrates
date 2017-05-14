@@ -4,6 +4,7 @@ import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
 import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
+import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
 import com.HamiStudios.ArchonCrates.API.libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.Files.CrateData;
 import com.HamiStudios.ArchonCrates.Main;
@@ -35,7 +36,7 @@ public class BlockPlace implements Listener {
 		ACPlayer player = new ACPlayer(event.getPlayer());
 
 		// Check if the player has the permission to create crates
-		if(player.hasPermission(Permissions.CREATE_PHYSICAL.value()) || player.hasPermission(Permissions.CREATE_VIRTUAL.value())) {
+		if(player.hasPermission(Permissions.CREATE_CRATE.value())) {
 
 			ItemStack item = event.getItemInHand();
 			if(item.hasItemMeta() && item.getItemMeta().hasLore()) {
@@ -49,6 +50,18 @@ public class BlockPlace implements Listener {
 						crateData.createCrate(block.getX(), block.getY(), block.getZ(), block.getWorld(), crate);
 
 						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_CREATED).replaceAll("<crate>", crate.getID()));
+
+					}
+				} else if(item.getItemMeta().getLore().size() == 2) {
+					if(ChatColor.stripColor(item.getItemMeta().getLore().get(0)).equalsIgnoreCase("Place down to create")
+							&& ChatColor.stripColor(item.getItemMeta().getLore().get(1)).equalsIgnoreCase("a new virtual crate")) {
+
+						CrateData crateData = new CrateData();
+						Block block = event.getBlock();
+
+						crateData.createCrate(block.getX(), block.getY(), block.getZ(), block.getWorld(), new VirtualCrate());
+
+						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_CREATED).replaceAll("<crate>", "Virtual"));
 
 					}
 				}

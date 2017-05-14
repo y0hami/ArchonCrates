@@ -9,11 +9,16 @@ public enum LanguageType {
 
 	// Commands
 	COMMAND_CREATE_ADDED_TO_INV ("Language.Commands.Create.AddedToInv"),
+	COMMAND_CREATE_NO_SPACE ("Language.Commands.Create.NoSpace"),
+	COMMAND_KEY_INVALID_AMOUNT ("Language.Commands.Key.InvalidAmount"),
 
 	// Events
 	EVENT_CRATE_CREATED ("Language.Events.Crate.Created"),
 	EVENT_CRATE_REMOVED ("Language.Events.Crate.Removed"),
-	EVENT_CRATE_SNEAK_TO_REMOVE ("Language.Events.Crate.SneakToRemove");
+	EVENT_CRATE_SNEAK_TO_REMOVE ("Language.Events.Crate.SneakToRemove"),
+	EVENT_KEY_NO_PERMISSION ("Language.Events.Key.NoPermission"),
+	EVENT_KEY_GIVEN_ALL ("Language.Events.Key.GivenAll"),
+	EVENT_KEY_GIVEN_PLAYER ("Language.Events.Key.GivenPlayer");
 
 
 	private String value;

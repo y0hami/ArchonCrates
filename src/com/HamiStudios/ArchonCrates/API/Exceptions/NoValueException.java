@@ -13,7 +13,7 @@ public class NoValueException extends Exception {
 		// Log to the server console to make the administrator aware of the error
 		Console console = new Console(Bukkit.getConsoleSender());
 		console.space();
-		console.error("&cThere was a request to value which did not exist.");
+		console.error("&cThere was a request to a value which did not exist.");
 		console.log("                      &7File: " + file.getFileName(), false);
 		console.log("                      &7Path: " + pathToAttemptValue, false);
 		console.space();

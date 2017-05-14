@@ -14,5 +14,5 @@ public class GetSound {
 			throw new InvalidSoundValue(ID, value, file);
 		}
 	}
-	
+
 }

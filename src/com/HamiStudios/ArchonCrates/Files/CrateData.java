@@ -3,6 +3,7 @@ package com.HamiStudios.ArchonCrates.Files;
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
+import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
 import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,7 +18,7 @@ public class CrateData implements FileInterface {
 	// Instances of File and FileConfiguration
 	private File file;
 	private FileConfiguration fileconfig;
-	private String filePath = "plugins/ArchonCrates/data/crates.yml";
+	private String filePath = "plugins/ArchonCrates/data/crates data.yml";
 
 
 	// Creates file constructor
@@ -84,25 +85,47 @@ public class CrateData implements FileInterface {
 	}
 
 	// Get a crate from the location given
-	public Crate getCrate(float x, float y, float z, World world) {
+	public String getCrate(float x, float y, float z, World world) {
 		// Get the crate ID
 		String crateID = (String) this.fileconfig.get("Crates." + world.getName() + "." + ((int) x) + "." + ((int) y) + "." + ((int) z));
 
 		// If the crate does not exist return null
 		if(crateID == null) { return null; }
 
-		// Try and create the crate from the ID
-		Crate crate = new Crate(crateID);
+		if(!crateID.equalsIgnoreCase("VIRTUAL_CRATE")) {
+			// Try and create the crate from the ID
+			Crate crate = new Crate(crateID);
 
-		// If the crate is valid return the crate else return null
-		if(crate.valid()) { return crate; }
-		else { return null; }
+			// If the crate is valid return the crate else return null
+			if(crate.valid()) { return crate.getID(); }
+			else { return null; }
+		} else {
+			// Create the virtual crate
+			VirtualCrate crate = new VirtualCrate();
+
+			// If the crate is valid return the crate else return null
+			if(crate.valid()) { return "VIRTUAL_CRATE"; }
+			else { return null; }
+		}
 	}
 
 	// Create a new crate
 	public boolean createCrate(float x, float y, float z, World world, Crate crate) {
 		if(getCrate(x, y, z, world) == null) {
 			this.fileconfig.set("Crates." + world.getName() + "." + ((int) x) + "." + ((int) y) + "." + ((int) z), crate.getID());
+
+			// Save the changes
+			this.save();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Create a new virtual crate
+	public boolean createCrate(float x, float y, float z, World world, VirtualCrate crate) {
+		if(getCrate(x, y, z, world) == null) {
+			this.fileconfig.set("Crates." + world.getName() + "." + ((int) x) + "." + ((int) y) + "." + ((int) z), "VIRTUAL_CRATE");
 
 			// Save the changes
 			this.save();

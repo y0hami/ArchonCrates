@@ -4,11 +4,21 @@ import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
 import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
 import com.HamiStudios.ArchonCrates.API.libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class Commands implements CommandExecutor {
+
+	// Instance of main class
+	private Main main;
+
+	// Commands Constructor
+	public Commands(Main main) {
+		this.main = main;
+	}
+
 
 	@Override
 	public boolean onCommand(CommandSender commandSender, Command cmd, String commandLabel, String[] args) {
@@ -68,6 +78,13 @@ public class Commands implements CommandExecutor {
 							helpCommand.execCommand(new String[]{args[1]}, sender);
 
 							break;
+						case "key": // Match key command
+
+							// Run the key command
+							KeyCommand keyCommand = new KeyCommand(this.main);
+							keyCommand.execCommand(new String[]{args[1], "1"}, sender);
+
+							break;
 						default:
 							// If no command matched display ERROR_INVALID_COMMAND message
 							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
@@ -79,6 +96,13 @@ public class Commands implements CommandExecutor {
 
 					// Switch through all 3 argument length commands
 					switch (args[0].toLowerCase()) {
+						case "key": // Match key command
+
+							// Run the key command
+							KeyCommand keyCommand = new KeyCommand(this.main);
+							keyCommand.execCommand(new String[]{args[1], args[2]}, sender);
+
+							break;
 						default:
 							// If no command matched display ERROR_INVALID_COMMAND message
 							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
@@ -91,6 +115,10 @@ public class Commands implements CommandExecutor {
 
 				return true;
 			}
+		} else {
+			// Send the player a message to say they don't have permission
+			sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
+			return true;
 		}
 
 		return false;

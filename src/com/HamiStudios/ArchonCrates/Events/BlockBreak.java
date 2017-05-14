@@ -38,32 +38,70 @@ public class BlockBreak implements Listener {
 		Block block = event.getBlock();
 
 		// Get the crate at the block location
-		Crate crate = crateData.getCrate(block.getX(), block.getY(), block.getZ(), block.getWorld());
+		String crateID = crateData.getCrate(block.getX(), block.getY(), block.getZ(), block.getWorld());
 
 		// If the block is a crate
-		if(crate != null) {
+		if(crateID != null) {
 
-			// Check if the player has the permission to create crates (If they can create them they can remove them)
-			if(player.hasPermission(Permissions.CREATE_PHYSICAL.value()) || player.hasPermission(Permissions.CREATE_VIRTUAL.value())) {
+			// If the crate is a virtual crate
+			if(crateID.equalsIgnoreCase("VIRTUAL_CRATE")) {
 
-				// And the player is sneaking
-				if (player.getPlayer().isSneaking()) {
-					// Remove the crate
-					crateData.removeCrate(block.getX(), block.getY(), block.getZ(), block.getWorld());
+				// Check if the player has the permission to create crates (If they can create them they can remove them)
+				if(player.hasPermission(Permissions.CREATE_CRATE.value())) {
 
-					block.setType(Material.AIR);
+					// And the player is sneaking
+					if (player.getPlayer().isSneaking()) {
+						// Remove the crate
+						crateData.removeCrate(block.getX(), block.getY(), block.getZ(), block.getWorld());
 
-					// Tell the player the crate is removed
-					player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_REMOVED));
-				} else {
-					// Tell the player they need to sneak to remove crates
-					player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_SNEAK_TO_REMOVE));
+						block.setType(Material.AIR);
+
+						// Tell the player the crate is removed
+						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_REMOVED));
+					} else {
+						// Tell the player they need to sneak to remove crates
+						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_SNEAK_TO_REMOVE));
+					}
+
+				}
+
+				// If the block is a crate stop the player from breaking it
+				event.setCancelled(true);
+
+			} else {
+
+				// Create an instance of the crate
+				Crate crate = new Crate(crateID);
+
+				// If the crate is valid
+				if(crate.valid()) {
+
+					// Check if the player has the permission to create crates (If they can create them they can remove them)
+					if(player.hasPermission(Permissions.CREATE_CRATE.value())) {
+
+						// And the player is sneaking
+						if (player.getPlayer().isSneaking()) {
+							// Remove the crate
+							crateData.removeCrate(block.getX(), block.getY(), block.getZ(), block.getWorld());
+
+							block.setType(Material.AIR);
+
+							// Tell the player the crate is removed
+							player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_REMOVED));
+						} else {
+							// Tell the player they need to sneak to remove crates
+							player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_SNEAK_TO_REMOVE));
+						}
+
+					}
+
+					// If the block is a crate stop the player from breaking it
+					event.setCancelled(true);
+
 				}
 
 			}
 
-			// If the block is a crate stop the player from breaking it
-			event.setCancelled(true);
 		}
 
 	}

@@ -2,6 +2,7 @@ package com.HamiStudios.ArchonCrates.API.libs;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -29,13 +30,30 @@ public class ItemBuilder {
 
 	// Set the lore of the item
 	public ItemBuilder setLore(ArrayList<String> value) {
-		this.itemMeta.setLore(value);
+		ArrayList<String> lore = new ArrayList<>();
+		for (String line : value) {
+			lore.add(ChatColor.translateAlternateColorCodes('&', line));
+		}
+
+		this.itemMeta.setLore(lore);
 		return this;
 	}
 
 	// Set the data value of the item
 	public ItemBuilder setData(short value) {
 		this.item.setDurability(value);
+		return this;
+	}
+
+	// Add an enchantment to the item
+	public ItemBuilder addEnchantment(Enchantment enchantment, int level, boolean ignoreRestriction) {
+		this.itemMeta.addEnchant(enchantment, level, ignoreRestriction);
+		return this;
+	}
+
+	// Set stack amount to the item
+	public ItemBuilder setAmount(int value) {
+		this.item.setAmount(value);
 		return this;
 	}
 
