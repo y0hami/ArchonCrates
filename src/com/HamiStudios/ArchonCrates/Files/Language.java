@@ -84,12 +84,20 @@ public class Language implements FileInterface {
 		public boolean create() {
 			try {
 				// Set all default language values
+
+				// Erros
 				this.set("Language.Prefix", "&7[&5ArchonCrates&7] ");
 				this.set("Language.NoPermission", "&cYou don't have permission to do that command.");
 				this.set("Language.InvalidCommand", "&cThe command you entered is invalid, try archoncrates help &cto view a list of all commands.");
-				
-				this.set("Language.Commands.Create.InvalidType", "&cThe crate type you entered is invalid, try looking at the create command help page.");
-				
+
+				// Commands
+				this.set("Language.Commands.Create.AddedToInv", "&fCrate added to your inventory.");
+
+				// Events
+				this.set("Language.Events.Crate.Created", "&fYou successfully created a &5<crate> &fcrate!.");
+				this.set("Language.Events.Crate.Removed", "&fCrate successfully removed.");
+				this.set("Language.Events.Crate.SneakToRemove", "&cYou must be sneaking to remove crates.");
+
 				this.save();
 
 				return true;

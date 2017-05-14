@@ -39,7 +39,7 @@ public class HelpCommand implements Command {
 			case "crates":
 				break;
 			default:
-				sender.sendMessage(LanguageManager.get(LanguageType.INVALID_COMMAND));
+				sender.sendMessage(LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 				break;
 		}
 	}

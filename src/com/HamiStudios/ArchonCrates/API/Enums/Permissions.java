@@ -6,7 +6,11 @@ public enum Permissions {
 
 	// Commands
 	COMMAND_USE ("archoncrates.command.use"),
-	COMMAND_HELP ("archoncrates.command.help");
+	COMMAND_HELP ("archoncrates.command.help"),
+
+	// Create
+	CREATE_PHYSICAL ("archoncrates.create.physical"),
+	CREATE_VIRTUAL ("archoncrates.create.virtual");
 
 	// Permission value
 	private String value;

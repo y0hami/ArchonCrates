@@ -1,5 +1,6 @@
 package com.HamiStudios.ArchonCrates.API.Objects;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -65,5 +66,23 @@ public class ACPlayer {
 
 	// Adds a username to the passed usernames
 	public void addToPassedUsernames(String value) { this.passedNames.add(value); }
+
+
+
+	// Other useful methods
+
+	public void sendMessage(String message) {
+		this.player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+	}
+
+	public void sendSpace() {
+		this.player.sendMessage(" ");
+	}
+
+	public boolean hasPermission(String permission) {
+		if(this.player.hasPermission(permission)) return true;
+		return false;
+	}
+
 
 }

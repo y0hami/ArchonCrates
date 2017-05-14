@@ -1,14 +1,13 @@
 package com.HamiStudios.ArchonCrates.Files;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
+import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
+import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
-import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Keys implements FileInterface {
 
@@ -114,7 +113,23 @@ public class Keys implements FileInterface {
 				this.set("Keys.golden.item.ID", 131);
 				this.set("Keys.golden.item.data", 0);
 				this.set("Keys.golden.glow", true);
-				
+
+
+				// Unique Key
+				this.set("Keys.unique.name", "&6Unique Key");
+
+				lore = new ItemLore()
+						.translateColours(false)
+						.add("&7Right click a crate")
+						.add("&7to use this key")
+						.build();
+
+				this.set("Keys.unique.lore", lore);
+				this.set("Keys.unique.item.ID", 371);
+				this.set("Keys.unique.item.data", 0);
+				this.set("Keys.unique.glow", true);
+
+
 				this.save();
 
 				return true;

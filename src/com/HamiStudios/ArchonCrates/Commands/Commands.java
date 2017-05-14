@@ -28,21 +28,33 @@ public class Commands implements CommandExecutor {
 						HelpCommand helpCommand = new HelpCommand();
 						helpCommand.displayHelp(sender);
 					} else {
-						// If no permissions send NO_PERMISSION message
-						sender.sendMessage(LanguageManager.get(LanguageType.PREFIX) + LanguageManager.get(LanguageType.NO_PERMISSION));
+						// If no permissions send ERROR_NO_PERMISSION message
+						sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
 					}
 
 				} else if(args.length == 1) {
 					// 1 Argument Provided
 
-					// Check if command was "help"
-					if(args[0].equalsIgnoreCase("help")) {
-						// Display help page for help command (lel)
-						HelpCommand helpCommand = new HelpCommand();
-						helpCommand.displayHelp(sender);
-					} else {
-						// If the command is not "help" display INVALID_COMMAND message
-						sender.sendMessage(LanguageManager.get(LanguageType.PREFIX) + LanguageManager.get(LanguageType.INVALID_COMMAND));
+					// Switch through all 1 argument length commands
+					switch (args[0]) {
+						case "help": // Match help command
+
+							// Display help page for help command (lel)
+							HelpCommand helpCommand = new HelpCommand();
+							helpCommand.displayHelp(sender);
+
+							break;
+						case "create": // Match create command
+
+							// Run the create command
+							CreateCommand createCommand = new CreateCommand();
+							createCommand.execCommand(args, sender);
+
+							break;
+						default:
+							// If no command is matched display ERROR_INVALID_COMMAND message
+							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
+							break;
 					}
 				} else if(args.length == 2) {
 					// 2 Arguments Provided
@@ -57,8 +69,8 @@ public class Commands implements CommandExecutor {
 
 							break;
 						default:
-							// If no command matched display INVALID_COMMAND message
-							sender.sendMessage(LanguageManager.get(LanguageType.PREFIX) + LanguageManager.get(LanguageType.INVALID_COMMAND));
+							// If no command matched display ERROR_INVALID_COMMAND message
+							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 							break;
 					}
 
@@ -67,21 +79,14 @@ public class Commands implements CommandExecutor {
 
 					// Switch through all 3 argument length commands
 					switch (args[0].toLowerCase()) {
-						case "create": // Match create command
-
-							// Run the create command
-							CreateCommand createCommand = new CreateCommand();
-							createCommand.execCommand(new String[]{args[1], args[2]}, sender);
-
-							break;
 						default:
-							// If no command matched display INVALID_COMMAND message
-							sender.sendMessage(LanguageManager.get(LanguageType.PREFIX) + LanguageManager.get(LanguageType.INVALID_COMMAND));
+							// If no command matched display ERROR_INVALID_COMMAND message
+							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 							break;
 					}
 				} else {
-					// If arguments length is larger then 3 there is no commands so display INVALID_COMMAND message
-					sender.sendMessage(LanguageManager.get(LanguageType.PREFIX) + LanguageManager.get(LanguageType.INVALID_COMMAND));
+					// If arguments length is larger then 3 there is no commands so display ERROR_INVALID_COMMAND message
+					sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 				}
 
 				return true;

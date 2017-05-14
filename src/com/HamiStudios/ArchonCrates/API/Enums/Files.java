@@ -5,10 +5,11 @@ public enum Files {
 
 	// File Enums
 	CRATES ("Crates", "crates.yml", "plugins/ArchonCrates/"),
+	VIRTUAL_CRATES ("Virtual Crates", "virtual crates.yml", "plugins/ArchonCrates/"),
 	KEYS ("Keys", "keys.yml", "plugins/ArchonCrates/"),
 	PRIZES ("Prizes", "prizes.yml", "plugins/ArchonCrates/"),
 	LANGUAGE ("Language", "language.yml", "plugins/ArchonCrates/"),
-	CRATE_DATA ("CrateData", "crates.json", "plugins/ArchonCrates/data/");
+	CRATE_DATA ("CrateData", "crates.yml", "plugins/ArchonCrates/data/");
 
 	// Variables for file values
 	private String name;

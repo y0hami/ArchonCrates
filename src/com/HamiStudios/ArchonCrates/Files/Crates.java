@@ -123,8 +123,8 @@ public class Crates implements FileInterface {
 			
 			this.set("Crates.default.keys", keys);
 			
-			this.set("Crates.default.messages.broadcast", "&6<player> &fjust won &6<price.name> &fin a &6<crate.name>&f crate!");
-			this.set("Crates.default.messages.player", "&fYou just won &6<price.name>&f!");
+			this.set("Crates.default.messages.broadcast", "&6<player> &fjust won &6<prize.name> &fin a &6<crate.name>&f crate!");
+			this.set("Crates.default.messages.player", "&fYou just won &6<prize.name>&f!");
 			this.set("Crates.default.messages.wrongKey", "&cWrong key, you can't use that key on this crate.");
 			
 			
@@ -165,8 +165,8 @@ public class Crates implements FileInterface {
 			
 			this.set("Crates.golden.keys", keys);
 			
-			this.set("Crates.golden.messages.broadcast", "&6<player> &fjust won &6<price.name> &fin a &6<crate.name>&f crate!");
-			this.set("Crates.golden.messages.player", "&fYou just won &6<price.name>&f!");
+			this.set("Crates.golden.messages.broadcast", "&6<player> &fjust won &6<prize.name> &fin a &6<crate.name>&f crate!");
+			this.set("Crates.golden.messages.player", "&fYou just won &6<prize.name>&f!");
 			this.set("Crates.golden.messages.wrongKey", "&cWrong key, you can't use that key on this crate.");
 			
 			this.save();

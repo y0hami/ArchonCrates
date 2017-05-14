@@ -30,7 +30,6 @@ public class Crate {
 	private ArrayList<Prize> prizes;
 	
 	private Crates crateFile;
-	private boolean updateFilesOnSet = true;
 	private boolean crateIsValid = true;
 	
 	
@@ -74,12 +73,6 @@ public class Crate {
 		}
 	}
 	
-	
-	// Set the updateFilesOnSet value
-	// if true when you use a setter it changes the file value to the value given
-	public void updateFilesOnSet(boolean value) {
-		this.updateFilesOnSet = value;
-	}
 	
 	// Check if the crate is valid and not missing any fields in the configuration files
 	public boolean valid() {
@@ -158,5 +151,11 @@ public class Crate {
 	public int getShowcaseDuration() {
 		return this.showcaseDuration;
 	}
+
+	// Should display coloured glass
+	public boolean showColouredGlass() { return this.displayColouredGlass; }
+
+	// Get an array of Prize objects
+	public ArrayList<Prize> getPrizes() { return this.prizes; }
 	
 }

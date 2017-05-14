@@ -5,6 +5,9 @@ import com.HamiStudios.ArchonCrates.API.libs.Console;
 import com.HamiStudios.ArchonCrates.API.libs.Glow;
 import com.HamiStudios.ArchonCrates.Commands.Commands;
 import com.HamiStudios.ArchonCrates.Commands.TabCompleter;
+import com.HamiStudios.ArchonCrates.Events.BlockBreak;
+import com.HamiStudios.ArchonCrates.Events.BlockPlace;
+import com.HamiStudios.ArchonCrates.Events.InventoryEvents;
 import com.HamiStudios.ArchonCrates.Events.PlayerJoin;
 import com.HamiStudios.ArchonCrates.Files.*;
 import org.bukkit.Bukkit;
@@ -78,6 +81,12 @@ public class Main extends JavaPlugin {
 		if(!cratesFile.exists()) {
 			missingFiles.add(Files.CRATES);
 		}
+
+		// Check if virtual crates.yml exists
+		VirtualCrates virtualCrates = new VirtualCrates();
+		if(!virtualCrates.exists()) {
+			missingFiles.add(Files.VIRTUAL_CRATES);
+		}
 		
 		// Check if keys.yml exists
 		Keys keysFile = new Keys();
@@ -120,6 +129,9 @@ public class Main extends JavaPlugin {
 				switch (file.getName()) {
 					case "Crates":
 						cratesFile.create();
+						break;
+					case "Virtual Crates":
+						virtualCrates.create();
 						break;
 					case "Keys":
 						keysFile.create();
@@ -172,8 +184,12 @@ public class Main extends JavaPlugin {
 
 		// Events
 		new PlayerJoin(this);
+		new BlockPlace(this);
+		new BlockBreak(this);
+		new InventoryEvents(this);
 
 		console.notice("&fEvents registered.");
+
 
 		console.space();
 		console.space();
