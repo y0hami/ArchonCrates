@@ -4,6 +4,7 @@ public enum PlayerDataType {
 
 	UUID,
 	USERNAME,
-	PASSED_NAMES;
+	PASSED_NAMES,
+	VIRTUAL_KEYS;
 
 }

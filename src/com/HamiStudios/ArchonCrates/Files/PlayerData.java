@@ -58,6 +58,8 @@ public class PlayerData {
 				return player.getName();
 			case PASSED_NAMES:
 				return player.getPassedNames();
+			case VIRTUAL_KEYS:
+				return player.getVirtualKeys();
 		}
 
 		return null;
@@ -73,7 +75,7 @@ public class PlayerData {
 			PrintWriter writter = new PrintWriter(new FileOutputStream(this.filePath), true);
 
 			Gson gson = new Gson();
-			writter.write(gson.toJson(player));
+			writter.write(gson.toJson(this.player));
 
 			writter.close();
 		} catch (IOException e) {

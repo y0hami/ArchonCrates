@@ -158,13 +158,13 @@ public class KeyMenu {
 	// Run the functionality for when a player clicks on a crate
 	public void event(Menu menu, InventoryClickEvent event) {
 
+		// Get the operation
+		GiveKeyOperation operation = this.main.getOperationsManager().getGiveKeyOperation(new ACPlayer((Player) event.getWhoClicked()));
+
 		switch (menu) {
 			case KEY_TYPE:
 
 				if(event.getCurrentItem().getType() == Material.TRIPWIRE_HOOK) {
-
-					// Get the operation
-					GiveKeyOperation operation = this.main.getOperationsManager().getGiveKeyOperation(new ACPlayer((Player) event.getWhoClicked()));
 
 					if(operation != null) {
 						this.openMenu((Player) event.getWhoClicked(), Menu.GIVE_KEY);
@@ -172,9 +172,6 @@ public class KeyMenu {
 					}
 
 				} else if(event.getCurrentItem().getType() == Material.NETHER_STAR) {
-
-					// Get the operation
-					GiveKeyOperation operation = this.main.getOperationsManager().getGiveKeyOperation(new ACPlayer((Player) event.getWhoClicked()));
 
 					if(operation != null) {
 						this.openMenu((Player) event.getWhoClicked(), Menu.GIVE_VIRTUAL_KEY);
@@ -185,9 +182,6 @@ public class KeyMenu {
 
 				break;
 			case GIVE_KEY:
-
-				// Get the operation
-				GiveKeyOperation operation = this.main.getOperationsManager().getGiveKeyOperation(new ACPlayer((Player) event.getWhoClicked()));
 
 				// If the operation is null the player
 				if(operation != null) {
@@ -290,46 +284,88 @@ public class KeyMenu {
 					}
 				}
 
-//				// If the slot the player clicks is a crate array index
-//				if(event.getSlot() < Fetcher.getKeys().size()) {
-//
-//					// Get the crate at the index of the slot they player clicks
-//					Key key = Fetcher.getKeys().get(event.getSlot());
-//
-//					// Create a Bukkit Player instance of the player that clicked the slot
-//					Player player = (Player) event.getWhoClicked();
-//
-//					// If that player has permission to create a crate
-//					if(player.hasPermission(Permissions.COMMAND_KEY_ALL.value())) {
-//
-//						// Add the crate create item to the players inventory
-//						player.getInventory().addItem(new ItemBuilder()
-//								.setMaterial(Material.getMaterial(crate.getBlockID()))
-//								.setName(crate.getTitle())
-//								.setData((short) crate.getBlockData())
-//								.setLore(new ItemLore()
-//										.add("&7Place down to create")
-//										.add("&7a new crate")
-//										.add("")
-//										.add("&7Crate ID:")
-//										.add("&f" + crate.getID())
-//										.build())
-//								.build()
-//						);
-//
-//						// Send the player a message so they know the crate has been added to their inventory
-//						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_CREATE_ADDED_TO_INV));
-//					} else {
-//						// Send the player a message to say they don't have permission
-//						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
-//					}
-//
-//					// Close the crate selection menu
-//					player.closeInventory();
-//				}
-
 				break;
 			case GIVE_VIRTUAL_KEY:
+
+				// If the operation is null the player
+				if(operation != null) {
+					if(operation.giveAll()) {
+
+						// The operation is a give all
+
+						// Check if the player has permission to give keys to all players
+						if(event.getWhoClicked().hasPermission(Permissions.COMMAND_KEY_ALL.value())) {
+
+							// If the slot the player clicks is a key array index
+							if(event.getSlot() < Fetcher.getKeys().size()) {
+
+								// Get the key at the index of the slot they player clicks
+								Key key = Fetcher.getKeys().get(event.getSlot());
+
+								// Create a Bukkit Player instance of the player that clicked the slot
+								Player player = (Player) event.getWhoClicked();
+
+								// For all the online players add a key to there inventory
+								for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+
+									ACPlayer acPlayer = new ACPlayer(onlinePlayer);
+									acPlayer.addVirtualKey(key, operation.getAmount());
+
+								}
+
+								// Send the player a message so they know the key has been added to their inventory
+								player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_ALL)
+										.replaceAll("<key>", key.getID())
+										.replaceAll("<amount>", operation.getAmount() + ""));
+
+								// Close the crate selection menu
+								player.closeInventory();
+							}
+
+						} else {
+							// No permission
+							event.getWhoClicked().sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_NO_PERMISSION));
+							event.getWhoClicked().closeInventory();
+						}
+
+					} else {
+
+						// Give key to the specified player
+
+						// Check if the player has permission to give keys to players
+						if(event.getWhoClicked().hasPermission(Permissions.COMMAND_KEY_PLAYER.value())) {
+
+							// If the slot the player clicks is a key array index
+							if(event.getSlot() < Fetcher.getKeys().size()) {
+
+								// Get the key at the index of the slot they player clicks
+								Key key = Fetcher.getKeys().get(event.getSlot());
+
+								// Create a Bukkit Player instance of the player that clicked the slot
+								Player player = (Player) event.getWhoClicked();
+								ACPlayer acPlayer = new ACPlayer(player);
+
+								acPlayer.addVirtualKey(key, operation.getAmount());
+
+								// Send the player a message so they know the key has been added to their inventory
+								player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_PLAYER)
+										.replaceAll("<key>", key.getID())
+										.replaceAll("<amount>", operation.getAmount() + "")
+										.replaceAll("<player>", operation.getGiveTo().getName()));
+
+								// Close the key selection menu
+								player.closeInventory();
+							}
+
+						} else {
+							// No permission
+							event.getWhoClicked().sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_NO_PERMISSION));
+							event.getWhoClicked().closeInventory();
+						}
+
+					}
+				}
+
 				break;
 		}
 

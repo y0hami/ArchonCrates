@@ -11,6 +11,10 @@ public enum LanguageType {
 	COMMAND_CREATE_ADDED_TO_INV ("Language.Commands.Create.AddedToInv"),
 	COMMAND_CREATE_NO_SPACE ("Language.Commands.Create.NoSpace"),
 	COMMAND_KEY_INVALID_AMOUNT ("Language.Commands.Key.InvalidAmount"),
+	COMMAND_KEY_PLAYER_OFFLINE ("Language.Commands.Key.OfflinePlayer"),
+	COMMAND_KEY_INVALID_FORMAT ("Language.Commands.Key.InvalidFormat"),
+	COMMAND_KEY_INVALID_KEY ("Language.Commands.Key.InvalidKey"),
+	COMMAND_KEY_INVALID_KEY_TYPE ("Language.Commands.Key.InvalidKeyType"),
 
 	// Events
 	EVENT_CRATE_CREATED ("Language.Events.Crate.Created"),

@@ -32,9 +32,9 @@ public class Commands implements CommandExecutor {
 			// Sender entered /archoncrates
 			if(cmd.getName().equalsIgnoreCase("archoncrates")) {
 
-				if(args.length == 0) {
+				if (args.length == 0) {
 					// No Arguments Provided & check for help command permissions
-					if(sender.hasPermission(Permissions.COMMAND_HELP.value())) {
+					if (sender.hasPermission(Permissions.COMMAND_HELP.value())) {
 						HelpCommand helpCommand = new HelpCommand();
 						helpCommand.displayHelp(sender);
 					} else {
@@ -42,7 +42,7 @@ public class Commands implements CommandExecutor {
 						sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
 					}
 
-				} else if(args.length == 1) {
+				} else if (args.length == 1) {
 					// 1 Argument Provided
 
 					// Switch through all 1 argument length commands
@@ -61,12 +61,19 @@ public class Commands implements CommandExecutor {
 							createCommand.execCommand(args, sender);
 
 							break;
+						case "key": // Match key command
+
+							// Run the key command
+							KeyCommand keyCommand = new KeyCommand(this.main);
+							keyCommand.execCommand(new String[]{}, sender);
+
+							break;
 						default:
 							// If no command is matched display ERROR_INVALID_COMMAND message
 							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 							break;
 					}
-				} else if(args.length == 2) {
+				} else if (args.length == 2) {
 					// 2 Arguments Provided
 
 					// Switch through all 2 argument length commands
@@ -91,7 +98,7 @@ public class Commands implements CommandExecutor {
 							break;
 					}
 
-				} else if(args.length == 3) {
+				} else if (args.length == 3) {
 					// 3 Arguments Provided
 
 					// Switch through all 3 argument length commands
@@ -101,6 +108,40 @@ public class Commands implements CommandExecutor {
 							// Run the key command
 							KeyCommand keyCommand = new KeyCommand(this.main);
 							keyCommand.execCommand(new String[]{args[1], args[2]}, sender);
+
+							break;
+						default:
+							// If no command matched display ERROR_INVALID_COMMAND message
+							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
+							break;
+					}
+				} else if (args.length == 4) {
+					// 4 Arguments Provided
+
+					// Switch through all 4 argument length commands
+					switch (args[0].toLowerCase()) {
+						case "key": // Match key command
+
+							// Run the key command
+							KeyCommand keyCommand = new KeyCommand(this.main);
+							keyCommand.execCommand(new String[]{args[1], args[2], args[3]}, sender);
+
+							break;
+						default:
+							// If no command matched display ERROR_INVALID_COMMAND message
+							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
+							break;
+					}
+				} else if (args.length == 5) {
+					// 5 Arguments Provided
+
+					// Switch through all 5 argument length commands
+					switch (args[0].toLowerCase()) {
+						case "key": // Match key command
+
+							// Run the key command
+							KeyCommand keyCommand = new KeyCommand(this.main);
+							keyCommand.execCommand(new String[]{args[1], args[2], args[3], args[4]}, sender);
 
 							break;
 						default:

@@ -100,6 +100,10 @@ public class Language implements FileInterface {
 				this.set("Language.Commands.Create.AddedToInv", "&fCrate added to your inventory.");
 				this.set("Language.Commands.Create.NoSpace", "&cCan't open crate selection menu because your inventory is full.");
 				this.set("Language.Commands.Key.InvalidAmount", "&cYou must enter a number for the amount.");
+				this.set("Language.Commands.Key.OfflinePlayer", "&cThe player you entered is offline, players must be online to give keys.");
+				this.set("Language.Commands.Key.InvalidFormat", "&cInvalid format of command, try visiting the help page. &f/archoncrates help key");
+				this.set("Language.Commands.Key.InvalidKey", "&cThe key you entered is invalid.");
+				this.set("Language.Commands.Key.InvalidKeyType", "&cThe key type can only be &5\"physical\" &cor &f\"virtual\"&c.");
 
 				// Events
 				this.set("Language.Events.Crate.Created", "&fYou successfully created a &5<crate> &fcrate!.");
