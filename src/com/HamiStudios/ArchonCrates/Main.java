@@ -1,15 +1,12 @@
 package com.HamiStudios.ArchonCrates;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
-import com.HamiStudios.ArchonCrates.API.libs.Console;
-import com.HamiStudios.ArchonCrates.API.libs.Glow;
-import com.HamiStudios.ArchonCrates.API.libs.OperationsManager;
+import com.HamiStudios.ArchonCrates.API.Libs.Console;
+import com.HamiStudios.ArchonCrates.API.Libs.Glow;
+import com.HamiStudios.ArchonCrates.API.Libs.OperationsManager;
 import com.HamiStudios.ArchonCrates.Commands.Commands;
 import com.HamiStudios.ArchonCrates.Commands.TabCompleter;
-import com.HamiStudios.ArchonCrates.Events.BlockBreak;
-import com.HamiStudios.ArchonCrates.Events.BlockPlace;
-import com.HamiStudios.ArchonCrates.Events.InventoryEvents;
-import com.HamiStudios.ArchonCrates.Events.PlayerJoin;
+import com.HamiStudios.ArchonCrates.Events.*;
 import com.HamiStudios.ArchonCrates.Files.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -57,21 +54,6 @@ public class Main extends JavaPlugin {
 
 		console.space();
 
-		File playerDataFolder = new File("plugins/ArchonCrates/data/players");
-		if(!playerDataFolder.exists()) {
-			console.warning("&fPlayer Data directory is missing, creating it...");
-			// If it doesn't create it
-			playerDataFolder.mkdirs();
-			console.notice("&fSuccessfully created 'data/players' directory.");
-		} else {
-			console.notice("&fPlayer Data directory exists.");
-		}
-
-
-		console.space();
-		console.space();
-
-
 		// Start checking if files exist
 		console.notice("&fChecking configuration files...");
 		
@@ -111,10 +93,14 @@ public class Main extends JavaPlugin {
 			missingFiles.add(Files.LANGUAGE);
 		}
 
-		// Check if data/crates.json exists
-		CrateData crateData = new CrateData();
-		if(!crateData.exists()) {
+		// Check if data/crates.db exists
+		if(!CrateData.exists()) {
 			missingFiles.add(Files.CRATE_DATA);
+		}
+
+		// Check if data/players.db exists
+		if(!PlayerData.exists()) {
+			missingFiles.add(Files.PLAYER_DATA);
 		}
 
 		/* If any files are missing announce how many are missing out of the total of files
@@ -148,7 +134,10 @@ public class Main extends JavaPlugin {
 						languageFile.create();
 						break;
 					case "CrateData":
-						crateData.create();
+						CrateData.createFile();
+						break;
+					case "PlayersData":
+						PlayerData.createFile();
 						break;
 					default:
 						break;
@@ -191,6 +180,7 @@ public class Main extends JavaPlugin {
 		new PlayerJoin(this);
 		new BlockPlace(this);
 		new BlockBreak(this);
+		new BlockClick(this);
 		new InventoryEvents(this);
 
 		console.notice("&fEvents registered.");

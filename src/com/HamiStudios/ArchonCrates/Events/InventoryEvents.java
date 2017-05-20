@@ -66,6 +66,10 @@ public class InventoryEvents implements Listener {
 			keyMenu.event(Menu.GIVE_VIRTUAL_KEY, event);
 
 			event.setCancelled(true);
+		} else if (ChatColor.stripColor(event.getInventory().getTitle()).equalsIgnoreCase(Menu.CRATES_WORLDS.getTitle())) {
+			// The inventory is the crates world menu
+
+			event.setCancelled(true);
 		}
 	}
 

@@ -1,7 +1,7 @@
 package com.HamiStudios.ArchonCrates.API.Exceptions;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
-import com.HamiStudios.ArchonCrates.API.libs.Console;
+import com.HamiStudios.ArchonCrates.API.Libs.Console;
 import org.bukkit.Bukkit;
 
 public class InvalidSoundValue extends Exception {

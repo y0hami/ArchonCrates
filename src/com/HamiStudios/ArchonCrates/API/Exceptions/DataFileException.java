@@ -1,6 +1,6 @@
 package com.HamiStudios.ArchonCrates.API.Exceptions;
 
-import com.HamiStudios.ArchonCrates.API.libs.Console;
+import com.HamiStudios.ArchonCrates.API.Libs.Console;
 import org.bukkit.Bukkit;
 
 public class DataFileException extends Exception {

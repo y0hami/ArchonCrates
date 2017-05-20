@@ -4,7 +4,7 @@ import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
 import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
-import com.HamiStudios.ArchonCrates.API.libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.Files.CrateData;
 import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.Material;
@@ -34,11 +34,10 @@ public class BlockBreak implements Listener {
 		ACPlayer player = new ACPlayer(event.getPlayer());
 
 		// Create instance of CrateData and the broken block
-		CrateData crateData = new CrateData();
 		Block block = event.getBlock();
 
 		// Get the crate at the block location
-		String crateID = crateData.getCrate(block.getX(), block.getY(), block.getZ(), block.getWorld());
+		String crateID = CrateData.get(block.getX(), block.getY(), block.getZ(), block.getWorld());
 
 		// If the block is a crate
 		if(crateID != null) {
@@ -52,7 +51,7 @@ public class BlockBreak implements Listener {
 					// And the player is sneaking
 					if (player.getPlayer().isSneaking()) {
 						// Remove the crate
-						crateData.removeCrate(block.getX(), block.getY(), block.getZ(), block.getWorld());
+						CrateData.remove(block.getX(), block.getY(), block.getZ(), block.getWorld());
 
 						block.setType(Material.AIR);
 
@@ -82,7 +81,7 @@ public class BlockBreak implements Listener {
 						// And the player is sneaking
 						if (player.getPlayer().isSneaking()) {
 							// Remove the crate
-							crateData.removeCrate(block.getX(), block.getY(), block.getZ(), block.getWorld());
+							CrateData.remove(block.getX(), block.getY(), block.getZ(), block.getWorld());
 
 							block.setType(Material.AIR);
 

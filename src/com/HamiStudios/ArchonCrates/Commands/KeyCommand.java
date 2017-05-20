@@ -7,10 +7,10 @@ import com.HamiStudios.ArchonCrates.API.Menus.KeyMenu;
 import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
 import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
-import com.HamiStudios.ArchonCrates.API.libs.Glow;
-import com.HamiStudios.ArchonCrates.API.libs.HelpPageBuilder;
-import com.HamiStudios.ArchonCrates.API.libs.ItemBuilder;
-import com.HamiStudios.ArchonCrates.API.libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Libs.Glow;
+import com.HamiStudios.ArchonCrates.API.Libs.HelpPageBuilder;
+import com.HamiStudios.ArchonCrates.API.Libs.ItemBuilder;
+import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -53,43 +53,15 @@ public class KeyCommand implements Command {
 			sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_FORMAT));
 		} else if(args.length == 1 || args.length == 2) {
 
-			Player player = (Player) sender.getSender();
+			if(!sender.isConsole()) {
 
-			// Give key to all players
-			if(args[0].equalsIgnoreCase("all")) {
+				Player player = (Player) sender.getSender();
 
-				// Check if the sender has permission to give keys to all players
-				if(player.hasPermission(Permissions.COMMAND_KEY_ALL.value())) {
-
-					// If they have permission
-					// Check if the amount they entered is a Integer
-
-					int amount = 1;
-
-					try {
-						amount = Integer.parseInt(args[1]);
-					} catch(NumberFormatException e) {
-						sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_AMOUNT));
-					}
-
-					this.main.getOperationsManager().addKeyGiver(new ACPlayer(player), null, true, amount);
-
-					KeyMenu keyMenu = new KeyMenu(this.main);
-					keyMenu.openMenu(player, Menu.KEY_TYPE);
-
-				} else {
-					// If they don't have permission
-					sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
-				}
-
-			} else {
-				// Give key to a single player
-				if(Bukkit.getPlayer(args[0]) == null) {
-					sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_PLAYER_OFFLINE));
-				} else {
+				// Give key to all players
+				if(args[0].equalsIgnoreCase("all")) {
 
 					// Check if the sender has permission to give keys to all players
-					if(player.hasPermission(Permissions.COMMAND_KEY_PLAYER.value())) {
+					if(player.hasPermission(Permissions.COMMAND_KEY_ALL.value())) {
 
 						// If they have permission
 						// Check if the amount they entered is a Integer
@@ -102,7 +74,7 @@ public class KeyCommand implements Command {
 							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_AMOUNT));
 						}
 
-						this.main.getOperationsManager().addKeyGiver(new ACPlayer(player), Bukkit.getPlayer(args[0]), false, amount);
+						this.main.getOperationsManager().addKeyGiver(new ACPlayer(player), null, true, amount);
 
 						KeyMenu keyMenu = new KeyMenu(this.main);
 						keyMenu.openMenu(player, Menu.KEY_TYPE);
@@ -112,7 +84,41 @@ public class KeyCommand implements Command {
 						sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
 					}
 
+				} else {
+					// Give key to a single player
+					if(Bukkit.getPlayer(args[0]) == null) {
+						sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_PLAYER_OFFLINE));
+					} else {
+
+						// Check if the sender has permission to give keys to all players
+						if(player.hasPermission(Permissions.COMMAND_KEY_PLAYER.value())) {
+
+							// If they have permission
+							// Check if the amount they entered is a Integer
+
+							int amount = 1;
+
+							try {
+								amount = Integer.parseInt(args[1]);
+							} catch(NumberFormatException e) {
+								sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_AMOUNT));
+							}
+
+							this.main.getOperationsManager().addKeyGiver(new ACPlayer(player), Bukkit.getPlayer(args[0]), false, amount);
+
+							KeyMenu keyMenu = new KeyMenu(this.main);
+							keyMenu.openMenu(player, Menu.KEY_TYPE);
+
+						} else {
+							// If they don't have permission
+							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
+						}
+
+					}
 				}
+
+			} else {
+				sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_PLAYER_ONLY_COMMAND));
 			}
 
 		} else if(args.length == 3) {

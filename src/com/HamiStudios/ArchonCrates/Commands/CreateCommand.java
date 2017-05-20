@@ -4,8 +4,8 @@ import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Menu;
 import com.HamiStudios.ArchonCrates.API.Menus.CreateMenu;
 import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
-import com.HamiStudios.ArchonCrates.API.libs.HelpPageBuilder;
-import com.HamiStudios.ArchonCrates.API.libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Libs.HelpPageBuilder;
+import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import org.bukkit.entity.Player;
 
 public class CreateCommand implements Command {
@@ -20,21 +20,27 @@ public class CreateCommand implements Command {
 
 	@Override
 	public void execCommand(String[] args, ACSender sender) {
-		Player player = (Player) sender.getSender();
+		if(!sender.isConsole()) {
 
-		int invSize = 36;
+			Player player = (Player) sender.getSender();
 
-		boolean space = false;
-		while(invSize != 1) {
-			invSize--;
-			if(player.getInventory().getItem(invSize-1) == null) { space = true; }
-		}
+			int invSize = 36;
 
-		if(space) {
-			CreateMenu createMenu = new CreateMenu();
-			createMenu.openMenu(player, Menu.CRATE_TYPE);
+			boolean space = false;
+			while(invSize != 1) {
+				invSize--;
+				if(player.getInventory().getItem(invSize-1) == null) { space = true; }
+			}
+
+			if(space) {
+				CreateMenu createMenu = new CreateMenu();
+				createMenu.openMenu(player, Menu.CRATE_TYPE);
+			} else {
+				player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_CREATE_NO_SPACE));
+			}
+
 		} else {
-			player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_CREATE_NO_SPACE));
+			sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_PLAYER_ONLY_COMMAND));
 		}
 	}
 

@@ -1,4 +1,4 @@
-package com.HamiStudios.ArchonCrates.API.libs;
+package com.HamiStudios.ArchonCrates.API.Libs;
 
 import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
 

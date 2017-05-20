@@ -3,7 +3,7 @@ package com.HamiStudios.ArchonCrates.API.Exceptions;
 import org.bukkit.Bukkit;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
-import com.HamiStudios.ArchonCrates.API.libs.Console;
+import com.HamiStudios.ArchonCrates.API.Libs.Console;
 
 public class NoValueException extends Exception {
 

@@ -2,8 +2,8 @@ package com.HamiStudios.ArchonCrates.Commands;
 
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
-import com.HamiStudios.ArchonCrates.API.libs.HelpPageBuilder;
-import com.HamiStudios.ArchonCrates.API.libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Libs.HelpPageBuilder;
+import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 
 import java.util.ArrayList;
 

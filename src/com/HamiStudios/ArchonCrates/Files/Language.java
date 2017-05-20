@@ -2,7 +2,7 @@ package com.HamiStudios.ArchonCrates.Files;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
-import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
+import com.HamiStudios.ArchonCrates.API.Libs.FileInterface;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -95,6 +95,7 @@ public class Language implements FileInterface {
 				this.set("Language.Prefix", "&7[&5ArchonCrates&7] ");
 				this.set("Language.NoPermission", "&cYou don't have permission to do that command.");
 				this.set("Language.InvalidCommand", "&cThe command you entered is invalid, try archoncrates help &cto view a list of all commands.");
+				this.set("Language.PlayerOnlyCommand", "&cThis command is only for players.");
 
 				// Commands
 				this.set("Language.Commands.Create.AddedToInv", "&fCrate added to your inventory.");

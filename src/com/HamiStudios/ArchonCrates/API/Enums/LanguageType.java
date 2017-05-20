@@ -6,6 +6,7 @@ public enum LanguageType {
 	ERROR_PREFIX("Language.Prefix"),
 	ERROR_NO_PERMISSION("Language.NoPermission"),
 	ERROR_INVALID_COMMAND("Language.InvalidCommand"),
+	ERROR_PLAYER_ONLY_COMMAND ("Language.PlayerOnlyCommand"),
 
 	// Commands
 	COMMAND_CREATE_ADDED_TO_INV ("Language.Commands.Create.AddedToInv"),

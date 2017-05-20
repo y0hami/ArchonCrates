@@ -2,7 +2,7 @@ package com.HamiStudios.ArchonCrates.Commands;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
 import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
-import com.HamiStudios.ArchonCrates.API.libs.TabCompletionHelper;
+import com.HamiStudios.ArchonCrates.API.Libs.TabCompletionHelper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 

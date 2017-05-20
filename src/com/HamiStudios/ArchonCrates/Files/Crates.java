@@ -2,7 +2,7 @@ package com.HamiStudios.ArchonCrates.Files;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
-import com.HamiStudios.ArchonCrates.API.libs.FileInterface;
+import com.HamiStudios.ArchonCrates.API.Libs.FileInterface;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

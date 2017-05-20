@@ -3,8 +3,8 @@ package com.HamiStudios.ArchonCrates.API.Objects;
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.Exceptions.InvalidSoundValue;
 import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
-import com.HamiStudios.ArchonCrates.API.libs.Find;
-import com.HamiStudios.ArchonCrates.API.libs.GetSound;
+import com.HamiStudios.ArchonCrates.API.Libs.Find;
+import com.HamiStudios.ArchonCrates.API.Libs.GetSound;
 import com.HamiStudios.ArchonCrates.Files.Crates;
 import org.bukkit.Sound;
 

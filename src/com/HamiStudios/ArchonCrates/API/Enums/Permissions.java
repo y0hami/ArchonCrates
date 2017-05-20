@@ -9,6 +9,7 @@ public enum Permissions {
 	COMMAND_HELP ("archoncrates.command.help"),
 	COMMAND_KEY_PLAYER ("archoncrates.command.key.player"),
 	COMMAND_KEY_ALL ("archoncrates.command.key.all"),
+	COMMAND_CRATES ("archoncrates.command.crates"),
 
 	// Create
 	CREATE_CRATE ("archoncrates.create.physical");

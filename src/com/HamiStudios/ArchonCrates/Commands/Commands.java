@@ -3,7 +3,7 @@ package com.HamiStudios.ArchonCrates.Commands;
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
 import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
-import com.HamiStudios.ArchonCrates.API.libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -66,6 +66,13 @@ public class Commands implements CommandExecutor {
 							// Run the key command
 							KeyCommand keyCommand = new KeyCommand(this.main);
 							keyCommand.execCommand(new String[]{}, sender);
+
+							break;
+						case "crates":
+
+							// Run the crates command
+							CratesCommand cratesCommand = new CratesCommand();
+							cratesCommand.execCommand(new String[]{}, sender);
 
 							break;
 						default:
