@@ -3,14 +3,14 @@ package com.HamiStudios.ArchonCrates.Commands;
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Menu;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
-import com.HamiStudios.ArchonCrates.API.Menus.KeyMenu;
-import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
-import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
-import com.HamiStudios.ArchonCrates.API.Objects.Key;
 import com.HamiStudios.ArchonCrates.API.Libs.Glow;
 import com.HamiStudios.ArchonCrates.API.Libs.HelpPageBuilder;
 import com.HamiStudios.ArchonCrates.API.Libs.ItemBuilder;
 import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Menus.KeyMenu;
+import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
+import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
+import com.HamiStudios.ArchonCrates.API.Objects.Key;
 import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -49,49 +49,20 @@ public class KeyCommand implements Command {
 	@Override
 	public void execCommand(String[] args, ACSender sender) {
 
-		if(args.length == 0) {
-			sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_FORMAT));
-		} else if(args.length == 1 || args.length == 2) {
+		if(sender.hasPermission(Permissions.COMMAND_KEY.value())) {
+			if(args.length == 0) {
+				sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_FORMAT));
+			} else if(args.length == 1 || args.length == 2) {
 
-			if(!sender.isConsole()) {
+				if(!sender.isConsole()) {
 
-				Player player = (Player) sender.getSender();
+					Player player = (Player) sender.getSender();
 
-				// Give key to all players
-				if(args[0].equalsIgnoreCase("all")) {
-
-					// Check if the sender has permission to give keys to all players
-					if(player.hasPermission(Permissions.COMMAND_KEY_ALL.value())) {
-
-						// If they have permission
-						// Check if the amount they entered is a Integer
-
-						int amount = 1;
-
-						try {
-							amount = Integer.parseInt(args[1]);
-						} catch(NumberFormatException e) {
-							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_AMOUNT));
-						}
-
-						this.main.getOperationsManager().addKeyGiver(new ACPlayer(player), null, true, amount);
-
-						KeyMenu keyMenu = new KeyMenu(this.main);
-						keyMenu.openMenu(player, Menu.KEY_TYPE);
-
-					} else {
-						// If they don't have permission
-						sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
-					}
-
-				} else {
-					// Give key to a single player
-					if(Bukkit.getPlayer(args[0]) == null) {
-						sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_PLAYER_OFFLINE));
-					} else {
+					// Give key to all players
+					if(args[0].equalsIgnoreCase("all")) {
 
 						// Check if the sender has permission to give keys to all players
-						if(player.hasPermission(Permissions.COMMAND_KEY_PLAYER.value())) {
+						if(player.hasPermission(Permissions.COMMAND_KEY_ALL.value())) {
 
 							// If they have permission
 							// Check if the amount they entered is a Integer
@@ -104,7 +75,7 @@ public class KeyCommand implements Command {
 								sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_AMOUNT));
 							}
 
-							this.main.getOperationsManager().addKeyGiver(new ACPlayer(player), Bukkit.getPlayer(args[0]), false, amount);
+							this.main.getOperationsManager().addKeyGiver(new ACPlayer(player), null, true, amount);
 
 							KeyMenu keyMenu = new KeyMenu(this.main);
 							keyMenu.openMenu(player, Menu.KEY_TYPE);
@@ -114,56 +85,132 @@ public class KeyCommand implements Command {
 							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
 						}
 
+					} else {
+						// Give key to a single player
+						if(Bukkit.getPlayer(args[0]) == null) {
+							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_PLAYER_OFFLINE));
+						} else {
+
+							// Check if the sender has permission to give keys to all players
+							if(player.hasPermission(Permissions.COMMAND_KEY_PLAYER.value())) {
+
+								// If they have permission
+								// Check if the amount they entered is a Integer
+
+								int amount = 1;
+
+								try {
+									amount = Integer.parseInt(args[1]);
+								} catch(NumberFormatException e) {
+									sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_AMOUNT));
+								}
+
+								this.main.getOperationsManager().addKeyGiver(new ACPlayer(player), Bukkit.getPlayer(args[0]), false, amount);
+
+								KeyMenu keyMenu = new KeyMenu(this.main);
+								keyMenu.openMenu(player, Menu.KEY_TYPE);
+
+							} else {
+								// If they don't have permission
+								sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
+							}
+
+						}
 					}
+
+				} else {
+					sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_PLAYER_ONLY_COMMAND));
 				}
 
-			} else {
-				sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_PLAYER_ONLY_COMMAND));
-			}
+			} else if(args.length == 3) {
+				sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_FORMAT));
+			} else if(args.length == 4) {
 
-		} else if(args.length == 3) {
-			sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_FORMAT));
-		} else if(args.length == 4) {
+				//                      0		 1		 2	  3
+				// /archoncrates key <player> [amount] [key <type>]
 
-			//                      0		 1		 2	  3
-			// /archoncrates key <player> [amount] [key <type>]
+				boolean giveAll = false;
+				Player givePlayer = null;
 
-			boolean giveAll = false;
-			Player givePlayer = null;
-
-			if (args[0].equalsIgnoreCase("all")) {
-				giveAll = true;
-			} else {
-				givePlayer = Bukkit.getPlayer(args[0]);
-			}
+				if (args[0].equalsIgnoreCase("all")) {
+					giveAll = true;
+				} else {
+					givePlayer = Bukkit.getPlayer(args[0]);
+				}
 
 
-			if (!args[3].equalsIgnoreCase("physical")
-					&& !args[3].equalsIgnoreCase("p")
-					&& !args[3].equalsIgnoreCase("virtual")
-					&& !args[3].equalsIgnoreCase("v")) {
-				sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_KEY_TYPE));
-			} else {
-
-				if(givePlayer == null) {
-					sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_PLAYER_OFFLINE));
+				if (!args[3].equalsIgnoreCase("physical")
+						&& !args[3].equalsIgnoreCase("p")
+						&& !args[3].equalsIgnoreCase("virtual")
+						&& !args[3].equalsIgnoreCase("v")) {
+					sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_KEY_TYPE));
 				} else {
 
-					try {
-						int amount = Integer.parseInt(args[1]);
+					if(givePlayer == null) {
+						sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_PLAYER_OFFLINE));
+					} else {
 
-						// Get the key at the index of the slot they player clicks
-						Key key = new Key(args[2]);
+						try {
+							int amount = Integer.parseInt(args[1]);
 
-						if(key.valid()) {
+							// Get the key at the index of the slot they player clicks
+							Key key = new Key(args[2]);
 
-							if(giveAll) {
-								// Check if the player has permission to give keys to all players
-								if (sender.hasPermission(Permissions.COMMAND_KEY_ALL.value())) {
+							if(key.valid()) {
 
-									if (args[3].equalsIgnoreCase("physical") || args[3].equalsIgnoreCase("p")) {
+								if(giveAll) {
+									// Check if the player has permission to give keys to all players
+									if (sender.hasPermission(Permissions.COMMAND_KEY_ALL.value())) {
 
-										for (Player player : Bukkit.getOnlinePlayers()) {
+										if (args[3].equalsIgnoreCase("physical") || args[3].equalsIgnoreCase("p")) {
+
+											for (Player player : Bukkit.getOnlinePlayers()) {
+												ItemBuilder keyItem = new ItemBuilder()
+														.setMaterial(Material.getMaterial(key.getItemID()))
+														.setName(key.getName())
+														.setData((short) key.getItemData())
+														.setLore(key.getLore())
+														.setAmount(amount);
+
+												if(key.glow()) {
+													keyItem.addEnchantment(new Glow(99), 1, true);
+												}
+
+												player.getInventory().addItem(keyItem.build());
+											}
+
+											// Send the player a message so they know the key has been added to their inventory
+											sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_ALL)
+													.replaceAll("<key>", key.getID())
+													.replaceAll("<amount>", amount + ""));
+
+										} else if(args[3].equalsIgnoreCase("virtual") || args[3].equalsIgnoreCase("v")) {
+
+											// For all the online players add a key to there inventory
+											for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+
+												ACPlayer acPlayer = new ACPlayer(onlinePlayer);
+												acPlayer.addVirtualKey(key, amount);
+
+											}
+
+											// Send the player a message so they know the key has been added to their inventory
+											sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_ALL)
+													.replaceAll("<key>", key.getID())
+													.replaceAll("<amount>", amount + ""));
+
+										}
+
+									} else {
+										// No permission
+										sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_NO_PERMISSION));
+									}
+								} else {
+									// Check if the player has permission to give keys to all players
+									if (sender.hasPermission(Permissions.COMMAND_KEY_PLAYER.value())) {
+
+										if (args[3].equalsIgnoreCase("physical") || args[3].equalsIgnoreCase("p")) {
+
 											ItemBuilder keyItem = new ItemBuilder()
 													.setMaterial(Material.getMaterial(key.getItemID()))
 													.setName(key.getName())
@@ -175,92 +222,49 @@ public class KeyCommand implements Command {
 												keyItem.addEnchantment(new Glow(99), 1, true);
 											}
 
-											player.getInventory().addItem(keyItem.build());
-										}
+											givePlayer.getInventory().addItem(keyItem.build());
 
-										// Send the player a message so they know the key has been added to their inventory
-										sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_ALL)
-												.replaceAll("<key>", key.getID())
-												.replaceAll("<amount>", amount + ""));
+											// Send the player a message so they know the key has been added to their inventory
+											sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_PLAYER)
+													.replaceAll("<key>", key.getID())
+													.replaceAll("<amount>", amount + "")
+													.replaceAll("<player>", givePlayer.getName()));
 
-									} else if(args[3].equalsIgnoreCase("virtual") || args[3].equalsIgnoreCase("v")) {
+										} else if(args[3].equalsIgnoreCase("virtual") || args[3].equalsIgnoreCase("v")) {
 
-										// For all the online players add a key to there inventory
-										for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-
-											ACPlayer acPlayer = new ACPlayer(onlinePlayer);
+											// For all the online players add a key to there inventory
+											ACPlayer acPlayer = new ACPlayer(givePlayer);
 											acPlayer.addVirtualKey(key, amount);
 
+											// Send the player a message so they know the key has been added to their inventory
+											sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_PLAYER)
+													.replaceAll("<key>", key.getID())
+													.replaceAll("<amount>", amount + "")
+													.replaceAll("<player>", givePlayer.getName()));
+
 										}
 
-										// Send the player a message so they know the key has been added to their inventory
-										sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_ALL)
-												.replaceAll("<key>", key.getID())
-												.replaceAll("<amount>", amount + ""));
-
+									} else {
+										// No permission
+										sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_NO_PERMISSION));
 									}
-
-								} else {
-									// No permission
-									sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_NO_PERMISSION));
 								}
+
 							} else {
-								// Check if the player has permission to give keys to all players
-								if (sender.hasPermission(Permissions.COMMAND_KEY_PLAYER.value())) {
-
-									if (args[3].equalsIgnoreCase("physical") || args[3].equalsIgnoreCase("p")) {
-
-										ItemBuilder keyItem = new ItemBuilder()
-												.setMaterial(Material.getMaterial(key.getItemID()))
-												.setName(key.getName())
-												.setData((short) key.getItemData())
-												.setLore(key.getLore())
-												.setAmount(amount);
-
-										if(key.glow()) {
-											keyItem.addEnchantment(new Glow(99), 1, true);
-										}
-
-										givePlayer.getInventory().addItem(keyItem.build());
-
-										// Send the player a message so they know the key has been added to their inventory
-										sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_PLAYER)
-												.replaceAll("<key>", key.getID())
-												.replaceAll("<amount>", amount + "")
-												.replaceAll("<player>", givePlayer.getName()));
-
-									} else if(args[3].equalsIgnoreCase("virtual") || args[3].equalsIgnoreCase("v")) {
-
-										// For all the online players add a key to there inventory
-										ACPlayer acPlayer = new ACPlayer(givePlayer);
-										acPlayer.addVirtualKey(key, amount);
-
-										// Send the player a message so they know the key has been added to their inventory
-										sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_PLAYER)
-												.replaceAll("<key>", key.getID())
-												.replaceAll("<amount>", amount + "")
-												.replaceAll("<player>", givePlayer.getName()));
-
-									}
-
-								} else {
-									// No permission
-									sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_NO_PERMISSION));
-								}
+								sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_KEY));
 							}
 
-						} else {
-							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_KEY));
+						} catch(NumberFormatException e) {
+							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_AMOUNT));
 						}
 
-					} catch(NumberFormatException e) {
-						sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_AMOUNT));
 					}
 
 				}
 
 			}
-
+		} else {
+			sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_NO_PERMISSION));
 		}
 
 	}

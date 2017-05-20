@@ -102,17 +102,18 @@ public class Language implements FileInterface {
 				this.set("Language.Commands.Create.NoSpace", "&cCan't open crate selection menu because your inventory is full.");
 				this.set("Language.Commands.Key.InvalidAmount", "&cYou must enter a number for the amount.");
 				this.set("Language.Commands.Key.OfflinePlayer", "&cThe player you entered is offline, players must be online to give keys.");
-				this.set("Language.Commands.Key.InvalidFormat", "&cInvalid format of command, try visiting the help page. &f/archoncrates help key");
+				this.set("Language.Commands.Key.InvalidFormat", "&cInvalid format of command, try visiting the help page. &f/archoncrates help key&c.");
 				this.set("Language.Commands.Key.InvalidKey", "&cThe key you entered is invalid.");
 				this.set("Language.Commands.Key.InvalidKeyType", "&cThe key type can only be &5\"physical\" &cor &f\"virtual\"&c.");
 
 				// Events
-				this.set("Language.Events.Crate.Created", "&fYou successfully created a &5<crate> &fcrate!.");
+				this.set("Language.Events.Crate.Created", "&fYou successfully created a &5<crate> &fcrate!");
 				this.set("Language.Events.Crate.Removed", "&fCrate successfully removed.");
 				this.set("Language.Events.Crate.SneakToRemove", "&cYou must be sneaking to remove crates.");
 				this.set("Language.Events.Key.NoPermission", "&cYou don't have permission to give players keys.");
 				this.set("Language.Events.Key.GivenAll", "&fGiven &5<amount> <key> &fkey(s) to all players.");
 				this.set("Language.Events.Key.GivenPlayer", "&fGiven &5<amount> <key> &fkey(s) to &5<player>&f.");
+				this.set("Language.Events.Crates.NoWorld", "&cThat world no longer exits!");
 
 				this.save();
 

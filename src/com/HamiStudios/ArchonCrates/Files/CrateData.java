@@ -39,9 +39,14 @@ public class CrateData {
 	public static String get(int x, int y, int z, World world) {
 		ArrayList<HashMap<String, Object>>  results = DatabaseHandler.executeQuery(Database.CRATES_DATA, Tables.CRATES_DATA, "SELECT * FROM `crates` WHERE `X`='" + x + "' AND `Y`='" + y + "' AND `Z`='" + z + "' AND `WORLD`='" + world.getName() + "'", new String[]{"CRATE_TYPE"});
 
-		if(results.size() == 0) { return (String) results.get(0).get("CRATE_TYPE"); }
+		if(results.size() == 1) { return (String) results.get(0).get("CRATE_TYPE"); }
 
 		return null;
+	}
+
+	// Get all crates in the given world
+	public static ArrayList<HashMap<String, Object>> getCrates(World world) {
+		return DatabaseHandler.executeQuery(Database.CRATES_DATA, Tables.CRATES_DATA, "SELECT * FROM `crates` WHERE `WORLD`='" + world.getName() + "'", new String[]{"ID", "CRATE_TYPE", "X", "Y", "Z", "WORLD", "CREATOR"});
 	}
 
 	// Create the database file

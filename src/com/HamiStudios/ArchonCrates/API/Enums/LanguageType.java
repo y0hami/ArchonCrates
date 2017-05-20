@@ -23,7 +23,8 @@ public enum LanguageType {
 	EVENT_CRATE_SNEAK_TO_REMOVE ("Language.Events.Crate.SneakToRemove"),
 	EVENT_KEY_NO_PERMISSION ("Language.Events.Key.NoPermission"),
 	EVENT_KEY_GIVEN_ALL ("Language.Events.Key.GivenAll"),
-	EVENT_KEY_GIVEN_PLAYER ("Language.Events.Key.GivenPlayer");
+	EVENT_KEY_GIVEN_PLAYER ("Language.Events.Key.GivenPlayer"),
+	EVENT_CRATES_NO_WORLD ("Language.Events.Crates.NoWorld");
 
 
 	private String value;

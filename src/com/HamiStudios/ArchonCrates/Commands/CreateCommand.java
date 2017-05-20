@@ -2,10 +2,11 @@ package com.HamiStudios.ArchonCrates.Commands;
 
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Menu;
-import com.HamiStudios.ArchonCrates.API.Menus.CreateMenu;
-import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
+import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
 import com.HamiStudios.ArchonCrates.API.Libs.HelpPageBuilder;
 import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Menus.CreateMenu;
+import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
 import org.bukkit.entity.Player;
 
 public class CreateCommand implements Command {
@@ -22,21 +23,25 @@ public class CreateCommand implements Command {
 	public void execCommand(String[] args, ACSender sender) {
 		if(!sender.isConsole()) {
 
-			Player player = (Player) sender.getSender();
+			if(sender.hasPermission(Permissions.COMMAND_CREATE.value())) {
+				Player player = (Player) sender.getSender();
 
-			int invSize = 36;
+				int invSize = 36;
 
-			boolean space = false;
-			while(invSize != 1) {
-				invSize--;
-				if(player.getInventory().getItem(invSize-1) == null) { space = true; }
-			}
+				boolean space = false;
+				while(invSize != 1) {
+					invSize--;
+					if(player.getInventory().getItem(invSize-1) == null) { space = true; }
+				}
 
-			if(space) {
-				CreateMenu createMenu = new CreateMenu();
-				createMenu.openMenu(player, Menu.CRATE_TYPE);
+				if(space) {
+					CreateMenu createMenu = new CreateMenu();
+					createMenu.openMenu(player, Menu.CRATE_TYPE);
+				} else {
+					player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_CREATE_NO_SPACE));
+				}
 			} else {
-				player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_CREATE_NO_SPACE));
+				sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
 			}
 
 		} else {

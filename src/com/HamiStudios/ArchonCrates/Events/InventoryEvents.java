@@ -1,6 +1,7 @@
 package com.HamiStudios.ArchonCrates.Events;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Menu;
+import com.HamiStudios.ArchonCrates.API.Menus.CratesMenu;
 import com.HamiStudios.ArchonCrates.API.Menus.CreateMenu;
 import com.HamiStudios.ArchonCrates.API.Menus.KeyMenu;
 import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
@@ -68,6 +69,16 @@ public class InventoryEvents implements Listener {
 			event.setCancelled(true);
 		} else if (ChatColor.stripColor(event.getInventory().getTitle()).equalsIgnoreCase(Menu.CRATES_WORLDS.getTitle())) {
 			// The inventory is the crates world menu
+
+			CratesMenu cratesMenu = new CratesMenu();
+			cratesMenu.event(Menu.CRATES_WORLDS, event);
+
+			event.setCancelled(true);
+		} else if (ChatColor.stripColor(event.getInventory().getTitle()).equalsIgnoreCase(Menu.CRATES_SELECTOR.getTitle())) {
+			// The inventory is the crates selector menu
+
+			CratesMenu cratesMenu = new CratesMenu();
+			cratesMenu.event(Menu.CRATES_SELECTOR, event);
 
 			event.setCancelled(true);
 		}
