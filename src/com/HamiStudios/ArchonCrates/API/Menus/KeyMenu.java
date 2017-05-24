@@ -3,14 +3,15 @@ package com.HamiStudios.ArchonCrates.API.Menus;
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Menu;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
-import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
-import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
-import com.HamiStudios.ArchonCrates.API.Objects.Key;
-import com.HamiStudios.ArchonCrates.API.Operations.GiveKeyOperation;
+import com.HamiStudios.ArchonCrates.API.Events.OnKeyGiven;
 import com.HamiStudios.ArchonCrates.API.Libs.Fetcher;
 import com.HamiStudios.ArchonCrates.API.Libs.Glow;
 import com.HamiStudios.ArchonCrates.API.Libs.ItemBuilder;
 import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
+import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
+import com.HamiStudios.ArchonCrates.API.Objects.Key;
+import com.HamiStudios.ArchonCrates.API.Operations.GiveKeyOperation;
 import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -217,6 +218,9 @@ public class KeyMenu {
 
 									onlinePlayer.getInventory().addItem(keyItem.build());
 
+									// Call KeyGiven Event
+									this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer(player), new ACPlayer(onlinePlayer), key, false));
+
 								}
 
 								// Send the player a message so they know the key has been added to their inventory
@@ -263,6 +267,9 @@ public class KeyMenu {
 								}
 
 								operation.getGiveTo().getInventory().addItem(keyItem.build());
+
+								// Call KeyGiven Event
+								this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer(player), new ACPlayer(operation.getGiveTo()), key, false));
 
 
 								// Send the player a message so they know the key has been added to their inventory
@@ -311,6 +318,9 @@ public class KeyMenu {
 									ACPlayer acPlayer = new ACPlayer(onlinePlayer);
 									acPlayer.addVirtualKey(key, operation.getAmount());
 
+									// Call KeyGiven Event
+									this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer(player), new ACPlayer(onlinePlayer), key, true));
+
 								}
 
 								// Send the player a message so they know the key has been added to their inventory
@@ -346,6 +356,9 @@ public class KeyMenu {
 								ACPlayer acPlayer = new ACPlayer(player);
 
 								acPlayer.addVirtualKey(key, operation.getAmount());
+
+								// Call KeyGiven Event
+								this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer(player), acPlayer, key, true));
 
 								// Send the player a message so they know the key has been added to their inventory
 								player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_KEY_GIVEN_PLAYER)

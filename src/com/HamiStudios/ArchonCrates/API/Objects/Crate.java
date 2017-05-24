@@ -20,7 +20,7 @@ public class Crate {
 	private Sound openSound;
 	private Sound scrollSound;
 	private Sound winSound;
-	private boolean displayPlayerEffects;
+	private boolean displayEffects;
 	private boolean displayFireworks;
 	private boolean broadcastWin;
 	private boolean sendPlayerMessage;
@@ -28,6 +28,10 @@ public class Crate {
 	private int showcaseDuration;
 	private boolean displayColouredGlass;
 	private ArrayList<Prize> prizes;
+	private ArrayList<Key> keys;
+	private String playerMessage;
+	private String broadcastMessage;
+	private String invalidKeyMessage;
 	
 	private Crates crateFile;
 	private boolean crateIsValid = true;
@@ -46,14 +50,18 @@ public class Crate {
 			this.openSound = GetSound.get((String) this.crateFile.get("Crates." + ID + ".sounds.open"), ID, Files.CRATES);
 			this.scrollSound = GetSound.get((String) this.crateFile.get("Crates." + ID + ".sounds.scroll"), ID, Files.CRATES);
 			this.winSound = GetSound.get((String) this.crateFile.get("Crates." + ID + ".sounds.win"), ID, Files.CRATES);
-			this.displayPlayerEffects = (boolean) this.crateFile.get("Crates." + ID + ".win.playerEffects");
 			this.displayFireworks = (boolean) this.crateFile.get("Crates." + ID + ".win.firework");
 			this.broadcastWin = (boolean) this.crateFile.get("Crates." + ID + ".win.broadcast");
 			this.sendPlayerMessage = (boolean) this.crateFile.get("Crates." + ID + ".win.messagePlayer");
 			this.scrollDuration = (int) this.crateFile.get("Crates." + ID + ".config.scrollDuration");
 			this.showcaseDuration = (int) this.crateFile.get("Crates." + ID + ".config.showcaseDuration");
 			this.displayColouredGlass = (boolean) this.crateFile.get("Crates." + ID + ".config.colouredGlass");
-			
+			this.displayEffects = (boolean) this.crateFile.get("Crates." + ID + ".config.crateEffects");
+
+			this.playerMessage = (String) this.crateFile.get("Crates." + ID + ".messages.player");
+			this.broadcastMessage = (String) this.crateFile.get("Crates." + ID + ".messages.broadcast");
+			this.invalidKeyMessage = (String) this.crateFile.get("Crates." + ID + ".messages.wrongKey");
+
 			this.prizes = new ArrayList<>();
 			
 			/*
@@ -63,6 +71,21 @@ public class Crate {
 			for(String prizeID : this.crateFile.getFileConfiguration().getStringList("Crates." + ID + ".prizes")) {
 				Prize prize = Find.prize(prizeID);
 				if(prize.valid()) { this.prizes.add(prize); }
+				else {
+					this.crateIsValid = false;
+					break;
+				}
+			}
+
+			this.keys = new ArrayList<>();
+
+			/*
+			 * Get the list of prize IDs and go through each and create a Prize object, if it is valid add
+			 * it to the array else set the crate to not valid
+			*/
+			for(String keyID : this.crateFile.getFileConfiguration().getStringList("Crates." + ID + ".keys")) {
+				Key key = Find.key(keyID);
+				if(key.valid()) { this.keys.add(key); }
 				else {
 					this.crateIsValid = false;
 					break;
@@ -120,11 +143,6 @@ public class Crate {
 		return this.winSound;
 	}
 	
-	// Should the crate display effects around the player
-	public boolean displayEffects() {
-		return this.displayPlayerEffects;
-	}
-	
 	// Should a firework go off when a player wins
 	public boolean firework() {
 		return this.displayFireworks;
@@ -153,7 +171,24 @@ public class Crate {
 	// Should display coloured glass
 	public boolean showColouredGlass() { return this.displayColouredGlass; }
 
+	// Should display effects around the crate
+	public boolean displayEffects() {
+		return this.displayEffects;
+	}
+
 	// Get an array of Prize objects
 	public ArrayList<Prize> getPrizes() { return this.prizes; }
+
+	// Get an array of Key objects
+	public ArrayList<Key> getKeys() { return this.keys; }
+
+	// Get the player message
+	public String getPlayerMessage() { return this.playerMessage; }
+
+	// Get the broadcast message
+	public String getBroadcastMessage() { return this.broadcastMessage; }
+
+	// Get the invalid key message
+	public String getInvalidKeyMessage() { return this.invalidKeyMessage; }
 	
 }

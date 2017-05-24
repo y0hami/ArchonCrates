@@ -98,13 +98,13 @@ public class Crates implements FileInterface {
 			this.set("Crates.default.sounds.open", "BLOCK_CHEST_OPEN");
 			this.set("Crates.default.sounds.scroll", "BLOCK_NOTE_BASS");
 			this.set("Crates.default.sounds.win", "ENTITY_PLAYER_LEVELUP");
-			this.set("Crates.default.win.playerEffects", false);
 			this.set("Crates.default.win.firework", true);
 			this.set("Crates.default.win.broadcast", false);
 			this.set("Crates.default.win.messagePlayer", true);
-			this.set("Crates.default.config.scrollDuration", 8);
+			this.set("Crates.default.config.scrollDuration", -1);
 			this.set("Crates.default.config.showcaseDuration", 10);
 			this.set("Crates.default.config.colouredGlass", true);
+			this.set("Crates.default.config.crateEffects", false);
 			
 			List<String> prizes = Arrays.asList(
 					"Diamonds",
@@ -123,8 +123,8 @@ public class Crates implements FileInterface {
 			
 			this.set("Crates.default.keys", keys);
 			
-			this.set("Crates.default.messages.broadcast", "&6<player> &fjust won &6<prize.name> &fin a &6<crate.name>&f crate!");
-			this.set("Crates.default.messages.player", "&fYou just won &6<prize.name>&f!");
+			this.set("Crates.default.messages.broadcast", "&5<player> &fjust won &5<prize_name> &fin a &5<crate_id>&f crate!");
+			this.set("Crates.default.messages.player", "&fYou just won &5<prize_name>&f!");
 			this.set("Crates.default.messages.wrongKey", "&cWrong key, you can't use that key on this crate.");
 			
 			
@@ -136,13 +136,13 @@ public class Crates implements FileInterface {
 			this.set("Crates.golden.sounds.open", "BLOCK_CHEST_OPEN");
 			this.set("Crates.golden.sounds.scroll", "BLOCK_NOTE_BASS");
 			this.set("Crates.golden.sounds.win", "ENTITY_PLAYER_LEVELUP");
-			this.set("Crates.golden.win.playerEffects", true);
 			this.set("Crates.golden.win.firework", true);
 			this.set("Crates.golden.win.broadcast", true);
 			this.set("Crates.golden.win.messagePlayer", true);
-			this.set("Crates.golden.config.scrollDuration", 8);
+			this.set("Crates.golden.config.scrollDuration", -1);
 			this.set("Crates.golden.config.showcaseDuration", 10);
 			this.set("Crates.golden.config.colouredGlass", true);
+			this.set("Crates.golden.config.crateEffects", true);
 			
 			prizes = Arrays.asList(
 					"Diamonds",
@@ -165,8 +165,8 @@ public class Crates implements FileInterface {
 			
 			this.set("Crates.golden.keys", keys);
 			
-			this.set("Crates.golden.messages.broadcast", "&6<player> &fjust won &6<prize.name> &fin a &6<crate.name>&f crate!");
-			this.set("Crates.golden.messages.player", "&fYou just won &6<prize.name>&f!");
+			this.set("Crates.golden.messages.broadcast", "&5<player> &fjust won &5<prize_name> &fin a &5<crate_id>&f crate!");
+			this.set("Crates.golden.messages.player", "&fYou just won &5<prize_name>&f!");
 			this.set("Crates.golden.messages.wrongKey", "&cWrong key, you can't use that key on this crate.");
 			
 			this.save();

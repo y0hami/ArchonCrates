@@ -96,6 +96,7 @@ public class Language implements FileInterface {
 				this.set("Language.NoPermission", "&cYou don't have permission to do that command.");
 				this.set("Language.InvalidCommand", "&cThe command you entered is invalid, try archoncrates help &cto view a list of all commands.");
 				this.set("Language.PlayerOnlyCommand", "&cThis command is only for players.");
+				this.set("Language.CantOpenCrate", "&cYou don't have permission to open this crate.");
 
 				// Commands
 				this.set("Language.Commands.Create.AddedToInv", "&fCrate added to your inventory.");
@@ -110,6 +111,7 @@ public class Language implements FileInterface {
 				this.set("Language.Events.Crate.Created", "&fYou successfully created a &5<crate> &fcrate!");
 				this.set("Language.Events.Crate.Removed", "&fCrate successfully removed.");
 				this.set("Language.Events.Crate.SneakToRemove", "&cYou must be sneaking to remove crates.");
+				this.set("Language.Events.Crate.MustUseKey", "&cYou must use a key to open a crate!");
 				this.set("Language.Events.Key.NoPermission", "&cYou don't have permission to give players keys.");
 				this.set("Language.Events.Key.GivenAll", "&fGiven &5<amount> <key> &fkey(s) to all players.");
 				this.set("Language.Events.Key.GivenPlayer", "&fGiven &5<amount> <key> &fkey(s) to &5<player>&f.");

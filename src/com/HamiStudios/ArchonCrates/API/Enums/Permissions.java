@@ -12,10 +12,11 @@ public enum Permissions {
 	COMMAND_KEY_PLAYER ("archoncrates.command.key.player"),
 	COMMAND_KEY_ALL ("archoncrates.command.key.all"),
 	COMMAND_CRATES ("archoncrates.command.crates"),
-	COMMAND_CRATES_TELEPORT ("archoncrates.command.crates.teleport"),
 
 	// Events
-	CREATE_CRATE ("archoncrates.events.crate.create");
+	CREATE_CRATE ("archoncrates.events.crate.create"),
+	OPEN_PHYSICAL_CRATE ("archoncrates.events.crate.physical.open"),
+	OPEN_VIRTUAL_CRATE ("archoncrates.events.crate.virtual.open");
 
 
 	// Permission value

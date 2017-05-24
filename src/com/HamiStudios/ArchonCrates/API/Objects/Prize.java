@@ -1,9 +1,9 @@
 package com.HamiStudios.ArchonCrates.API.Objects;
 
-import java.util.ArrayList;
-
 import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
 import com.HamiStudios.ArchonCrates.Files.Prizes;
+
+import java.util.ArrayList;
 
 public class Prize {
 
@@ -44,8 +44,8 @@ public class Prize {
 			this.glow = (boolean) this.prizesFile.get("Prizes." + ID + ".glow");
 			this.usePermission = (boolean) this.prizesFile.get("Prizes." + ID + ".permission.use");
 			this.permission = (String) this.prizesFile.get("Prizes." + ID + ".permission.value");
-			this.globalWinAmount = (String) this.prizesFile.get("Prizes." + ID + ".winAmount.global");
-			this.playerWinAmount = (String) this.prizesFile.get("Prizes." + ID + ".winAmount.player");
+			this.globalWinAmount = (this.prizesFile.get("Prizes." + ID + ".winAmount.global") + "");
+			this.playerWinAmount = (this.prizesFile.get("Prizes." + ID + ".winAmount.player") + "");
 			this.commands = (ArrayList<String>) this.prizesFile.get("Prizes." + ID + ".commands");
 		} catch (NoValueException e) {
 			this.prizeIsValid = false;

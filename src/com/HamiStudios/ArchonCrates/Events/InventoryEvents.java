@@ -5,7 +5,9 @@ import com.HamiStudios.ArchonCrates.API.Menus.CratesMenu;
 import com.HamiStudios.ArchonCrates.API.Menus.CreateMenu;
 import com.HamiStudios.ArchonCrates.API.Menus.KeyMenu;
 import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
+import com.HamiStudios.ArchonCrates.API.Operations.CrateRoll;
 import com.HamiStudios.ArchonCrates.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +29,7 @@ public class InventoryEvents implements Listener {
 	}
 
 	@EventHandler
-	public void onInventoryEvent(InventoryClickEvent event) {
+	public void onInventoryEvent(final InventoryClickEvent event) {
 
 		// Check if the inventory in which is clicked is a ArchonCrates menu
 
@@ -81,11 +83,17 @@ public class InventoryEvents implements Listener {
 			cratesMenu.event(Menu.CRATES_SELECTOR, event);
 
 			event.setCancelled(true);
+		} else {
+			// If its a crate menu
+			if(this.main.getOperationsManager().isCrateRoller(new ACPlayer((Player) event.getWhoClicked()))) {
+				// Once closed, reopen it (Prevent the player from closing the menu)
+				event.setCancelled(true);
+			}
 		}
 	}
 
 	@EventHandler
-	public void onInventoryClose(InventoryCloseEvent event) {
+	public void onInventoryClose(final InventoryCloseEvent event) {
 
 		// Check if the inventory in which is clicked is a ArchonCrates menu
 
@@ -112,6 +120,28 @@ public class InventoryEvents implements Listener {
 				this.main.getOperationsManager().removeKeyGiver(new ACPlayer(player));
 			}
 
+		} else {
+			// If its a crate menu
+			ACPlayer acplayer = new ACPlayer((Player) event.getPlayer());
+
+			if(this.main.getOperationsManager().isCrateRoller(acplayer)) {
+				CrateRoll crateRoller = this.main.getOperationsManager().getCrateRoller(acplayer);
+
+				// If the crate roller can't exit the inventory
+				if(!crateRoller.canExit()) {
+					// Once closed, reopen it (Prevent the player from closing the menu)
+					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+						@Override
+						public void run() {
+							event.getPlayer().openInventory(event.getInventory());
+						}
+					}, 1);
+				} else {
+					// If they are crate roller but they can close there menu, remove them from crate rollers
+					this.main.getOperationsManager().getCrateRoller(acplayer).cancelAutoClose();
+					this.main.getOperationsManager().removeCrateRoller(acplayer);
+				}
+			}
 		}
 
 	}

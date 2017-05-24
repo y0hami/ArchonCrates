@@ -2,9 +2,11 @@ package com.HamiStudios.ArchonCrates.Events;
 
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
+import com.HamiStudios.ArchonCrates.API.Events.OnCrateRemoved;
+import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
-import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
 import com.HamiStudios.ArchonCrates.Files.CrateData;
 import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.Material;
@@ -57,6 +59,10 @@ public class BlockBreak implements Listener {
 
 						// Tell the player the crate is removed
 						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_REMOVED));
+
+						// Call CrateRemove Event
+						this.main.getServer().getPluginManager().callEvent(new OnCrateRemoved(player, new Crate(CrateData.get(block.getX(), block.getY(), block.getZ(), block.getWorld()))));
+
 					} else {
 						// Tell the player they need to sneak to remove crates
 						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_SNEAK_TO_REMOVE));
@@ -87,6 +93,10 @@ public class BlockBreak implements Listener {
 
 							// Tell the player the crate is removed
 							player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_REMOVED));
+
+							// Call CrateRemove Event
+							this.main.getServer().getPluginManager().callEvent(new OnCrateRemoved(player, new VirtualCrate()));
+
 						} else {
 							// Tell the player they need to sneak to remove crates
 							player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_SNEAK_TO_REMOVE));

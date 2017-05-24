@@ -3,6 +3,7 @@ package com.HamiStudios.ArchonCrates.Commands;
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Menu;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
+import com.HamiStudios.ArchonCrates.API.Events.OnKeyGiven;
 import com.HamiStudios.ArchonCrates.API.Libs.Glow;
 import com.HamiStudios.ArchonCrates.API.Libs.HelpPageBuilder;
 import com.HamiStudios.ArchonCrates.API.Libs.ItemBuilder;
@@ -177,6 +178,9 @@ public class KeyCommand implements Command {
 												}
 
 												player.getInventory().addItem(keyItem.build());
+
+												// Call KeyGiven Event
+												this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer((Player) sender), new ACPlayer(player), key, false));
 											}
 
 											// Send the player a message so they know the key has been added to their inventory
@@ -191,6 +195,9 @@ public class KeyCommand implements Command {
 
 												ACPlayer acPlayer = new ACPlayer(onlinePlayer);
 												acPlayer.addVirtualKey(key, amount);
+
+												// Cal KeyGiven Event
+												this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer((Player) sender), acPlayer, key, true));
 
 											}
 
@@ -230,6 +237,9 @@ public class KeyCommand implements Command {
 													.replaceAll("<amount>", amount + "")
 													.replaceAll("<player>", givePlayer.getName()));
 
+											// Call KeyGiven Event
+											this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer((Player) sender), new ACPlayer(givePlayer), key, false));
+
 										} else if(args[3].equalsIgnoreCase("virtual") || args[3].equalsIgnoreCase("v")) {
 
 											// For all the online players add a key to there inventory
@@ -241,6 +251,9 @@ public class KeyCommand implements Command {
 													.replaceAll("<key>", key.getID())
 													.replaceAll("<amount>", amount + "")
 													.replaceAll("<player>", givePlayer.getName()));
+
+											// Call KeyGiven Event
+											this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer((Player) sender), new ACPlayer(givePlayer), key, true));
 
 										}
 

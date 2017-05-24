@@ -8,6 +8,7 @@ import com.HamiStudios.ArchonCrates.Files.VirtualCrates;
 import org.bukkit.Sound;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class VirtualCrate {
 
@@ -25,7 +26,7 @@ public class VirtualCrate {
 	private int scrollDuration;
 	private int showcaseDuration;
 	private boolean displayColouredGlass;
-	private ArrayList<Key> keys;
+	private HashMap<Key, ArrayList<Prize>> keys;
 	private String broadcastMessage;
 	private String playerMessage;
 
@@ -53,15 +54,27 @@ public class VirtualCrate {
 			this.showcaseDuration = (int) this.crateFile.get("Virtual Crate.config.showcaseDuration");
 			this.displayColouredGlass = (boolean) this.crateFile.get("Virtual Crate.config.colouredGlass");
 
-			this.keys = new ArrayList<>();
+			this.keys = new HashMap<>();
 
 			/*
 			 * Get the list of key IDs and go through each and create a Key object, if it is valid add
 			 * it to the array else set the crate to not valid
 			*/
-			for(String keyID : this.crateFile.getFileConfiguration().getStringList("Virtual Crate.keys")) {
+			for(String keyID : this.crateFile.getFileConfiguration().getConfigurationSection("Virtual Crate.keys").getKeys(false)) {
 				Key key = new Key(keyID);
-				if(key.valid()) { this.keys.add(key); }
+				if(key.valid()) {
+					ArrayList<Prize> prizes = new ArrayList<>();
+					for (String prizeName : this.crateFile.getFileConfiguration().getStringList("Virtual Crate.keys." + keyID)) {
+						Prize prize = new Prize(prizeName);
+						if(prize.valid()) { prizes.add(prize); }
+						else {
+							this.crateIsValid = false;
+							break;
+						}
+					}
+
+					this.keys.put(key, prizes);
+				}
 				else {
 					this.crateIsValid = false;
 					break;
@@ -150,7 +163,7 @@ public class VirtualCrate {
 	public boolean showColouredGlass() { return this.displayColouredGlass; }
 
 	// Get an array of Key objects
-	public ArrayList<Key> getKeys() { return this.keys; }
+	public HashMap<Key, ArrayList<Prize>> getKeys() { return this.keys; }
 
 	// Get the broadcast message
 	public String getBroadcastMessage() { return this.broadcastMessage; }

@@ -222,7 +222,7 @@ public class Prizes implements FileInterface {
 			this.set("Prizes.CrateKey.winAmount.player", "*");
 			
 			commands = new ArrayList<>();
-			commands.add("archoncrates key <player> default 1");
+			commands.add("archoncrates key <player> 1 default physical");
 			
 			this.set("Prizes.CrateKey.commands", commands);
 			
@@ -241,7 +241,7 @@ public class Prizes implements FileInterface {
 			this.set("Prizes.DevHead.winAmount.player", "*");
 			
 			commands = new ArrayList<>();
-			commands.add("minecraft:give <player> skull 1 3 {SkullOwner:\"Hamiii\",Unbreakable:1}");
+			commands.add("minecraft:give <player> skull 1 3 {SkullOwner:\"hammy2899\",Unbreakable:1}");
 			
 			this.set("Prizes.DevHead.commands", commands);
 			
@@ -282,6 +282,25 @@ public class Prizes implements FileInterface {
 			commands.add("minecraft:give <player> emerald 3");
 			
 			this.set("Prizes.Emeralds.commands", commands);
+
+
+			// Beacon Prize
+			this.set("Prizes.Beacon.name", "&3Beacon");
+			this.set("Prizes.Beacon.item.ID", 138);
+			this.set("Prizes.Beacon.item.data", 0);
+			this.set("Prizes.Beacon.item.stackSize", 1);
+			this.set("Prizes.Beacon.chance", 1.0);
+			this.set("Prizes.Beacon.broadcast", true);
+			this.set("Prizes.Beacon.glow", true);
+			this.set("Prizes.Beacon.permission.use", false);
+			this.set("Prizes.Beacon.permission.value", "archoncrates.prize.beacon");
+			this.set("Prizes.Beacon.winAmount.global", "*");
+			this.set("Prizes.Beacon.winAmount.player", "*");
+
+			commands = new ArrayList<>();
+			commands.add("minecraft:give <player> beacon 3");
+
+			this.set("Prizes.Beacon.commands", commands);
 			
 			this.save();
 

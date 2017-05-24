@@ -8,8 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 public class VirtualCrates implements FileInterface {
 
@@ -106,13 +105,44 @@ public class VirtualCrates implements FileInterface {
 			this.set("Virtual Crate.config.showcaseDuration", 10);
 			this.set("Virtual Crate.config.colouredGlass", true);
 
-			List<String> keys = Arrays.asList(
-					"default",
-						"golden",
-						"unique"
-					);
+			ArrayList<String> prizes = new ArrayList<>();
+			prizes.add("Diamonds");
+			prizes.add("Food");
+			prizes.add("Sword");
+			prizes.add("Gold");
+			prizes.add("Tools");
+			prizes.add("DevHead");
 
-			this.set("Virtual Crate.keys", keys);
+			this.set("Virtual Crate.keys.default", prizes);
+
+			prizes = new ArrayList<>();
+			prizes.add("Diamonds");
+			prizes.add("Food");
+			prizes.add("Sword");
+			prizes.add("Gold");
+			prizes.add("Tools");
+			prizes.add("DevHead");
+			prizes.add("CrateKey");
+			prizes.add("NetherStar");
+			prizes.add("GodApple");
+			prizes.add("Emeralds");
+
+			this.set("Virtual Crate.keys.golden", prizes);
+
+			prizes = new ArrayList<>();
+			prizes.add("Diamonds");
+			prizes.add("Food");
+			prizes.add("Sword");
+			prizes.add("Gold");
+			prizes.add("Tools");
+			prizes.add("DevHead");
+			prizes.add("CrateKey");
+			prizes.add("NetherStar");
+			prizes.add("GodApple");
+			prizes.add("Emeralds");
+			prizes.add("Beacon");
+
+			this.set("Virtual Crate.keys.unique", prizes);
 
 			this.set("Virtual Crate.messages.broadcast", "&6<player> &fjust won &6<prize.name> &fin a &6<crate.name>&f crate!");
 			this.set("Virtual Crate.messages.player", "&fYou just won &6<prize.name>&f!");

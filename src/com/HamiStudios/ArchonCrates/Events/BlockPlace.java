@@ -2,10 +2,11 @@ package com.HamiStudios.ArchonCrates.Events;
 
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
+import com.HamiStudios.ArchonCrates.API.Events.OnCrateCreated;
+import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
 import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
-import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.Files.CrateData;
 import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.ChatColor;
@@ -50,6 +51,8 @@ public class BlockPlace implements Listener {
 
 						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_CREATED).replaceAll("<crate>", crate.getID()));
 
+						// Call the CrateCreate Event
+						this.main.getServer().getPluginManager().callEvent(new OnCrateCreated(player, crate));
 					}
 				} else if(item.getItemMeta().getLore().size() == 2) {
 					if(ChatColor.stripColor(item.getItemMeta().getLore().get(0)).equalsIgnoreCase("Place down to create")
@@ -61,6 +64,8 @@ public class BlockPlace implements Listener {
 
 						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_CREATED).replaceAll("<crate>", "Virtual"));
 
+						// Call the CrateCreate Event
+						this.main.getServer().getPluginManager().callEvent(new OnCrateCreated(player, new VirtualCrate()));
 					}
 				}
 			}

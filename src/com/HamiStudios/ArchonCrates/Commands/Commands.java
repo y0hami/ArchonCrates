@@ -2,8 +2,8 @@ package com.HamiStudios.ArchonCrates.Commands;
 
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
-import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
 import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
 import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -39,7 +39,7 @@ public class Commands implements CommandExecutor {
 						helpCommand.displayHelp(sender);
 					} else {
 						// If no permissions send ERROR_NO_PERMISSION message
-						sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
+						sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_NO_PERMISSION));
 					}
 
 				} else if (args.length == 1) {
@@ -77,7 +77,7 @@ public class Commands implements CommandExecutor {
 							break;
 						default:
 							// If no command is matched display ERROR_INVALID_COMMAND message
-							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
+							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 							break;
 					}
 				} else if (args.length == 2) {
@@ -101,7 +101,7 @@ public class Commands implements CommandExecutor {
 							break;
 						default:
 							// If no command matched display ERROR_INVALID_COMMAND message
-							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
+							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 							break;
 					}
 
@@ -119,7 +119,7 @@ public class Commands implements CommandExecutor {
 							break;
 						default:
 							// If no command matched display ERROR_INVALID_COMMAND message
-							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
+							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 							break;
 					}
 				} else if (args.length == 4) {
@@ -136,7 +136,7 @@ public class Commands implements CommandExecutor {
 							break;
 						default:
 							// If no command matched display ERROR_INVALID_COMMAND message
-							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
+							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 							break;
 					}
 				} else if (args.length == 5) {
@@ -153,12 +153,12 @@ public class Commands implements CommandExecutor {
 							break;
 						default:
 							// If no command matched display ERROR_INVALID_COMMAND message
-							sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
+							sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 							break;
 					}
 				} else {
 					// If arguments length is larger then 3 there is no commands so display ERROR_INVALID_COMMAND message
-					sender.sendMessage(LanguageManager.get(LanguageType.ERROR_PREFIX) + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
+					sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
 				}
 
 				return true;

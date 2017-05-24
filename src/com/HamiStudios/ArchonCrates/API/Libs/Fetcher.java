@@ -1,7 +1,6 @@
 package com.HamiStudios.ArchonCrates.API.Libs;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
-import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
 import com.HamiStudios.ArchonCrates.API.Objects.Key;
 import com.HamiStudios.ArchonCrates.API.Objects.Prize;
@@ -81,15 +80,10 @@ public class Fetcher {
 		// Create an empty array to store the keys
 		ArrayList<Key> keys = new ArrayList<>();
 
-		try {
-			// For every key ID in the key file
-			for (String keyID : (ArrayList<String>) virtualCrates.get("Virtual Crate.keys")) {
-				// Create a new instance of the key
-				Key key = new Key(keyID);
-				// If the key is valid add it to the key array
-				if(key.valid()) { keys.add(key); }
-			}
-		} catch(NoValueException e) { }
+		for (String keyName : virtualCrates.getFileConfiguration().getConfigurationSection("Virtual Crate.keys").getKeys(false)) {
+			Key key = new Key(keyName);
+			if(key.valid()) { keys.add(key); }
+		}
 
 		// Return the array of keys
 		return keys;

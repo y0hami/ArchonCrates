@@ -8,6 +8,7 @@ import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
 import com.HamiStudios.ArchonCrates.API.Objects.Crate;
 import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
+import com.HamiStudios.ArchonCrates.API.Objects.VirtualCrate;
 import com.HamiStudios.ArchonCrates.Files.CrateData;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -89,24 +90,45 @@ public class CratesMenu {
 		this.crateSelectorMenu = Bukkit.createInventory(null, invSize, ChatColor.translateAlternateColorCodes('&', "&5" + Menu.CRATES_SELECTOR.getTitle()));
 
 		for (HashMap<String, Object> crateRow : crates) {
-			Crate crate = new Crate((String) crateRow.get("CRATE_TYPE"));
+			if(((String) crateRow.get("CRATE_TYPE")).equalsIgnoreCase("VIRTUAL_CRATE")) {
+				VirtualCrate crate = new VirtualCrate();
 
-			// Adds the crate item
-			this.crateSelectorMenu.addItem(new ItemBuilder()
-					.setMaterial(Material.getMaterial(crate.getBlockID()))
-					.setName(crate.getTitle())
-					.setData((short) crate.getBlockData())
-					.setLore(new ItemLore()
-							.add("&7Crate ID: &f" + crate.getID())
-							.add(" ")
-							.add("&7X: &f" + crateRow.get("X"))
-							.add("&7Y: &f" + crateRow.get("Y"))
-							.add("&7Z: &f" + crateRow.get("Z"))
-							.add("&7World: &f" + crateRow.get("WORLD"))
-							.build()
-					)
-					.build()
-			);
+				// Adds the crate item
+				this.crateSelectorMenu.addItem(new ItemBuilder()
+						.setMaterial(Material.getMaterial(crate.getBlockID()))
+						.setName(crate.getTitle())
+						.setData((short) crate.getBlockData())
+						.setLore(new ItemLore()
+								.add("&7Crate ID: &5VIRTUAL_CRATE")
+								.add(" ")
+								.add("&7X: &f" + crateRow.get("X"))
+								.add("&7Y: &f" + crateRow.get("Y"))
+								.add("&7Z: &f" + crateRow.get("Z"))
+								.add("&7World: &f" + crateRow.get("WORLD"))
+								.build()
+						)
+						.build()
+				);
+			} else {
+				Crate crate = new Crate((String) crateRow.get("CRATE_TYPE"));
+
+				// Adds the crate item
+				this.crateSelectorMenu.addItem(new ItemBuilder()
+						.setMaterial(Material.getMaterial(crate.getBlockID()))
+						.setName(crate.getTitle())
+						.setData((short) crate.getBlockData())
+						.setLore(new ItemLore()
+								.add("&7Crate ID: &f" + crate.getID())
+								.add(" ")
+								.add("&7X: &f" + crateRow.get("X"))
+								.add("&7Y: &f" + crateRow.get("Y"))
+								.add("&7Z: &f" + crateRow.get("Z"))
+								.add("&7World: &f" + crateRow.get("WORLD"))
+								.build()
+						)
+						.build()
+				);
+			}
 		}
 
 	}
@@ -168,6 +190,7 @@ public class CratesMenu {
 
 									// Get an instance of the ACPlayer
 									ACPlayer player = new ACPlayer((Player) event.getWhoClicked());
+
 
 									// Check if the world still exits
 									if(Bukkit.getWorld(worldName) != null) {
