@@ -1,7 +1,6 @@
 package com.HamiStudios.ArchonCrates.Events;
 
 import com.HamiStudios.ArchonCrates.API.Enums.PlayerDataType;
-import com.HamiStudios.ArchonCrates.API.Libs.Console;
 import com.HamiStudios.ArchonCrates.API.Objects.ACPlayer;
 import com.HamiStudios.ArchonCrates.Files.PlayerData;
 import com.HamiStudios.ArchonCrates.Main;
@@ -25,9 +24,6 @@ public class PlayerJoin implements Listener {
 	// On Player Join
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		// Creates an instance of the console
-		Console console = new Console(this.main);
-
 		// If it doesn't exist, create it (New players)
 		if(!PlayerData.playerExists(new ACPlayer(event.getPlayer()))) {
 			// Creates the players data file

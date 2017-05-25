@@ -82,12 +82,16 @@ public class CrateRoll {
 		player.getPlayer().openInventory(this.crateMenu);
 	}
 
-	public void roll(ACPlayer player, VirtualCrate crate, Key key, Block block) {
+	public void roll(ACPlayer player, VirtualCrate crate, Key usedKey, Block block) {
+
+		// Set instances of the object passed to the roll method
 		this.player = player;
 		this.virtualCrate = crate;
-		this.prizes = crate.getKeys().get(key.getID());
+		this.usedKey = usedKey;
+		this.prizes = crate.getKeys().get(usedKey.getID());
 
-		this.crateMenu = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('&', this.virtualCrate.getTitle()));
+		// Create the crate menu
+		this.crateMenu = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('&', this.crate.getTitle()));
 
 		// For all slots but the middle one, set it to a black glass pane
 		fillBlankPanes();
@@ -101,6 +105,13 @@ public class CrateRoll {
 		// Add the new Crate Roller
 		this.main.getOperationsManager().addCrateRoller(this);
 
+		// Rotate the prizes to display a random prize
+		rotatePrizes(block.getLocation());
+
+		// Play the crate open sound
+		playSound(player.getPlayer().getLocation(), this.crate.getOpenSound());
+
+		// Open the crate menu
 		player.getPlayer().openInventory(this.crateMenu);
 	}
 

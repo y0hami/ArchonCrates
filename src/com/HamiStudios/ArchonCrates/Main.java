@@ -61,7 +61,7 @@ public class Main extends JavaPlugin {
 		ArrayList<Files> missingFiles = new ArrayList<>();
 		
 		// Total files
-		int totalFiles = 6;
+		int totalFiles = 8;
 		
 		// Check if crates.yml exists
 		Crates cratesFile = new Crates();
@@ -103,6 +103,11 @@ public class Main extends JavaPlugin {
 			missingFiles.add(Files.PLAYER_DATA);
 		}
 
+		// Check if vc layout.json exists
+		if(!VCLayout.exists()) {
+			missingFiles.add(Files.VIRTUAL_CRATE_LAYOUT);
+		}
+
 		/* If any files are missing announce how many are missing out of the total of files
 		 * and then announce the creation of the new files
 		 */
@@ -117,27 +122,30 @@ public class Main extends JavaPlugin {
 				console.log("  &7- &fCreating &5" + file.getFileName(), false);
 				
 				// Find out what file is missing then execute the create method
-				switch (file.getName()) {
-					case "Crates":
+				switch (file) {
+					case CRATES:
 						cratesFile.create();
 						break;
-					case "Virtual Crates":
+					case VIRTUAL_CRATES:
 						virtualCrates.create();
 						break;
-					case "Keys":
+					case KEYS:
 						keysFile.create();
 						break;
-					case "Prizes":
+					case PRIZES:
 						prizesFile.create();
 						break;
-					case "Language":
+					case LANGUAGE:
 						languageFile.create();
 						break;
-					case "CrateData":
+					case CRATE_DATA:
 						CrateData.createFile();
 						break;
-					case "PlayersData":
+					case PLAYER_DATA:
 						PlayerData.createFile();
+						break;
+					case VIRTUAL_CRATE_LAYOUT:
+						VCLayout.createFile();
 						break;
 					default:
 						break;

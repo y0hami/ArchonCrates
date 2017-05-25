@@ -21,7 +21,6 @@ public class Key {
 
 
 	// Key Object Constructor
-	@SuppressWarnings("unchecked")
 	public Key(String ID) {
 		this.ID = ID;
 
