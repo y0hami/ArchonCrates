@@ -180,7 +180,7 @@ public class KeyCommand implements Command {
 												player.getInventory().addItem(keyItem.build());
 
 												// Call KeyGiven Event
-												this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer((Player) sender), new ACPlayer(player), key, false));
+												this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(null, new ACPlayer(player), key, false));
 											}
 
 											// Send the player a message so they know the key has been added to their inventory
@@ -197,7 +197,7 @@ public class KeyCommand implements Command {
 												acPlayer.addVirtualKey(key, amount);
 
 												// Cal KeyGiven Event
-												this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer((Player) sender), acPlayer, key, true));
+												this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(null, acPlayer, key, true));
 
 											}
 
@@ -238,7 +238,7 @@ public class KeyCommand implements Command {
 													.replaceAll("<player>", givePlayer.getName()));
 
 											// Call KeyGiven Event
-											this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer((Player) sender), new ACPlayer(givePlayer), key, false));
+											this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(null, new ACPlayer(givePlayer), key, false));
 
 										} else if(args[3].equalsIgnoreCase("virtual") || args[3].equalsIgnoreCase("v")) {
 
@@ -253,7 +253,7 @@ public class KeyCommand implements Command {
 													.replaceAll("<player>", givePlayer.getName()));
 
 											// Call KeyGiven Event
-											this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(new ACPlayer((Player) sender), new ACPlayer(givePlayer), key, true));
+											this.main.getServer().getPluginManager().callEvent(new OnKeyGiven(null, new ACPlayer(givePlayer), key, true));
 
 										}
 

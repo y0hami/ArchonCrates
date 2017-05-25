@@ -100,8 +100,13 @@ public class PlayerData {
 		HashMap<String, Integer> keys = (HashMap<String, Integer>) get(player, PlayerDataType.VIRTUAL_KEYS);
 
 		if(keys.get(key.getID()) != null) {
-			DatabaseHandler.execute(Database.PLAYERS_DATA, Tables.KEYS_DATA, "UPDATE `keys`" +
-					"SET `AMOUNT`=" + (keys.get(key.getID())-amount) + " WHERE `UUID`='" + player.getUUID() + "' AND `KEY_ID`='" + key.getID() + "';");
+			if(keys.get(key.getID()) <= 0) {
+				DatabaseHandler.execute(Database.PLAYERS_DATA, Tables.KEYS_DATA, "UPDATE `keys`" +
+						"SET `AMOUNT`=0 WHERE `UUID`='" + player.getUUID() + "' AND `KEY_ID`='" + key.getID() + "';");
+			} else {
+				DatabaseHandler.execute(Database.PLAYERS_DATA, Tables.KEYS_DATA, "UPDATE `keys`" +
+						"SET `AMOUNT`=" + (keys.get(key.getID())-amount) + " WHERE `UUID`='" + player.getUUID() + "' AND `KEY_ID`='" + key.getID() + "';");
+			}
 		}
 	}
 

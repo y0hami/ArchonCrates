@@ -19,7 +19,7 @@ public class VirtualCrate {
 	private Sound openSound;
 	private Sound scrollSound;
 	private Sound winSound;
-	private boolean displayPlayerEffects;
+	private boolean displayCrateEffects;
 	private boolean displayFireworks;
 	private boolean broadcastWin;
 	private boolean sendPlayerMessage;
@@ -46,7 +46,7 @@ public class VirtualCrate {
 			this.openSound = GetSound.get((String) this.crateFile.get("Virtual Crate.sounds.open"), null, Files.VIRTUAL_CRATES);
 			this.scrollSound = GetSound.get((String) this.crateFile.get("Virtual Crate.sounds.scroll"), null, Files.VIRTUAL_CRATES);
 			this.winSound = GetSound.get((String) this.crateFile.get("Virtual Crate.sounds.win"), null, Files.VIRTUAL_CRATES);
-			this.displayPlayerEffects = (boolean) this.crateFile.get("Virtual Crate.win.playerEffects");
+			this.displayCrateEffects = (boolean) this.crateFile.get("Virtual Crate.win.crateEffects");
 			this.displayFireworks = (boolean) this.crateFile.get("Virtual Crate.win.firework");
 			this.broadcastWin = (boolean) this.crateFile.get("Virtual Crate.win.broadcast");
 			this.sendPlayerMessage = (boolean) this.crateFile.get("Virtual Crate.win.messagePlayer");
@@ -131,7 +131,7 @@ public class VirtualCrate {
 
 	// Should the crate display effects around the player
 	public boolean displayEffects() {
-		return this.displayPlayerEffects;
+		return this.displayCrateEffects;
 	}
 
 	// Should a firework go off when a player wins

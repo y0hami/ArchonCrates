@@ -24,13 +24,23 @@ public class CrateRoll {
 	private Main main;
 
 	private ACPlayer player;
-	private Crate crate;
 	private Key usedKey;
-	private VirtualCrate virtualCrate;
 	private ArrayList<Prize> prizes;
 	private Prize lastPrize;
 	private Inventory crateMenu;
 	private boolean canExit = false;
+
+	// Crate Variables
+	private int scrollDuration;
+	private Sound scrollSound;
+	private Sound winSound;
+	private boolean firework;
+	private boolean broadcast;
+	private boolean sendPlayerMessage;
+	private String playerMessage;
+	private String broadcastMessage;
+	private String crateID;
+	private int showcaseDuration;
 
 
 	// Tasks
@@ -51,14 +61,29 @@ public class CrateRoll {
 
 
 	public void roll(ACPlayer player, Crate crate, Key usedKey, Block block) {
+
+		player.getPlayer().closeInventory();
+
 		// Set instances of the object passed to the roll method
 		this.player = player;
-		this.crate = crate;
 		this.usedKey = usedKey;
 		this.prizes = crate.getPrizes();
 
+
+		// Set Crate Variables
+		this.scrollDuration = crate.getScrollDuration();
+		this.scrollSound = crate.getScrollSound();
+		this.winSound = crate.getWinSound();
+		this.firework = crate.firework();
+		this.broadcast = crate.broadcast();
+		this.sendPlayerMessage = crate.playerMessage();
+		this.playerMessage = crate.getPlayerMessage();
+		this.broadcastMessage = crate.getBroadcastMessage();
+		this.crateID = crate.getID();
+		this.showcaseDuration = crate.getShowcaseDuration();
+
 		// Create the crate menu
-		this.crateMenu = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('&', this.crate.getTitle()));
+		this.crateMenu = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('&', crate.getTitle()));
 
 		// For all slots but the middle one, set it to a black glass pane
 		fillBlankPanes();
@@ -76,7 +101,7 @@ public class CrateRoll {
 		rotatePrizes(block.getLocation());
 
 		// Play the crate open sound
-		playSound(player.getPlayer().getLocation(), this.crate.getOpenSound());
+		playSound(player.getPlayer().getLocation(), crate.getOpenSound());
 
 		// Open the crate menu
 		player.getPlayer().openInventory(this.crateMenu);
@@ -84,14 +109,35 @@ public class CrateRoll {
 
 	public void roll(ACPlayer player, VirtualCrate crate, Key usedKey, Block block) {
 
+		player.getPlayer().closeInventory();
+
 		// Set instances of the object passed to the roll method
 		this.player = player;
-		this.virtualCrate = crate;
 		this.usedKey = usedKey;
-		this.prizes = crate.getKeys().get(usedKey.getID());
+
+		for (HashMap.Entry<Key, ArrayList<Prize>> key : crate.getKeys().entrySet()) {
+			if(key.getKey().getID().equals(usedKey.getID())) {
+				this.prizes = key.getValue();
+				break;
+			}
+		}
+
+
+		// Set Crate Variables
+		this.scrollDuration = crate.getScrollDuration();
+		this.scrollSound = crate.getScrollSound();
+		this.winSound = crate.getWinSound();
+		this.firework = crate.firework();
+		this.broadcast = crate.broadcast();
+		this.sendPlayerMessage = crate.playerMessage();
+		this.playerMessage = crate.getPlayerMessage();
+		this.broadcastMessage = crate.getBroadcastMessage();
+		this.crateID = "Virtual";
+		this.showcaseDuration = crate.getShowcaseDuration();
+
 
 		// Create the crate menu
-		this.crateMenu = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('&', this.crate.getTitle()));
+		this.crateMenu = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('&', crate.getTitle()));
 
 		// For all slots but the middle one, set it to a black glass pane
 		fillBlankPanes();
@@ -109,7 +155,7 @@ public class CrateRoll {
 		rotatePrizes(block.getLocation());
 
 		// Play the crate open sound
-		playSound(player.getPlayer().getLocation(), this.crate.getOpenSound());
+		playSound(player.getPlayer().getLocation(), crate.getOpenSound());
 
 		// Open the crate menu
 		player.getPlayer().openInventory(this.crateMenu);
@@ -179,7 +225,7 @@ public class CrateRoll {
 	// For the possible prizes rotate them in a random order
 	private void rotatePrizes(Location location) {
 
-		if(this.crate.getScrollDuration() == -1) {
+		if(this.scrollDuration == -1) {
 
 			this.stopTask = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.main, new Runnable() {
 				@Override
@@ -209,7 +255,7 @@ public class CrateRoll {
 
 					setCanExit(true);
 				}
-			}, crate.getScrollDuration()*20L);
+			}, this.scrollDuration*20L);
 
 			scroll(false, location);
 
@@ -227,7 +273,7 @@ public class CrateRoll {
 				@Override
 				public void run() {
 					displayPrize(getRandomPrize());
-					playSound(location, crate.getScrollSound());
+					playSound(location, scrollSound);
 				}
 			}, 0, 10L);
 
@@ -237,7 +283,7 @@ public class CrateRoll {
 					Bukkit.getServer().getScheduler().cancelTask(scrollTask1);
 
 					displayPrize(getRandomPrize());
-					playSound(location, crate.getScrollSound());
+					playSound(location, scrollSound);
 				}
 			}, 2*20L, 8L);
 
@@ -247,7 +293,7 @@ public class CrateRoll {
 					Bukkit.getServer().getScheduler().cancelTask(scrollTask2);
 
 					displayPrize(getRandomPrize());
-					playSound(location, crate.getScrollSound());
+					playSound(location, scrollSound);
 				}
 			}, 3*20L, 6L);
 
@@ -257,7 +303,7 @@ public class CrateRoll {
 					Bukkit.getServer().getScheduler().cancelTask(scrollTask3);
 
 					displayPrize(getRandomPrize());
-					playSound(location, crate.getScrollSound());
+					playSound(location, scrollSound);
 				}
 			}, 4*20L, 4L);
 
@@ -267,7 +313,7 @@ public class CrateRoll {
 					Bukkit.getServer().getScheduler().cancelTask(scrollTask4);
 
 					displayPrize(getRandomPrize());
-					playSound(location, crate.getScrollSound());
+					playSound(location, scrollSound);
 				}
 			}, 5*20L, 2L);
 
@@ -278,7 +324,7 @@ public class CrateRoll {
 				@Override
 				public void run() {
 					displayPrize(getRandomPrize());
-					playSound(location, crate.getScrollSound());
+					playSound(location, scrollSound);
 				}
 			}, 0, 8L);
 		}
@@ -457,7 +503,7 @@ public class CrateRoll {
 
 
 		// If the crate should spawn a firework
-		if(this.crate.firework()) {
+		if(this.firework) {
 			// Spawn a firework at the players location
 			Firework firework = this.player.getPlayer().getWorld().spawn(this.player.getPlayer().getLocation(), Firework.class);
 
@@ -483,29 +529,29 @@ public class CrateRoll {
 
 
 		// Play the win sound
-		playSound(this.player.getPlayer().getLocation(), this.crate.getWinSound());
+		playSound(this.player.getPlayer().getLocation(), this.winSound);
 
 
 		// If the crate allows broadcasting on win
-		if(this.crate.broadcast()) {
+		if(this.broadcast) {
 			// If the server should broadcast a win when a player wins
 			if(winningPrize.broadcast()) {
 				Bukkit.getServer().broadcastMessage(LanguageManager.get(LanguageType.PREFIX) +
-						ChatColor.translateAlternateColorCodes('&', this.crate.getBroadcastMessage()
+						ChatColor.translateAlternateColorCodes('&', this.broadcastMessage
 								.replaceAll("<player>", this.player.getName())
 								.replaceAll("<prize_name>", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', winningPrize.getName())))
-								.replaceAll("<crate_id>", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', this.crate.getID())))
+								.replaceAll("<crate_id>", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', this.crateID)))
 						)
 				);
 			}
 		}
 
 		// If the crate allows player messaging
-		if(this.crate.playerMessage()) {
+		if(this.sendPlayerMessage) {
 			this.player.sendMessage(LanguageManager.get(LanguageType.PREFIX) +
-					ChatColor.translateAlternateColorCodes('&', this.crate.getPlayerMessage()
+					ChatColor.translateAlternateColorCodes('&', this.playerMessage
 							.replaceAll("<prize_name>", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', winningPrize.getName())))
-							.replaceAll("<crate_id>", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', this.crate.getID())))
+							.replaceAll("<crate_id>", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', this.crateID)))
 					)
 			);
 		}
@@ -517,7 +563,7 @@ public class CrateRoll {
 			public void run() {
 				player.getPlayer().closeInventory();
 			}
-		}, crate.getShowcaseDuration()*20L);
+		}, this.showcaseDuration*20L);
 
 
 		// Insert win into players database
@@ -531,7 +577,7 @@ public class CrateRoll {
 		// Insert into database
 		DatabaseHandler.execute(Database.PLAYERS_DATA, Tables.WIN_DATA, "INSERT INTO `wins` (`UUID`, `KEY_ID`, `CRATE_TYPE`, `CHANCE_EQUALIZER`, `PRIZE_ID`, `WIN_TIME`)" +
 				"VALUES" +
-				"('" + this.player.getUUID() + "', '" + this.usedKey.getID() + "', '" + this.crate.getID() + "', '" + chanceEqualizer + "', '" + winningPrize.getID() + "', '" + date + "')");
+				"('" + this.player.getUUID() + "', '" + this.usedKey.getID() + "', '" + this.crateID + "', '" + chanceEqualizer + "', '" + winningPrize.getID() + "', '" + date + "')");
 
 	}
 

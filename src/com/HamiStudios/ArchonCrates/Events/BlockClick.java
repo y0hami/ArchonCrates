@@ -63,12 +63,18 @@ public class BlockClick implements Listener {
 
 							// Virtual Crate
 
-							// Add the player to the operation manager
-							this.main.getOperationsManager().addVirtualKeySelector(new VirtualKeySelector(player, event.getClickedBlock()));
+							if(player.hasPermission(Permissions.OPEN_VIRTUAL_CRATE.value())) {
 
-							// Open the virtual key selector menu
-							VirtualCrateMenu virtualCrateMenu = new VirtualCrateMenu(player);
-							player.getPlayer().openInventory(virtualCrateMenu.getMenu());
+								// Add the player to the operation manager
+								this.main.getOperationsManager().addVirtualKeySelector(new VirtualKeySelector(player, event.getClickedBlock()));
+
+								// Open the virtual key selector menu
+								VirtualCrateMenu virtualCrateMenu = new VirtualCrateMenu(player);
+								player.getPlayer().openInventory(virtualCrateMenu.getMenu());
+
+							} else {
+								player.sendMessage(LanguageManager.get(LanguageType.PREFIX) + LanguageManager.get(LanguageType.ERROR_CANT_OPEN_CRATE));
+							}
 
 
 						} else {

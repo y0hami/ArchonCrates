@@ -1,10 +1,13 @@
 package com.HamiStudios.ArchonCrates.Events;
 
+import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
 import com.HamiStudios.ArchonCrates.API.Enums.Menu;
+import com.HamiStudios.ArchonCrates.API.Enums.Permissions;
 import com.HamiStudios.ArchonCrates.API.Enums.PlayerDataType;
 import com.HamiStudios.ArchonCrates.API.Libs.Fetcher;
 import com.HamiStudios.ArchonCrates.API.Libs.Glow;
 import com.HamiStudios.ArchonCrates.API.Libs.ItemBuilder;
+import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.API.Menus.CratesMenu;
 import com.HamiStudios.ArchonCrates.API.Menus.CreateMenu;
 import com.HamiStudios.ArchonCrates.API.Menus.KeyMenu;
@@ -18,6 +21,7 @@ import com.HamiStudios.ArchonCrates.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -101,73 +105,96 @@ public class InventoryEvents implements Listener {
 			// The inventory is a virtual crate key selector menu
 			event.setCancelled(true);
 
-			// Check if they clicked on a key
-			if(event.getCurrentItem().hasItemMeta()) {
-				if(event.getCurrentItem().getItemMeta().hasLore()) {
-					if(event.getCurrentItem().getItemMeta().getLore().size() == 1) {
-						if(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(0)).startsWith("Keys: ")) {
+			if(event.getCurrentItem() != null) {
+				// Check if they clicked on a key
+				if(event.getCurrentItem().hasItemMeta()) {
+					if(event.getCurrentItem().getItemMeta().hasLore()) {
+						if(event.getCurrentItem().getItemMeta().getLore().size() == 1) {
+							if(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(0)).startsWith("Keys: ")) {
 
-							// Create null instance of key to check against
-							Key key = null;
+								// Create null instance of key to check against
+								Key key = null;
 
-							// For all virtual keys
-							for (Key keyCheck : Fetcher.getVirtualKeys()) {
-								// Create a replica of the key
-								ItemBuilder item = new ItemBuilder()
-										.setMaterial(Material.getMaterial(keyCheck.getItemID()))
-										.setData((short) keyCheck.getItemData())
-										.setName(keyCheck.getName())
-										.setLore(keyCheck.getLore());
+								// For all virtual keys
+								for (Key keyCheck : Fetcher.getVirtualKeys()) {
+									// Create a replica of the key
+									ItemBuilder item = new ItemBuilder()
+											.setMaterial(Material.getMaterial(keyCheck.getItemID()))
+											.setData((short) keyCheck.getItemData())
+											.setName(keyCheck.getName())
+											.setLore(keyCheck.getLore());
 
-								if(keyCheck.glow()) {
-									item.addEnchantment(new Glow(99), 0, true);
+									if(keyCheck.glow()) {
+										item.addEnchantment(new Glow(99), 0, true);
+									}
+
+									// Get an instance of the clicked on key
+									ItemStack clickedKey = event.getCurrentItem().clone();
+
+									ItemLore lore = new ItemLore();
+									for (String line : keyCheck.getLore()) {
+										lore.add(line);
+									}
+
+									// Set the lore to the checkKey lore
+									ItemMeta clickedKeyItemMeta = clickedKey.getItemMeta();
+									clickedKeyItemMeta.setLore(lore.build());
+									clickedKey.setItemMeta(clickedKeyItemMeta);
+
+
+									// Check if the keys match
+									if(clickedKey.equals(item.build())) {
+										// If they match the player click on the checkKey
+										key = keyCheck;
+										break;
+									}
+
 								}
 
-								// Get an instance of the clicked on key
-								ItemStack clickedKey = event.getCurrentItem().clone();
+								// If the player clicked on a valid key
+								if(key != null) {
 
-								ItemLore lore = new ItemLore();
-								for (String line : keyCheck.getLore()) {
-									lore.add(line);
-								}
+									// Get instance of ACPlayer
+									ACPlayer player = new ACPlayer((Player) event.getWhoClicked());
 
-								// Set the lore to the checkKey lore
-								ItemMeta clickedKeyItemMeta = clickedKey.getItemMeta();
-								clickedKeyItemMeta.setLore(lore.build());
-								clickedKey.setItemMeta(clickedKeyItemMeta);
+									if(player.hasPermission(Permissions.OPEN_VIRTUAL_CRATE.value())) {
 
+										if(this.main.getOperationsManager().isVirtualKeySelector(player)) {
 
-								// Check if the keys match
-								if(clickedKey.equals(item.build())) {
-									// If they match the player click on the checkKey
-									key = keyCheck;
-									break;
+											// Get a list of key counts for all virtual keys
+											HashMap<String, Integer> keyCount = (HashMap<String, Integer>) PlayerData.get(player, PlayerDataType.VIRTUAL_KEYS);
+
+											// If the player has a key for the type selected
+											if(keyCount.get(key.getID()) != null) {
+
+												if(keyCount.get(key.getID()) >= 1) {
+													// Remove 1 virtual key from the player
+													PlayerData.removeVirtualKey(player, key, 1);
+
+													Block crateBlock = this.main.getOperationsManager().getVirtualKeySelector(player).getBlock();
+
+													// Remove them from the virtual key selector operation
+													this.main.getOperationsManager().removeVirtualKeySelector(player);
+
+													// Roll the crate for the player
+													CrateRoll crateRoll = new CrateRoll(this.main);
+													crateRoll.roll(player, new VirtualCrate(), key, crateBlock);
+												}
+
+											}
+
+										} else {
+											player.getPlayer().closeInventory();
+										}
+
+									} else {
+										player.getPlayer().closeInventory();
+										player.sendMessage(LanguageManager.get(LanguageType.PREFIX) + LanguageManager.get(LanguageType.ERROR_CANT_OPEN_CRATE));
+									}
+
 								}
 
 							}
-
-							// If the player clicked on a valid key
-							if(key != null) {
-
-								// Get instance of ACPlayer
-								ACPlayer player = new ACPlayer((Player) event.getWhoClicked());
-
-								// Get a list of key counts for all virtual keys
-								HashMap<String, Integer> keyCount = (HashMap<String, Integer>) PlayerData.get(player, PlayerDataType.VIRTUAL_KEYS);
-
-								// If the player has a key for the type selected
-								if(keyCount.get(key.getID()) != null) {
-
-									// Remove 1 virtual key from the player
-									PlayerData.removeVirtualKey(player, key, 1);
-
-									// Roll the crate for the player
-									CrateRoll crateRoll = new CrateRoll(this.main);
-//									crateRoll.roll(player, new VirtualCrate(), key, event.);
-								}
-
-							}
-
 						}
 					}
 				}

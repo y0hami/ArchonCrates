@@ -190,6 +190,7 @@ public class Main extends JavaPlugin {
 		new BlockBreak(this);
 		new BlockClick(this);
 		new InventoryEvents(this);
+		new PlayerInteraction(this);
 
 		console.notice("&fEvents registered.");
 

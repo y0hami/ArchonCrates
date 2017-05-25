@@ -46,7 +46,7 @@ public class OperationsManager {
 	public void removeKeyGiver(ACPlayer player) {
 		for (GiveKeyOperation operation : this.currentKeyGivers) {
 			if(operation.getPlayer().getPlayer() == player.getPlayer()) {
-				this.currentKeyGivers.remove(operation);
+				this.currentKeyGivers.remove(this.currentKeyGivers.indexOf(operation));
 				break;
 			}
 		}
@@ -89,7 +89,7 @@ public class OperationsManager {
 	public void removeCrateRoller(ACPlayer player) {
 		for (CrateRoll crateRoll : this.currentCrateRollers) {
 			if(crateRoll.getPlayer().getPlayer() == player.getPlayer()) {
-				this.currentCrateRollers.remove(crateRoll);
+				this.currentCrateRollers.remove(this.currentCrateRollers.indexOf(crateRoll));
 				break;
 			}
 		}
@@ -133,7 +133,7 @@ public class OperationsManager {
 	public void removeVirtualKeySelector(ACPlayer player) {
 		for (VirtualKeySelector keySelector : this.currentVirtualKeySelectors) {
 			if(keySelector.getPlayer().getPlayer() == player.getPlayer()) {
-				this.currentVirtualKeySelectors.remove(keySelector);
+				this.currentVirtualKeySelectors.remove(this.currentVirtualKeySelectors.indexOf(keySelector));
 				break;
 			}
 		}

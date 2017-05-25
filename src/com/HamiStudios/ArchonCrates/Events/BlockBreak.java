@@ -61,7 +61,7 @@ public class BlockBreak implements Listener {
 						player.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.EVENT_CRATE_REMOVED));
 
 						// Call CrateRemove Event
-						this.main.getServer().getPluginManager().callEvent(new OnCrateRemoved(player, new Crate(CrateData.get(block.getX(), block.getY(), block.getZ(), block.getWorld()))));
+						this.main.getServer().getPluginManager().callEvent(new OnCrateRemoved(player, new VirtualCrate()));
 
 					} else {
 						// Tell the player they need to sneak to remove crates

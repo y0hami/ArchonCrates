@@ -97,11 +97,11 @@ public class VirtualCrates implements FileInterface {
 			this.set("Virtual Crate.sounds.open", "BLOCK_CHEST_OPEN");
 			this.set("Virtual Crate.sounds.scroll", "BLOCK_NOTE_BASS");
 			this.set("Virtual Crate.sounds.win", "ENTITY_PLAYER_LEVELUP");
-			this.set("Virtual Crate.win.playerEffects", false);
+			this.set("Virtual Crate.win.crateEffects", false);
 			this.set("Virtual Crate.win.firework", true);
 			this.set("Virtual Crate.win.broadcast", false);
 			this.set("Virtual Crate.win.messagePlayer", true);
-			this.set("Virtual Crate.config.scrollDuration", 8);
+			this.set("Virtual Crate.config.scrollDuration", -1);
 			this.set("Virtual Crate.config.showcaseDuration", 10);
 			this.set("Virtual Crate.config.colouredGlass", true);
 
@@ -144,8 +144,8 @@ public class VirtualCrates implements FileInterface {
 
 			this.set("Virtual Crate.keys.unique", prizes);
 
-			this.set("Virtual Crate.messages.broadcast", "&6<player> &fjust won &6<prize.name> &fin a &6<crate.name>&f crate!");
-			this.set("Virtual Crate.messages.player", "&fYou just won &6<prize.name>&f!");
+			this.set("Virtual Crate.messages.broadcast", "&5<player> &fjust won &5<prize_name> &fin a &5<crate_name>&f crate!");
+			this.set("Virtual Crate.messages.player", "&fYou just won &5<prize_name>&f!");
 
 			this.save();
 
