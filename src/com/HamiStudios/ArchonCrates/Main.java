@@ -61,7 +61,7 @@ public class Main extends JavaPlugin {
 		ArrayList<Files> missingFiles = new ArrayList<>();
 		
 		// Total files
-		int totalFiles = 8;
+		int totalFiles = 9;
 		
 		// Check if crates.yml exists
 		Crates cratesFile = new Crates();
@@ -108,6 +108,12 @@ public class Main extends JavaPlugin {
 			missingFiles.add(Files.VIRTUAL_CRATE_LAYOUT);
 		}
 
+		// Check if key drops.yml exists
+		KeyDrop keyDrop = new KeyDrop();
+		if(!keyDrop.exists()) {
+			missingFiles.add(Files.KEY_DROPS);
+		}
+
 		/* If any files are missing announce how many are missing out of the total of files
 		 * and then announce the creation of the new files
 		 */
@@ -147,6 +153,8 @@ public class Main extends JavaPlugin {
 					case VIRTUAL_CRATE_LAYOUT:
 						VCLayout.createFile();
 						break;
+					case KEY_DROPS:
+						keyDrop.create();
 					default:
 						break;
 				}
@@ -186,11 +194,13 @@ public class Main extends JavaPlugin {
 
 		// Events
 		new PlayerJoin(this);
+		new PlayerLeave(this);
 		new BlockPlace(this);
 		new BlockBreak(this);
 		new BlockClick(this);
 		new InventoryEvents(this);
 		new PlayerInteraction(this);
+		new MobDeath(this);
 
 		console.notice("&fEvents registered.");
 

@@ -16,7 +16,9 @@ public enum Permissions {
 	// Events
 	CREATE_CRATE ("archoncrates.events.crate.create"),
 	OPEN_PHYSICAL_CRATE ("archoncrates.events.crate.physical.open"),
-	OPEN_VIRTUAL_CRATE ("archoncrates.events.crate.virtual.open");
+	OPEN_VIRTUAL_CRATE ("archoncrates.events.crate.virtual.open"),
+	MOB_DROP_KEY ("archoncrates.events.keydrop.mob"),
+	BLOCK_DROP_KEY ("archoncrates.events.keydrop.block");
 
 
 	// Permission value

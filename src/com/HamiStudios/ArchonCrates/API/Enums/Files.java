@@ -11,7 +11,8 @@ public enum Files {
 	LANGUAGE ("Language", "language.yml", "plugins/ArchonCrates/"),
 	CRATE_DATA ("CrateData", "crates.db", "plugins/ArchonCrates/data/"),
 	PLAYER_DATA ("PlayersData", "players.db", "plugins/ArchonCrates/data/"),
-	VIRTUAL_CRATE_LAYOUT ("VC Layout", "vc layout.json", "plugins/ArchonCrates/");
+	VIRTUAL_CRATE_LAYOUT ("VC Layout", "vc layout.json", "plugins/ArchonCrates/"),
+	KEY_DROPS ("Key Drops", "key drops.yml", "plugins/ArchonCrates/");
 
 	// Variables for file values
 	private String name;

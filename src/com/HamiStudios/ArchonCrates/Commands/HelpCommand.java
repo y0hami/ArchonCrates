@@ -47,9 +47,11 @@ public class HelpCommand implements Command {
 				keyCommand.displayHelp(sender);
 
 				break;
-			case "list":
-				break;
 			case "crates":
+
+				CratesCommand cratesCommand = new CratesCommand();
+				cratesCommand.displayHelp(sender);
+
 				break;
 			default:
 				sender.sendMessage(LanguageManager.get(LanguageType.ERROR_INVALID_COMMAND));
