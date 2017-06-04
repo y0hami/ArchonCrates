@@ -1,8 +1,11 @@
 name: ArchonCrates
 main: com.HamiStudios.ArchonCrates.Main
-version: 19.0
+version: 18.0.0
 commands:
    ArchonCrates:
       description: Main command for ArchonCrates
-      usage: /<command> <argument 1> [argument 2] [argument 3] [argument 4]
+      usage: /archoncrates <argument 1> [argument 2] [argument 3] [argument 4] [argument 5]
       aliases: ac
+   acupdate:
+      descritpion: Command to download and install the newest update of ArchonCrates (Can only be used in the server console)
+      usage: /acupdate

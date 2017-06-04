@@ -115,7 +115,7 @@ public class CrateRoll {
 		this.player = player;
 		this.usedKey = usedKey;
 
-		for (HashMap.Entry<Key, ArrayList<Prize>> key : crate.getKeys().entrySet()) {
+		for (Map.Entry<Key, ArrayList<Prize>> key : crate.getKeys().entrySet()) {
 			if(key.getKey().getID().equals(usedKey.getID())) {
 				this.prizes = key.getValue();
 				break;

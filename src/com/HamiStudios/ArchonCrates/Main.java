@@ -1,9 +1,11 @@
 package com.HamiStudios.ArchonCrates;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
+import com.HamiStudios.ArchonCrates.API.Enums.UpdateState;
 import com.HamiStudios.ArchonCrates.API.Libs.Console;
 import com.HamiStudios.ArchonCrates.API.Libs.Glow;
 import com.HamiStudios.ArchonCrates.API.Libs.OperationsManager;
+import com.HamiStudios.ArchonCrates.API.Libs.UpdateChecker;
 import com.HamiStudios.ArchonCrates.Commands.Commands;
 import com.HamiStudios.ArchonCrates.Commands.TabCompleter;
 import com.HamiStudios.ArchonCrates.Events.*;
@@ -32,6 +34,31 @@ public class Main extends JavaPlugin {
 		console.notice("&fStarting...");
 
 		console.notice("&fArchonCrates Version: " + Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion());
+
+
+		console.space();
+		console.space();
+
+		console.log("&fChecking for updates...");
+
+		String currentVersion = Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion();
+		UpdateChecker updateChecker = new UpdateChecker();
+
+		UpdateState updateState = updateChecker.check(currentVersion);
+
+		if(updateState.equals(UpdateState.UPDATE)) {
+			console.log("&fThere is an update available.");
+			console.space();
+			console.log("  &7- &fCurrent Version: &5"  + currentVersion, false);
+			console.log("  &7- &fNew Version: &5" + updateChecker.getNewVersion(), false);
+			console.log("  &7- &fMessage: &5" + updateChecker.getNote(), false);
+			console.space();
+			console.log("Run \"acupdate\" in the server console to download and install the newest version.");
+		} else if(updateState.equals(UpdateState.NO_UPDATE)) {
+			console.log("&fYou are all up to date.");
+		} else {
+			console.log("&fError checking for updates, please report this to our support team. https://feedback.hamistudios.com");
+		}
 
 
 		console.space();
@@ -174,8 +201,11 @@ public class Main extends JavaPlugin {
 		console.notice("&fRegistering Commands...");
 
 		// Register the commands
-		this.getCommand("archoncrates").setExecutor(new Commands(this));
+		Commands commands = new Commands(this);
+
+		this.getCommand("archoncrates").setExecutor(commands);
 		this.getCommand("archoncrates").setTabCompleter(new TabCompleter());
+		this.getCommand("acupdate").setExecutor(commands);
 
 		console.notice("&fCommands registered.");
 

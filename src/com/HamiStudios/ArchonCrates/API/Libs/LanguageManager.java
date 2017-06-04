@@ -23,6 +23,6 @@ public class LanguageManager {
 
 	public static String getHelpSuffix() { return ChatColor.translateAlternateColorCodes('&', "&7&m>----------------------------<"); }
 
-	public static String getHelpURL() { return "https://archoncrates.net/docs/"; }
+	public static String getHelpURL() { return "https://archoncrates.com/docs/"; }
 
 }

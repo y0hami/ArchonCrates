@@ -14,6 +14,7 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class VirtualCrateMenu {
 
@@ -54,7 +55,7 @@ public class VirtualCrateMenu {
 				.build());
 		}
 
-		for (HashMap.Entry<String, Integer> keyItem : this.keys.entrySet()) {
+		for (Map.Entry<String, Integer> keyItem : this.keys.entrySet()) {
 			Key key = new Key(keyItem.getKey());
 			if(key.valid()) {
 
