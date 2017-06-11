@@ -19,11 +19,23 @@ public class FileHandler {
 	}
 	
 	// Get File instance
+
+	/**
+	 * Get the File.
+	 *
+	 * @return the File instance.
+	 */
 	public File getFile() {
 		return new File(this.file.getFilePath());
 	}
 
 	// Get FileConfiguration instance
+
+	/**
+	 * Get the file configuration of the file.
+	 *
+	 * @return the FileConfiguration instance.
+	 */
 	public FileConfiguration getFileConfiguration() {
 		return YamlConfiguration.loadConfiguration(new File(this.file.getFilePath() + this.file.getFileName()));
 	}

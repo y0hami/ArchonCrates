@@ -11,6 +11,12 @@ import java.util.ArrayList;
 public class Fetcher {
 
 	// Get all crates
+
+	/**
+	 * Get all valid crates from the crates file.
+	 *
+	 * @return an ArrayList containing all valid crates.
+	 */
 	public static ArrayList<Crate> getCrates() {
 
 		// Get the crates file
@@ -31,6 +37,12 @@ public class Fetcher {
 	}
 
 	// Get all prizes
+
+	/**
+	 * Get all valid prizes from the prize file.
+	 *
+	 * @return an ArrayList containing all valid prizes.
+	 */
 	public static ArrayList<Prize> getPrizes() {
 
 		// Get the prizes file
@@ -51,6 +63,12 @@ public class Fetcher {
 	}
 
 	// Get all keys
+
+	/**
+	 * Get all valid keys from the key file.
+	 *
+	 * @return an ArrayList containing all valid keys.
+	 */
 	public static ArrayList<Key> getKeys() {
 
 		// Get the keys file
@@ -71,6 +89,12 @@ public class Fetcher {
 	}
 
 	// Get all virtual keys
+
+	/**
+	 * Get all valid keys used as virtual keys in the virtual crate file.
+	 *
+	 * @return an ArrayList containing all valid virtual keys.
+	 */
 	public static ArrayList<Key> getVirtualKeys() {
 
 		// Get the keys file

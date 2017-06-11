@@ -11,6 +11,16 @@ import java.util.HashMap;
 public class DatabaseHandler {
 
 	// Execute a query and get a boolean of table modification back
+
+	/**
+	 * Execute a SQL query
+	 *
+	 * @param database the database in which to execute the query.
+	 * @param table the table in which to execute the query.
+	 * @param query the query in which to execute.
+	 *
+	 * @return true if the query was successful and false if not.
+	 */
 	public static boolean execute(Database database, Tables table, String query) {
 
 		try {
@@ -49,6 +59,17 @@ public class DatabaseHandler {
 	}
 
 	// Execute a query and get results back
+
+	/**
+	 * Execute a query to return data.
+	 *
+	 * @param database the database in which to execute the query.
+	 * @param table the table in which to execute the query.
+	 * @param query the query in which to execute.
+	 * @param columns an array of a list of columns to return.
+	 *
+	 * @return an ArrayList containing a HashMap of all returned rows from the query.
+	 */
 	public static ArrayList<HashMap<String, Object>> executeQuery(Database database, Tables table, String query, String[] columns) {
 
 		try {
@@ -95,6 +116,14 @@ public class DatabaseHandler {
 		return null;
 	}
 
+
+	/**
+	 * Create the specified database.
+	 *
+	 * @param database the database to create.
+	 *
+	 * @return true if it was created and false if not.
+	 */
 	public static boolean createDatabase(Database database) {
 		try {
 			// Get database connection
@@ -118,6 +147,15 @@ public class DatabaseHandler {
 		return false;
 	}
 
+
+	/**
+	 * Create the specified table.
+	 *
+	 * @param database the database to create the table.
+	 * @param table the table to create.
+	 *
+	 * @return true if the table was created and false if not.
+	 */
 	public static boolean createTable(Database database, Tables table) {
 		try {
 			// Get database connection

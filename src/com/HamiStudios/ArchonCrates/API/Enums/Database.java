@@ -11,6 +11,11 @@ public enum Database {
 		this.dbName = dbName;
 	}
 
+	/**
+	 * Returns the name of the database.
+	 *
+	 * @return  The database name.
+	 */
 	public String getDatabaseName() {
 		return this.dbName;
 	}

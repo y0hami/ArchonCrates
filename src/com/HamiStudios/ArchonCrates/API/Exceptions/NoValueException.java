@@ -9,6 +9,12 @@ public class NoValueException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Thrown when an invalid value is trying to be parsed in a file.
+	 *
+	 * @param pathToAttemptValue YAML path to the value trying to be parsed.
+	 * @param file of which the value exists.
+	 */
 	public NoValueException(String pathToAttemptValue, Files file) {
 		// Log to the server console to make the administrator aware of the error
 		Console console = new Console(Bukkit.getConsoleSender());

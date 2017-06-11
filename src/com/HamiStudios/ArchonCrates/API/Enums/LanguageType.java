@@ -34,7 +34,14 @@ public enum LanguageType {
 	LanguageType(String value) {
 		this.value = value;
 	}
-	
+
+	// Get the language file path
+
+	/**
+	 * Gets the YAML path to the specified message from the language file.
+	 *
+	 * @return The YAML path to the message.
+	 */
 	public String value() {
 		return this.value;
 	}

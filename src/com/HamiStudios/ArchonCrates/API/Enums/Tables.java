@@ -19,6 +19,13 @@ public enum Tables {
 		this.createStatement = createStatement;
 	}
 
+	// Create statement for the table
+
+	/**
+	 * Gets the create statement for the table.
+	 *
+	 * @return Create statement for the table.
+	 */
 	public String getCreateStatement() {
 		return this.createStatement;
 	}

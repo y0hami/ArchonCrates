@@ -27,6 +27,12 @@ public enum Permissions {
 	Permissions(String value) { this.value = value; }
 
 	// Return the permission value
+
+	/**
+	 * The permission value.
+	 *
+	 * @return The value of the permission.
+	 */
 	public String value() {
 		return this.value;
 	}

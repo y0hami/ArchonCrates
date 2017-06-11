@@ -9,6 +9,15 @@ import java.util.List;
 public class TabCompletionHelper {
 
 	// Get a completion list for commands/players from a String[] list
+
+	/**
+	 * Get all tab completable arguments as a List
+	 *
+	 * @param args currently typed by the player.
+	 * @param strings of which it can complete.
+	 * @param returnPlayers if it should return players names.
+	 * @return a List containing all possible completable arguments.
+	 */
 	public static List<String> getCompletionList(String[] args, String[] strings, boolean returnPlayers) {
 		// Get the current argument
 		String arg = args[args.length-1];
@@ -41,6 +50,14 @@ public class TabCompletionHelper {
 		return completionList;
 	}
 
+	/**
+	 * Get all tab completable arguments as an ArrayList
+	 *
+	 * @param args currently typed by the player.
+	 * @param strings of which it can complete.
+	 * @param returnPlayers if it should return players names.
+	 * @return a List containing all possible completable arguments.
+	 */
 	public static List<String> getCompletionList(String[] args, ArrayList<String> strings, boolean returnPlayers) {
 		// Get the current argument
 		String arg = args[args.length-1];

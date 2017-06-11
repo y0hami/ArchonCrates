@@ -4,6 +4,6 @@ public enum UpdateState {
 
 	NO_UPDATE,
 	UPDATE,
-	ERROR;
+	ERROR
 
 }

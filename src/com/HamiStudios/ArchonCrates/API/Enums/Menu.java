@@ -16,6 +16,13 @@ public enum Menu {
 		this.title = title;
 	}
 
+	// Get the menu title
+
+	/**
+	 * Get the title of the menu.
+	 *
+	 * @return The menu title.
+	 */
 	public String getTitle() { return this.title; }
 
 }

@@ -27,16 +27,34 @@ public enum Files {
 	}
 	
 	// Get the given name for the file
+
+	/**
+	 * Returns the pretty name of the file.
+	 *
+	 * @return  The pretty file name.
+	 */
 	public String getName() {
 		return this.name;
 	}
 	
 	// Get the filename for the file
+
+	/**
+	 * Returns the name of the file including the file extension.
+	 *
+	 * @return  The file name.
+	 */
 	public String getFileName() {
 		return this.fileName;
 	}
 	
 	// Get the path to the file directory
+
+	/**
+	 * Retuns the path to the file.
+	 *
+	 * @return  The file path.
+	 */
 	public String getFilePath() {
 		return this.filePath;
 	}

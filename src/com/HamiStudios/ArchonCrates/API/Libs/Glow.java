@@ -8,6 +8,10 @@ import java.lang.reflect.Field;
 
 public class Glow extends Enchantment {
 
+	/**
+	 * Class constructor
+	 * @param id of the enchantment to make
+	 */
 	public Glow(int id) {
 		super(id);
 	}
@@ -42,6 +46,9 @@ public class Glow extends Enchantment {
 		return 0;
 	}
 
+	/**
+	 * Register the Glow enchantment as a enchantment in the game.
+	 */
 	public void registerGlow() {
 		try {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
