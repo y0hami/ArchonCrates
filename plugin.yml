@@ -1,6 +1,6 @@
 name: ArchonCrates
 main: com.HamiStudios.ArchonCrates.Main
-version: 18.0.0
+version: 19.0.0
 commands:
    ArchonCrates:
       description: Main command for ArchonCrates

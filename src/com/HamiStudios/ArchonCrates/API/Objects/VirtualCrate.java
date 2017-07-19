@@ -50,13 +50,13 @@ public class VirtualCrate {
 			this.openSound = GetSound.get((String) this.crateFile.get("Virtual Crate.sounds.open"), null, Files.VIRTUAL_CRATES);
 			this.scrollSound = GetSound.get((String) this.crateFile.get("Virtual Crate.sounds.scroll"), null, Files.VIRTUAL_CRATES);
 			this.winSound = GetSound.get((String) this.crateFile.get("Virtual Crate.sounds.win"), null, Files.VIRTUAL_CRATES);
-			this.displayCrateEffects = (boolean) this.crateFile.get("Virtual Crate.win.crateEffects");
 			this.displayFireworks = (boolean) this.crateFile.get("Virtual Crate.win.firework");
 			this.broadcastWin = (boolean) this.crateFile.get("Virtual Crate.win.broadcast");
 			this.sendPlayerMessage = (boolean) this.crateFile.get("Virtual Crate.win.messagePlayer");
 			this.scrollDuration = (int) this.crateFile.get("Virtual Crate.config.scrollDuration");
 			this.showcaseDuration = (int) this.crateFile.get("Virtual Crate.config.showcaseDuration");
 			this.displayColouredGlass = (boolean) this.crateFile.get("Virtual Crate.config.colouredGlass");
+			this.displayCrateEffects = (boolean) this.crateFile.get("Virtual Crate.config.crateEffects");
 
 			this.keys = new HashMap<>();
 

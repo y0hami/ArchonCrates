@@ -14,7 +14,7 @@ public class GetSound {
 	 * @param ID of the element the sound is from in a file.
 	 * @param file where the element is in.
 	 * @return Sound instance (Minecraft aka Bukkit object).
-	 * @throws InvalidSoundValue
+	 * @throws InvalidSoundValue throws InvalidSoundValue when the sound is an invalid Minecraft sound
 	 */
 	public static Sound get(String value, String ID, Files file) throws InvalidSoundValue {
 		try {

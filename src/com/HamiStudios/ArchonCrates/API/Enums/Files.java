@@ -25,7 +25,7 @@ public enum Files {
 		this.fileName = fileName;
 		this.filePath = filePath;
 	}
-	
+
 	// Get the given name for the file
 
 	/**

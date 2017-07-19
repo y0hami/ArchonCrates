@@ -16,7 +16,7 @@ public class ItemLore {
 	 * Add a line to the lore.
 	 *
 	 * @param content to be added.
-	 * @return
+	 * @return ItemLore (self)
 	 */
 	public ItemLore add(String content) {
 		if(translateColours) { this.lore.add(ChatColor.translateAlternateColorCodes('&', content)); }
@@ -30,7 +30,7 @@ public class ItemLore {
 	 * If the lore should translate colour codes.
 	 *
 	 * @param value of which to translate or not.
-	 * @return
+	 * @return ItemLore (self)
 	 */
 	public ItemLore translateColours(boolean value) {
 		this.translateColours = value;

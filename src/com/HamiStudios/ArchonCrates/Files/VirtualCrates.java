@@ -97,13 +97,13 @@ public class VirtualCrates implements FileInterface {
 			this.set("Virtual Crate.sounds.open", "BLOCK_CHEST_OPEN");
 			this.set("Virtual Crate.sounds.scroll", "BLOCK_NOTE_BASS");
 			this.set("Virtual Crate.sounds.win", "ENTITY_PLAYER_LEVELUP");
-			this.set("Virtual Crate.win.crateEffects", false);
 			this.set("Virtual Crate.win.firework", true);
 			this.set("Virtual Crate.win.broadcast", false);
 			this.set("Virtual Crate.win.messagePlayer", true);
 			this.set("Virtual Crate.config.scrollDuration", -1);
 			this.set("Virtual Crate.config.showcaseDuration", 10);
 			this.set("Virtual Crate.config.colouredGlass", true);
+			this.set("Virtual Crate.config.crateEffects", false);
 
 			ArrayList<String> prizes = new ArrayList<>();
 			prizes.add("Diamonds");
