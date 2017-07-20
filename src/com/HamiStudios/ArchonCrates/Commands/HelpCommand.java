@@ -1,9 +1,10 @@
 package com.HamiStudios.ArchonCrates.Commands;
 
 import com.HamiStudios.ArchonCrates.API.Enums.LanguageType;
-import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
 import com.HamiStudios.ArchonCrates.API.Libs.HelpPageBuilder;
 import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
+import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class HelpCommand implements Command {
 
 		new HelpPageBuilder("help")
 				.setCommandDescription("Shows help on how to use commands.")
-				.setHelpURL("commands/help")
+				.setHelpURL(Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion().replaceAll("\\.", "-") + "/commands")
 				.setExample("create")
 				.addArgument("command", false, args)
 			.send(sender);

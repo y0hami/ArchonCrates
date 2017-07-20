@@ -1,6 +1,4 @@
-.settings
-bin
-.classpath
-.project
 .idea
-ArchonCrates.iml
+.settings
+.classpath
+out

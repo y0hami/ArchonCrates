@@ -2,8 +2,9 @@ package com.HamiStudios.ArchonCrates.Files;
 
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
-import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
 import com.HamiStudios.ArchonCrates.API.Libs.FileInterface;
+import com.HamiStudios.ArchonCrates.API.Objects.ItemLore;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -138,6 +139,8 @@ public class Keys implements FileInterface {
 
 				this.save();
 
+				this.setHeader();
+
 				return true;
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -147,6 +150,16 @@ public class Keys implements FileInterface {
 
 		@Override
 		public boolean setHeader() {
+			this.fileconfig.options().header(
+					"\n " +
+					"Need help configuring? Visit the ArchonCrates documentation https://archoncrates.com/docs/" +
+					Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion().replaceAll("\\.", "-") +
+					"/files/keys" +
+					"\n \n"
+				);
+
+			this.save();
+
 			return true;
 		}
 	

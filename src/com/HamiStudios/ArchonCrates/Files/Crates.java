@@ -3,6 +3,7 @@ package com.HamiStudios.ArchonCrates.Files;
 import com.HamiStudios.ArchonCrates.API.Enums.Files;
 import com.HamiStudios.ArchonCrates.API.Exceptions.NoValueException;
 import com.HamiStudios.ArchonCrates.API.Libs.FileInterface;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -170,7 +171,9 @@ public class Crates implements FileInterface {
 			this.set("Crates.golden.messages.wrongKey", "&cWrong key, you can't use that key on this crate.");
 			
 			this.save();
-			
+
+			this.setHeader();
+
 			return true;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -180,6 +183,16 @@ public class Crates implements FileInterface {
 
 	@Override
 	public boolean setHeader() {
+		this.fileconfig.options().header(
+				"\n " +
+				"Need help configuring? Visit the ArchonCrates documentation https://archoncrates.com/docs/" +
+				Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion().replaceAll("\\.", "-") +
+				"/files/crates" +
+				"\n \n"
+			);
+
+		this.save();
+
 		return true;
 	}
 

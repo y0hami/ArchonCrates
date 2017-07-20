@@ -7,6 +7,7 @@ import com.HamiStudios.ArchonCrates.API.Libs.HelpPageBuilder;
 import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.API.Menus.CratesMenu;
 import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class CratesCommand implements Command {
@@ -15,7 +16,7 @@ public class CratesCommand implements Command {
 	public void displayHelp(ACSender sender) {
 		new HelpPageBuilder("crates")
 				.setCommandDescription("This command opens a GUI where you can select a crate to teleport to.")
-				.setHelpURL("commands/crates")
+				.setHelpURL(Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion().replaceAll("\\.", "-") + "/commands")
 				.send(sender);
 	}
 

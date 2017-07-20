@@ -42,7 +42,7 @@ public class KeyCommand implements Command {
 				.setCommandDescription("This command allows you to give keys to one or all players.")
 				.addArgument("player", false, playerArgs)
 				.addArgument("amount", true, amountArgs)
-				.setHelpURL("commands/key")
+				.setHelpURL(Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion().replaceAll("\\.", "-") + "/commands")
 				.setExample("hammy2899 3")
 				.send(sender);
 	}

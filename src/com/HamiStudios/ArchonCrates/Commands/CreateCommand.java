@@ -7,6 +7,7 @@ import com.HamiStudios.ArchonCrates.API.Libs.HelpPageBuilder;
 import com.HamiStudios.ArchonCrates.API.Libs.LanguageManager;
 import com.HamiStudios.ArchonCrates.API.Menus.CreateMenu;
 import com.HamiStudios.ArchonCrates.API.Objects.ACSender;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class CreateCommand implements Command {
@@ -15,7 +16,7 @@ public class CreateCommand implements Command {
 	public void displayHelp(ACSender sender) {
 		new HelpPageBuilder("create")
 				.setCommandDescription("This command opens a GUI where you select what crate type you want to make and what crate you want to create.")
-				.setHelpURL("commands/create")
+				.setHelpURL(Bukkit.getPluginManager().getPlugin("ArchonCrates").getDescription().getVersion().replaceAll("\\.", "-") + "/commands")
 				.send(sender);
 	}
 
