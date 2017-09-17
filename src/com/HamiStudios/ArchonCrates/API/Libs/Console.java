@@ -1,7 +1,6 @@
 package com.HamiStudios.ArchonCrates.API.Libs;
 
-import net.md_5.bungee.api.ChatColor;
-
+import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 
 import com.HamiStudios.ArchonCrates.Main;
