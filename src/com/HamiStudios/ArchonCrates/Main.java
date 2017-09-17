@@ -6,6 +6,7 @@ import com.HamiStudios.ArchonCrates.API.Libs.Console;
 import com.HamiStudios.ArchonCrates.API.Libs.Glow;
 import com.HamiStudios.ArchonCrates.API.Libs.OperationsManager;
 import com.HamiStudios.ArchonCrates.API.Libs.UpdateChecker;
+import com.HamiStudios.ArchonCrates.API.Operations.ConfigUpdater;
 import com.HamiStudios.ArchonCrates.Commands.Commands;
 import com.HamiStudios.ArchonCrates.Commands.TabCompleter;
 import com.HamiStudios.ArchonCrates.Events.*;
@@ -195,6 +196,18 @@ public class Main extends JavaPlugin {
 		} else {
 			console.notice("&fAll file checks where performed with no errors.");
 		}
+		console.space();
+		console.space();
+
+		console.notice("&fVerifying files...");
+		ConfigUpdater configUpdater = new ConfigUpdater();
+		if(configUpdater.changesMade()) {
+			console.warning("&fSome files are out of date.");
+			console.notice("&fOut of date files where updated.");
+		} else {
+			console.notice("&fFiles verified successfully.");
+		}
+
 		console.space();
 		console.space();
 
