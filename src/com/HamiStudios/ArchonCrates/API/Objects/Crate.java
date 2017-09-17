@@ -25,6 +25,7 @@ public class Crate {
 	private boolean broadcastWin;
 	private boolean sendPlayerMessage;
 	private int scrollDuration;
+	private int scrollSpeed;
 	private int showcaseDuration;
 	private boolean displayColouredGlass;
 	private ArrayList<Prize> prizes;
@@ -60,6 +61,7 @@ public class Crate {
 			this.broadcastWin = (boolean) this.crateFile.get("Crates." + ID + ".win.broadcast");
 			this.sendPlayerMessage = (boolean) this.crateFile.get("Crates." + ID + ".win.messagePlayer");
 			this.scrollDuration = (int) this.crateFile.get("Crates." + ID + ".config.scrollDuration");
+			this.scrollSpeed = (int) this.crateFile.get("Crates." + ID + ".config.scrollSpeed");
 			this.showcaseDuration = (int) this.crateFile.get("Crates." + ID + ".config.showcaseDuration");
 			this.displayColouredGlass = (boolean) this.crateFile.get("Crates." + ID + ".config.colouredGlass");
 			this.displayEffects = (boolean) this.crateFile.get("Crates." + ID + ".config.crateEffects");
@@ -240,7 +242,16 @@ public class Crate {
 	public int getScrollDuration() {
 		return this.scrollDuration;
 	}
-	
+
+	// Get the crate scroll speed
+
+	/**
+	 * Get the crates scroll speed
+	 *
+	 * @return crate scroll speed
+	 */
+	public int getScrollSpeed() { return this.scrollSpeed; }
+
 	// Get the crate Showcase Duration
 
 	/**

@@ -103,6 +103,7 @@ public class Crates implements FileInterface {
 			this.set("Crates.default.win.broadcast", false);
 			this.set("Crates.default.win.messagePlayer", true);
 			this.set("Crates.default.config.scrollDuration", -1);
+			this.set("Crates.default.config.scrollSpeed", 8);
 			this.set("Crates.default.config.showcaseDuration", 10);
 			this.set("Crates.default.config.colouredGlass", true);
 			this.set("Crates.default.config.crateEffects", false);
@@ -141,6 +142,7 @@ public class Crates implements FileInterface {
 			this.set("Crates.golden.win.broadcast", true);
 			this.set("Crates.golden.win.messagePlayer", true);
 			this.set("Crates.golden.config.scrollDuration", -1);
+			this.set("Crates.golden.config.scrollSpeed", 8);
 			this.set("Crates.golden.config.showcaseDuration", 10);
 			this.set("Crates.golden.config.colouredGlass", true);
 			this.set("Crates.golden.config.crateEffects", true);

@@ -32,6 +32,7 @@ public class CrateRoll {
 
 	// Crate Variables
 	private int scrollDuration;
+	private int scrollSpeed;
 	private Sound scrollSound;
 	private Sound winSound;
 	private boolean firework;
@@ -72,6 +73,7 @@ public class CrateRoll {
 
 		// Set Crate Variables
 		this.scrollDuration = crate.getScrollDuration();
+		this.scrollSpeed = crate.getScrollSpeed();
 		this.scrollSound = crate.getScrollSound();
 		this.winSound = crate.getWinSound();
 		this.firework = crate.firework();
@@ -125,6 +127,7 @@ public class CrateRoll {
 
 		// Set Crate Variables
 		this.scrollDuration = crate.getScrollDuration();
+		this.scrollSpeed = crate.getScrollSpeed();
 		this.scrollSound = crate.getScrollSound();
 		this.winSound = crate.getWinSound();
 		this.firework = crate.firework();
@@ -326,7 +329,7 @@ public class CrateRoll {
 					displayPrize(getRandomPrize());
 					playSound(location, scrollSound);
 				}
-			}, 0, 8L);
+			}, 0, Long.parseLong(scrollSpeed+""));
 		}
 
 	}

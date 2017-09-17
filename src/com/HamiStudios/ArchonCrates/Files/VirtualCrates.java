@@ -102,6 +102,7 @@ public class VirtualCrates implements FileInterface {
 			this.set("Virtual Crate.win.broadcast", false);
 			this.set("Virtual Crate.win.messagePlayer", true);
 			this.set("Virtual Crate.config.scrollDuration", -1);
+			this.set("Virtual Crate.config.scrollSpeed", 8);
 			this.set("Virtual Crate.config.showcaseDuration", 10);
 			this.set("Virtual Crate.config.colouredGlass", true);
 			this.set("Virtual Crate.config.crateEffects", false);

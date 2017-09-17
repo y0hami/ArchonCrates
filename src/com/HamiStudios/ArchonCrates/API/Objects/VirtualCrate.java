@@ -24,6 +24,7 @@ public class VirtualCrate {
 	private boolean broadcastWin;
 	private boolean sendPlayerMessage;
 	private int scrollDuration;
+	private int scrollSpeed;
 	private int showcaseDuration;
 	private boolean displayColouredGlass;
 	private HashMap<Key, ArrayList<Prize>> keys;
@@ -54,6 +55,7 @@ public class VirtualCrate {
 			this.broadcastWin = (boolean) this.crateFile.get("Virtual Crate.win.broadcast");
 			this.sendPlayerMessage = (boolean) this.crateFile.get("Virtual Crate.win.messagePlayer");
 			this.scrollDuration = (int) this.crateFile.get("Virtual Crate.config.scrollDuration");
+			this.scrollSpeed = (int) this.crateFile.get("Virtual Crate.config.scrollSpeed");
 			this.showcaseDuration = (int) this.crateFile.get("Virtual Crate.config.showcaseDuration");
 			this.displayColouredGlass = (boolean) this.crateFile.get("Virtual Crate.config.colouredGlass");
 			this.displayCrateEffects = (boolean) this.crateFile.get("Virtual Crate.config.crateEffects");
@@ -229,6 +231,15 @@ public class VirtualCrate {
 	public int getScrollDuration() {
 		return this.scrollDuration;
 	}
+
+	// Get the crate scroll speed
+
+	/**
+	 * Get the crate scroll speed
+	 *
+	 * @return crate scroll speed
+	 */
+	public int getScrollSpeed() { return this.scrollSpeed; }
 
 	// Get the crate Showcase Duration
 
