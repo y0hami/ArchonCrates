@@ -147,7 +147,7 @@ public class KeyCommand implements Command {
 					sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_INVALID_KEY_TYPE));
 				} else {
 
-					if(givePlayer == null) {
+					if(!giveAll && givePlayer == null) {
 						sender.sendMessage(LanguageManager.getPrefix() + LanguageManager.get(LanguageType.COMMAND_KEY_PLAYER_OFFLINE));
 					} else {
 
