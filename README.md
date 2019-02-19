@@ -1,3 +1,9 @@
+# End of Life Statement
+
+Please read: [EOL_STATEMENT.md](https://github.com/hammy2899/ArchonCrates/blob/b565873c7c027a93c73e4ece905823879e17e68b/EOL_STATEMENT.md)
+
+---
+
 ![ArchonCrates Logo](https://archoncrates.com/assets/img/brand_logo_small.png)
 
 ### The worlds most popular crate plugin.
